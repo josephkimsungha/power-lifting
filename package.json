@@ -1,0 +1,23 @@
+{
+  "name": "power-lifting",
+  "version": "1.0.0",
+  "description": "Pump weights. Win prizes. Defeat your rivals. All for the sake of...",
+  "source": "index.html",
+  "staticFiles": {
+    "staticPath": "assets",
+    "staticOutPath": "assets"
+  },
+  "scripts": {
+    "dev": "parcel --no-cache"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "parcel": "^2.12.0",
+    "pixi.js": "^8.1.0"
+  },
+  "devDependencies": {
+    "parcel-reporter-static-files-copy": "^1.5.3"
+  }
+}
+

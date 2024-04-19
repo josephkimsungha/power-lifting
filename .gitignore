@@ -85,4 +85,5 @@ entrypoint.hashmanifest.json
 firebase.json
 src/scss/_tokens.scss
 src/scss/_themes.scss
+.parcel-cache
 

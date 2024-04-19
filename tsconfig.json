@@ -1,0 +1,15 @@
+{
+    "include": [
+        "src/**/*",
+    ],
+    "compilerOptions": {
+        "esModuleInterop": true,
+        "experimentalDecorators": true,
+        "lib": [
+            "dom"
+        ],
+        "target": "ES6",
+        "moduleResolution": "Node",
+    }
+}
+
