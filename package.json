@@ -8,7 +8,8 @@
     "staticOutPath": "assets"
   },
   "scripts": {
-    "dev": "parcel --no-cache"
+    "dev": "parcel --no-cache",
+    "build": "parcel build --no-cache"
   },
   "author": "",
   "license": "ISC",
