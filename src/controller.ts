@@ -1,5 +1,6 @@
 import { Application } from "pixi.js";
-import { Minigame, MinigameDelegate } from "./Minigame";
+import { Minigame, MinigameDelegate } from "./minigame";
+import { KeyboardMinigame } from "./keyboardMinigame";
 
 /** Controls the flow of the game. */
 export class Controller implements MinigameDelegate {
@@ -16,7 +17,7 @@ export class Controller implements MinigameDelegate {
   }
 
   start() {
-    this.currentMinigame = new Minigame(this.app, this);
+    this.currentMinigame = new KeyboardMinigame(this.app, this);
     this.currentMinigame.attach();
   }
 }
