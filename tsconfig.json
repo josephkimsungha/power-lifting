@@ -5,6 +5,7 @@
     "compilerOptions": {
         "esModuleInterop": true,
         "experimentalDecorators": true,
+        "useDefineForClassFields": false,
         "lib": [
           "DOM",
           "es2022"
