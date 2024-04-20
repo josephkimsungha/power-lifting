@@ -12,6 +12,10 @@ export class Minigame {
     this.container = new Container();
   }
 
+  async preLoad() {
+    
+  }
+
   attach() {
     this.populateContainer();
     this.app.stage.addChild(this.container);
