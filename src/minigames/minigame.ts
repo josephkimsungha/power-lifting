@@ -1,10 +1,10 @@
 import { Application, Container, Graphics } from "pixi.js";
 
 export interface MinigameDelegate {
-  finished: (passed: boolean) => void;
+  onMinigameEnd: (passed: boolean) => void;
 }
 
-/** Base class all minigames extend */
+/** Base class for all minigames to extend. */
 export class Minigame {
   protected container: Container;
 
@@ -12,9 +12,13 @@ export class Minigame {
     this.container = new Container();
   }
 
-  protected finishMinigame(passed: boolean) {
-    // Show the player they've won or lost.
-    this.minigameDelegate.finished(passed);
+  attach() {
+    this.populateContainer();
+    this.app.stage.addChild(this.container);
+  }
+
+  detach() {
+    this.app.stage.removeChild(this.container);
   }
 
   protected populateContainer() {
@@ -32,12 +36,8 @@ export class Minigame {
     this.container.addChild(square);
   }
 
-  attach() {
-    this.populateContainer();
-    this.app.stage.addChild(this.container);
-  }
-
-  detach() {
-    this.app.stage.removeChild(this.container);
+  protected finishMinigame(passed: boolean) {
+    // Show the player they've won or lost.
+    this.minigameDelegate.onMinigameEnd(passed);
   }
 }
