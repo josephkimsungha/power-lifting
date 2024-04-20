@@ -6,13 +6,13 @@ export interface MinigameDelegate {
 
 /** Base class all minigames extend */
 export class Minigame {
-  private container: Container;
+  protected container: Container;
 
-  constructor(private readonly app: Application, private readonly minigameDelegate: MinigameDelegate) {
+  constructor(protected readonly app: Application, protected readonly minigameDelegate: MinigameDelegate) {
     this.container = new Container();
   }
 
-  private finishMinigame(passed: boolean) {
+  protected finishMinigame(passed: boolean) {
     // Show the player they've won or lost.
     this.minigameDelegate.finished(passed);
   }
