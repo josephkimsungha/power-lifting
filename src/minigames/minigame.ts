@@ -8,7 +8,7 @@ export interface MinigameDelegate {
 export class Minigame {
   protected container: Container;
 
-  constructor(protected readonly app: Application, protected readonly minigameDelegate: MinigameDelegate) {
+  constructor(protected readonly app: Application, protected readonly delegate: MinigameDelegate) {
     this.container = new Container();
   }
 
@@ -38,6 +38,6 @@ export class Minigame {
 
   protected finishMinigame(passed: boolean) {
     // Show the player they've won or lost.
-    this.minigameDelegate.onMinigameEnd(passed);
+    this.delegate.onMinigameEnd(passed);
   }
 }
