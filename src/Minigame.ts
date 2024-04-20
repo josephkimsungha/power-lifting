@@ -18,8 +18,8 @@ export class Minigame {
     square.fill(0xde3249);
     square.eventMode = 'static';
     square.on('pointerdown', () => {
-      this.finishMinigame(true);
       square.removeFromParent();
+      this.finishMinigame(true);
     });
     this.container.addChild(square);
   }
