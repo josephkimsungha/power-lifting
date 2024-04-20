@@ -8,13 +8,20 @@ export class Minigame {
     this.container = new Container();
   }
 
-  populateContainer() {
-    const graphics = new Graphics();
-    // Rectangle
-    graphics.rect(50, 50, 100, 100);
-    graphics.fill(0xde3249);
+  finishMinigame(passed: boolean) {
+    console.log('Minigame Finished', passed);
+  }
 
-    this.container.addChild(graphics);
+  populateContainer() {
+    const square = new Graphics();
+    square.rect(50, 50, 100, 100);
+    square.fill(0xde3249);
+    square.eventMode = 'static';
+    square.on('pointerdown', () => {
+      square.removeFromParent();
+      this.finishMinigame(true);
+    });
+    this.container.addChild(square);
   }
 
   attach() {
