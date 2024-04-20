@@ -1,5 +1,5 @@
 import { LitElement, css, html } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, state } from 'lit/decorators.js';
 import { game } from './game';
 
 @customElement('main-menu')
@@ -15,22 +15,10 @@ export class MainMenu extends LitElement {
     }
   `;
 
-  @property({ type: Boolean })
-  settingsOpen = false;
+  @state()
+  private settingsOpen = false;
 
-  startGame() {
-    this.remove();
-    game.start();
-  }
-
-  renderSettings() {
-    return html`
-      <h1> Settings </h1>
-      <button @click=${() => (this.settingsOpen = false)}> Back </button>
-    `;
-  }
-
-  render() {
+  protected override render() {
     if (this.settingsOpen) {
       return this.renderSettings();
     }
@@ -40,5 +28,17 @@ export class MainMenu extends LitElement {
       <button @click=${this.startGame}> Play </button>
       <button @click=${() => (this.settingsOpen = true)}> Settings </button>
     `;
+  }
+
+  private renderSettings() {
+    return html`
+      <h1> Settings </h1>
+      <button @click=${() => (this.settingsOpen = false)}> Back </button>
+    `;
+  }
+
+  private startGame() {
+    this.remove();
+    game.start();
   }
 }
