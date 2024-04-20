@@ -38,6 +38,6 @@ export class Minigame {
   }
 
   detach() {
-    this.app.stage.removeChild(this.container);
+    window.removeEventListener('keydown', this.keyDownListener);
   }
 }
