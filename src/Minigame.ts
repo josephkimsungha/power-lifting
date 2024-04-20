@@ -22,6 +22,6 @@ export class Minigame {
   }
 
   detach() {
-    this.app.stage.addChild(this.container);
+    this.app.stage.removeChild(this.container);
   }
 }

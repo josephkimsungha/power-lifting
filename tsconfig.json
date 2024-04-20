@@ -6,9 +6,10 @@
         "esModuleInterop": true,
         "experimentalDecorators": true,
         "lib": [
-            "es2015"
+          "DOM",
+          "es2022"
         ],
-        "target": "ES6",
+        "target": "ES2022",
         "moduleResolution": "Node",
     }
 }

@@ -9,7 +9,7 @@ class Game {
   }
 
   async start(): Promise<void> {
-    await this.app.init({ antialias: true, resizeTo: window });
+    await this.app.init({ resizeTo: window });
 
     // Import minigames.
     const basicMinigame = new Minigame(this.app);
