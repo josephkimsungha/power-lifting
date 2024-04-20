@@ -1,2 +1,1 @@
-import './main-menu.ts';
-
+import "./main-menu.ts";

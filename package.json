@@ -9,7 +9,8 @@
   },
   "scripts": {
     "dev": "parcel --no-cache",
-    "build": "parcel build --no-cache --public-url '.'"
+    "build": "parcel build --no-cache --public-url '.'",
+    "format": "prettier"
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +20,7 @@
     "pixi.js": "^8.1.0"
   },
   "devDependencies": {
-    "parcel-reporter-static-files-copy": "^1.5.3"
+    "parcel-reporter-static-files-copy": "^1.5.3",
+    "prettier": "3.2.5"
   }
 }

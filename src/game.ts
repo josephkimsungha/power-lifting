@@ -1,5 +1,5 @@
-import { Application } from 'pixi.js';
-import { Controller } from './controller';
+import { Application } from "pixi.js";
+import { Controller } from "./controller";
 
 class Game {
   private app: Application;
@@ -9,7 +9,6 @@ class Game {
     this.app = new Application();
     this.controller = new Controller(this.app);
   }
-
 
   async start(): Promise<void> {
     await this.app.init({ resizeTo: window });

@@ -18,6 +18,7 @@ export class MainMenu extends LitElement {
   @state()
   private settingsOpen = false;
 
+  // Hello world this is a long comment and i want it to blow past 80 characters yes sir. maybe i did not and that's ok.
   protected override render() {
     if (this.settingsOpen) {
       return this.renderSettings();

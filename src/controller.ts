@@ -6,7 +6,7 @@ import { KeyboardMinigame } from "./minigames/keyboardMinigame";
 export class Controller implements MinigameDelegate {
   private currentMinigame?: Minigame;
 
-  constructor(private readonly app: Application) { }
+  constructor(private readonly app: Application) {}
 
   start() {
     this.currentMinigame = new KeyboardMinigame(this.app, this);
@@ -16,7 +16,7 @@ export class Controller implements MinigameDelegate {
   onMinigameEnd(passed: boolean) {
     this.currentMinigame!.detach();
     this.currentMinigame = undefined;
-    console.log('Player', passed ? 'won' : 'lost');
+    console.log("Player", passed ? "won" : "lost");
     // For now just restart the same minigame again.
     this.start();
   }
