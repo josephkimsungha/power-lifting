@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "parcel --no-cache",
-    "build": "parcel build --no-cache"
+    "build": "parcel build --no-cache --public-url '.'"
   },
   "author": "",
   "license": "ISC",
