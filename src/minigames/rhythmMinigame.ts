@@ -40,12 +40,12 @@ export class RhythmMinigame extends KeyboardMinigame {
         console.log(key, "pressed");
         if (this.waitingForPress == true) {
             this.app.renderer.background.color = "#00FF00"
-            his.delegate.onMinigameFinished(true) 
+            this.finishMinigame(true) 
             this.waitingForPress = false;
         }
         else {
             this.app.renderer.background.color = "#de3249"
-            his.delegate.onMinigameFinished(false) 
+            this.finishMinigame(false) 
         }
   }
 
