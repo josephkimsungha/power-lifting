@@ -4,7 +4,6 @@ import {
   Graphics,
   Point,
   Ticker,
-  TickerCallback,
 } from "pixi.js";
 import { Minigame } from "./minigame";
 
