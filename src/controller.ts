@@ -14,7 +14,7 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
 
   private currentScreen?: Minigame | Interlude;
 
-  constructor(private readonly app: Application) {}
+  constructor(private readonly app: Application) { }
 
   start() {
     this.populateMinigameQueue(10);
