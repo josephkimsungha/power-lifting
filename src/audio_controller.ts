@@ -1,17 +1,16 @@
-import { Howl } from 'howler';
-import { Controller } from './controller';
+import { Howl } from "howler";
 
 class AudioController {
   private howls: Howl[] = [];
 
   playTitleScreenMusic() {
-    const titleScreen = new Howl({
-      src: ['./assets/titlescreen.mp3'],
-      volume: 0.01
+    const titleScreenAudio = new Howl({
+      src: ["./assets/titlescreen.mp3"],
+      volume: 0.01,
     });
 
-    this.howls.push(titleScreen);
-    titleScreen.play();
+    this.howls.push(titleScreenAudio);
+    titleScreenAudio.play();
   }
 }
 

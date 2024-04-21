@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "parcel --no-cache",
     "build": "parcel build --no-cache --public-url '.'",
-    "format": "prettier"
+    "format": "prettier . --write"
   },
   "author": "",
   "license": "ISC",

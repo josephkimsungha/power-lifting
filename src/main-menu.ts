@@ -1,8 +1,8 @@
-import { LitElement, css, html } from 'lit';
-import { customElement, state } from 'lit/decorators.js';
-import { game } from './game';
+import { LitElement, css, html } from "lit";
+import { customElement, state } from "lit/decorators.js";
+import { game } from "./game";
 
-@customElement('main-menu')
+@customElement("main-menu")
 export class MainMenu extends LitElement {
   static styles = css`
     :host {
@@ -24,16 +24,16 @@ export class MainMenu extends LitElement {
     }
 
     return html`
-      <h1> Power Lifter </h1>
-      <button @click=${this.startGame}> Play </button>
-      <button @click=${() => (this.settingsOpen = true)}> Settings </button>
+      <h1>Power Lifter</h1>
+      <button @click=${this.startGame}>Play</button>
+      <button @click=${() => (this.settingsOpen = true)}>Settings</button>
     `;
   }
 
   private renderSettings() {
     return html`
-      <h1> Settings </h1>
-      <button @click=${() => (this.settingsOpen = false)}> Back </button>
+      <h1>Settings</h1>
+      <button @click=${() => (this.settingsOpen = false)}>Back</button>
     `;
   }
 
