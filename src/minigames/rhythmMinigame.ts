@@ -1,21 +1,11 @@
 import { TextStyle, Text } from "pixi.js";
-import { Minigame } from "./minigame";
+import { KeyboardMinigame } from "./keyboardMinigame";
 
-export class RhythmMinigame extends Minigame {
+export class RhythmMinigame extends KeyboardMinigame {
 
-    private keyDownListener = (e: KeyboardEvent) => void this.onKeyDown(e.key);
+    //private keyDownListener = (e: KeyboardEvent) => void this.onKeyDown(e.key);
     protected text: Text | null = null;
     private waitingForPress: boolean = false;
-
-    override attach() {
-        super.attach();
-        window.addEventListener("keydown", this.keyDownListener);
-    }
-    
-    override detach() {
-        window.removeEventListener("keydown", this.keyDownListener);
-        super.detach();
-    }
 
     protected override populateContainer(): void {
         this.text = new Text({
@@ -46,16 +36,16 @@ export class RhythmMinigame extends Minigame {
         return new Promise(resolve => setTimeout(resolve, time));
     }
 
-    
-
-    protected onKeyDown(key: string) {
+    protected override onKeyDown(key: string) {
         console.log(key, "pressed");
         if (this.waitingForPress == true) {
             this.app.renderer.background.color = "#00FF00"
+            his.delegate.onMinigameFinished(true) 
             this.waitingForPress = false;
         }
         else {
             this.app.renderer.background.color = "#de3249"
+            his.delegate.onMinigameFinished(false) 
         }
   }
 
