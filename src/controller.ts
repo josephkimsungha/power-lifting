@@ -13,7 +13,7 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
 
   private currentScreen?: Minigame | Interlude;
 
-  constructor(private readonly app: Application) { }
+  constructor(private readonly app: Application) {}
 
   start() {
     this.populateMinigameQueue(10);
@@ -25,7 +25,11 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
     if (passed) {
       this.minigameWinCount++;
     }
-    console.log(passed ? "Nice!" : "Too bad!", "Player has won", this.minigameWinCount);
+    console.log(
+      passed ? "Nice!" : "Too bad!",
+      "Player has won",
+      this.minigameWinCount,
+    );
 
     if (this.minigameWinCount >= 5) {
       // Player has met the requirements to proceed to the next phase.
@@ -35,8 +39,7 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
         return;
       }
 
-      this.currentScreen = new Interlude(this.app, this);
-      this.currentScreen.attach();
+      this.startNextInterlude();
       this.minigameWinCount = 0;
       return;
     }
@@ -61,13 +64,26 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
     // Reset the current queue.
     this.minigameQueue.length = 0;
     for (let i = 0; i < count; i++) {
-      const minigame = new pool[Math.floor(Math.random() * pool.length)](this.app, this);
+      // TODO: Don't let the same minigame be selected multiple times for the queue.
+      const minigame = new pool[Math.floor(Math.random() * pool.length)](
+        this.app,
+        this,
+      );
       this.minigameQueue.push(minigame);
     }
   }
 
   private startNextMinigame() {
+    this.currentScreen?.detach();
+
     this.currentScreen = this.minigameQueue.shift();
+    this.currentScreen.attach();
+  }
+
+  private startNextInterlude() {
+    this.currentScreen?.detach();
+
+    this.currentScreen = new Interlude(this.app, this);
     this.currentScreen.attach();
   }
 }
