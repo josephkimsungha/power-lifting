@@ -1,3 +1,5 @@
+import "pixi.js/lib/math-extras/init";
+
 import { Application } from "pixi.js";
 import { Controller } from "./controller";
 

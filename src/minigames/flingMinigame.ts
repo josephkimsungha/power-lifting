@@ -88,10 +88,7 @@ export class FlingMinigame extends Minigame {
     adjustedVel.x = vel.x * time.deltaTime;
     adjustedVel.y = vel.y * time.deltaTime;
 
-    // object.position.add(vel.multiplyScalar(time.deltaTime));
-    // object.position.add(adjustedVel);
-    object.position.x += adjustedVel.x;
-    object.position.y += adjustedVel.y;
+    object.position.add(vel.multiplyScalar(time.deltaTime), object.position);
   }
 
   private onDragStart(object: Container) {
@@ -119,10 +116,6 @@ export class FlingMinigame extends Minigame {
     const previousPos = this.dragTarget.position.clone();
     this.dragTarget.position = event.getLocalPosition(this.dragTarget.parent);
 
-    // this.dragTargetVelocity = this.dragTarget.position.subtract(previousPos);
-    this.dragTargetVelocity = new Point(
-      this.dragTarget.position.x - previousPos.x,
-      this.dragTarget.position.y - previousPos.y,
-    );
+    this.dragTargetVelocity = this.dragTarget.position.subtract(previousPos);
   }
 }
