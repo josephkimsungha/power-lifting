@@ -25,13 +25,13 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
     if (passed) {
       this.minigameWinCount++;
     }
-    console.log(passed ? 'Nice!' : 'Too bad!', 'Player has won', this.minigameWinCount);
+    console.log(passed ? "Nice!" : "Too bad!", "Player has won", this.minigameWinCount);
 
     if (this.minigameWinCount >= 5) {
       // Player has met the requirements to proceed to the next phase.
       this.completedMinigamePhases++;
       if (this.completedMinigamePhases >= 3) {
-        console.log('You are the power lifting champion!');
+        console.log("You are the power lifting champion!");
         return;
       }
 
@@ -43,7 +43,7 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
 
     if (this.minigameQueue.length === 0) {
       // Player has run out of chances to proceed to the next phase.
-      console.log('You lose!');
+      console.log("You lose!");
       return;
     }
 
