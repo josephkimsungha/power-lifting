@@ -1,4 +1,5 @@
 import { Howl } from 'howler';
+import { Controller } from './controller';
 
 class AudioController {
   private howls: Howl[] = [];
