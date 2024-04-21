@@ -1,17 +1,11 @@
 {
-    "include": [
-        "src/**/*",
-    ],
-    "compilerOptions": {
-        "esModuleInterop": true,
-        "experimentalDecorators": true,
-        "useDefineForClassFields": false,
-        "lib": [
-          "DOM",
-          "es2022"
-        ],
-        "target": "ES2022",
-        "moduleResolution": "Node",
-    }
+  "include": ["src/**/*"],
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false,
+    "lib": ["DOM", "es2022"],
+    "target": "ES2022",
+    "moduleResolution": "Node"
+  }
 }
-

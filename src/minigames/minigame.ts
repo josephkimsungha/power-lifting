@@ -8,7 +8,10 @@ export interface MinigameDelegate {
 export class Minigame {
   protected container: Container;
 
-  constructor(protected readonly app: Application, protected readonly minigameDelegate: MinigameDelegate) {
+  constructor(
+    protected readonly app: Application,
+    protected readonly minigameDelegate: MinigameDelegate,
+  ) {
     this.container = new Container();
   }
 
@@ -28,8 +31,8 @@ export class Minigame {
 
     square.rect(x, y, 100, 100);
     square.fill(0xde3249);
-    square.eventMode = 'static';
-    square.on('pointerdown', () => {
+    square.eventMode = "static";
+    square.on("pointerdown", () => {
       square.removeFromParent();
       this.finishMinigame(true);
     });
