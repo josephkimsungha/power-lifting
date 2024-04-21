@@ -1,5 +1,3 @@
-import "@pixi/math-extras";
-
 import {
   Container,
   FederatedMouseEvent,
