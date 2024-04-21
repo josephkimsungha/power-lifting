@@ -1,9 +1,10 @@
 import { Application } from "pixi.js";
 import { Minigame, MinigameDelegate } from "./minigames/minigame";
 import { KeyboardMinigame } from "./minigames/keyboardMinigame";
+import { RhythmMinigame } from "./minigames/rhythmMinigame";
 import { Interlude, InterludeDelegate } from "./interlude/interlude";
 
-const ALL_MINIGAMES = [Minigame, KeyboardMinigame];
+const ALL_MINIGAMES = [RhythmMinigame];
 /** Controls the flow of the game. */
 export class Controller implements MinigameDelegate, InterludeDelegate {
   private completedMinigamePhases = 0;
