@@ -2,7 +2,7 @@ import { TextStyle, Text } from "pixi.js";
 import { Minigame } from "./minigame";
 
 export class KeyboardMinigame extends Minigame {
-  private keyDownListener = (e: KeyboardEvent) => void this.onKeyDown(e.key);
+  private keyDownListener = (e: KeyboardEvent) => void this.onKeyDown(e.key, e);
 
   override attach() {
     super.attach();
@@ -24,7 +24,7 @@ export class KeyboardMinigame extends Minigame {
     this.container.addChild(text);
   }
 
-  protected onKeyDown(key: string) {
+  protected onKeyDown(key: string, e: KeyboardEvent) {
     console.log(key, "pressed");
     const text = this.container.getChildByLabel("text");
     if (!text || !(text instanceof Text)) {

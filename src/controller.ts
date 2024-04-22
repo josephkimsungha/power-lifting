@@ -6,6 +6,7 @@ import { TypingMinigame } from "./minigames/typingMinigame";
 import { TimingMinigame } from "./minigames/timingMinigame";
 import { RhythmMinigame } from "./minigames/rhythmMinigame";
 import { Interlude, InterludeDelegate } from "./interlude/interlude";
+import { CheckpointMinigame } from "./minigames/checkpointMinigame";
 
 const ALL_MINIGAMES = [
   Minigame,
@@ -13,6 +14,8 @@ const ALL_MINIGAMES = [
   FlingMinigame,
   TypingMinigame,
   TimingMinigame,
+  // TODO: Only play this at the end of a phase.
+  CheckpointMinigame,
 ];
 /** Controls the flow of the game. */
 export class Controller implements MinigameDelegate, InterludeDelegate {

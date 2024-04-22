@@ -28,7 +28,7 @@ export class Minigame {
    * minigame needs. Return a promise that resolves when
    * assets are ready.
    */
-  static async preload() { }
+  static async preload() {}
 
   attach() {
     this.ticker = new Ticker();
