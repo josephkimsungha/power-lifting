@@ -13,8 +13,6 @@ export class TimingMinigame extends Minigame {
 
   private recticleXVel = 10;
 
-  private readonly ticker = new Ticker();
-
   protected override populateContainer(): void {
     this.container.eventMode = "static";
     this.container.hitArea = this.app.screen;
@@ -40,7 +38,6 @@ export class TimingMinigame extends Minigame {
         this.recticleXVel *= -1;
       }
     });
-    this.ticker.start();
 
     this.container.addChild(this.target);
     this.container.addChild(this.reticle);
@@ -48,7 +45,6 @@ export class TimingMinigame extends Minigame {
 
   private checkHit() {
     if (this.testForAABB(this.reticle, this.target)) {
-      this.ticker.destroy();
       this.finishMinigame(true);
     }
   }

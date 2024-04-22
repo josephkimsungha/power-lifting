@@ -1,4 +1,4 @@
-import { Application, Container, Graphics } from "pixi.js";
+import { Application, Container, Graphics, Ticker } from "pixi.js";
 
 export interface MinigameDelegate {
   onMinigameEnd: (passed: boolean) => void;
@@ -7,6 +7,14 @@ export interface MinigameDelegate {
 /** Base class for all minigames to extend. */
 export class Minigame {
   protected container: Container;
+  /**
+   * How long this minigame should go for before timing out
+   * and failing the player. In milliseconds. Set to
+   * undefined for a minigame with no time limit.
+   */
+  protected lifetime = 10_000;
+  protected cumulativeMS = 0;
+  protected ticker: Ticker;
 
   constructor(
     protected readonly app: Application,
@@ -18,9 +26,17 @@ export class Minigame {
   attach() {
     this.populateContainer();
     this.app.stage.addChild(this.container);
+
+    this.ticker = new Ticker();
+    if (this.lifetime !== undefined) {
+      this.ticker.add(() => void this.onTick());
+    }
+    this.ticker.start();
   }
 
   detach() {
+    this.ticker?.destroy();
+    this.ticker = null;
     this.app.stage.removeChild(this.container);
   }
 
@@ -42,5 +58,13 @@ export class Minigame {
   protected finishMinigame(passed: boolean) {
     // Show the player they've won or lost.
     this.delegate.onMinigameEnd(passed);
+  }
+
+  private onTick() {
+    this.cumulativeMS += this.ticker.elapsedMS;
+
+    if (this.cumulativeMS > this.lifetime) {
+      this.delegate.onMinigameEnd(false);
+    }
   }
 }
