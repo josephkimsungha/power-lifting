@@ -24,10 +24,11 @@ export class Minigame {
   }
 
   attach() {
+    this.ticker = new Ticker();
+
     this.populateContainer();
     this.app.stage.addChild(this.container);
 
-    this.ticker = new Ticker();
     if (this.lifetime !== undefined) {
       this.ticker.add(() => void this.onTick());
     }
