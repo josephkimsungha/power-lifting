@@ -15,6 +15,13 @@ export class Minigame {
     this.container = new Container();
   }
 
+  /**
+   * Override this function to load any assets the
+   * minigame needs. Return a promise that resolves when
+   * assets are ready.
+   */
+  static async preload() {}
+
   attach() {
     this.populateContainer();
     this.app.stage.addChild(this.container);
