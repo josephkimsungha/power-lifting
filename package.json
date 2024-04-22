@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@datastructures-js/trie": "^4.2.2",
     "@types/howler": "^2.2.11",
     "howler": "^2.2.4",
     "lit": "^3.1.3",
