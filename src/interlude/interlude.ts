@@ -1,42 +1,53 @@
 import { Application, Container, Text, TextStyle } from "pixi.js";
+import { getIntroFrames } from "./frames/introFrames";
+import { getDayOneFrames } from "./frames/dayOneFrames";
+import { getDayTwoFrames } from "./frames/dayTwoFrames";
+import { getDayThreeFrames } from "./frames/dayThreeFrames";
 
 export interface InterludeDelegate {
   onInterludeEnd: () => void;
 }
 
-/** Base class for all interludes to extend. */
+const framesMap = [
+  getIntroFrames,
+  getDayOneFrames,
+  getDayTwoFrames,
+  getDayThreeFrames,
+];
+
 export class Interlude {
-  protected container: Container;
+  private frames: Container[] = [];
+  private currentFrame = -1;
 
   constructor(
-    protected readonly app: Application,
-    protected readonly delegate: InterludeDelegate,
+    private readonly app: Application,
+    private readonly delegate: InterludeDelegate,
+    day: number,
   ) {
-    this.container = new Container();
+    const getFrames = framesMap[day];
+    if (getFrames === undefined) return;
+
+    this.frames = getFrames(app);
   }
 
-  attach() {
-    this.populateContainer();
-    this.app.stage.addChild(this.container);
+  start() {
+    this.showNextFrame();
   }
 
-  detach() {
-    this.app.stage.removeChild(this.container);
-  }
-
-  protected populateContainer(): void {
-    const text = new Text({
-      text: "Rest time... (click to proceed)",
-      style: new TextStyle({ fill: "#de3249" }),
-    });
-
-    this.container.addChild(text);
-
-    this.container.eventMode = "static";
-    this.container.width = this.app.screen.width;
-    this.container.height = this.app.screen.height;
-    this.container.on("click", () => {
+  private showNextFrame() {
+    this.currentFrame++;
+    if (this.currentFrame >= this.frames.length) {
       this.delegate.onInterludeEnd();
+      return;
+    }
+
+    const container = this.frames[this.currentFrame];
+    container.eventMode = "static";
+    container.on("click", () => {
+      this.app.stage.removeChild(container);
+      this.showNextFrame();
     });
+
+    this.app.stage.addChild(container);
   }
 }
