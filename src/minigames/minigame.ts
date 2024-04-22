@@ -60,9 +60,8 @@ export class Minigame {
     this.delegate.onMinigameEnd(passed);
   }
 
-  private onTick() {
+  protected onTick() {
     this.cumulativeMS += this.ticker.elapsedMS;
-
     if (this.cumulativeMS > this.lifetime) {
       this.delegate.onMinigameEnd(false);
     }
