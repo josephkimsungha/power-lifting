@@ -2,6 +2,7 @@ import { Application } from "pixi.js";
 import { Minigame, MinigameDelegate } from "./minigames/minigame";
 import { KeyboardMinigame } from "./minigames/keyboardMinigame";
 import { FlingMinigame } from "./minigames/flingMinigame";
+import { TypingMinigame } from "./minigames/typingMinigame";
 import { TimingMinigame } from "./minigames/timingMinigame";
 import { Interlude, InterludeDelegate } from "./interlude/interlude";
 
@@ -9,6 +10,7 @@ const ALL_MINIGAMES = [
   Minigame,
   KeyboardMinigame,
   FlingMinigame,
+  TypingMinigame,
   TimingMinigame,
 ];
 /** Controls the flow of the game. */
