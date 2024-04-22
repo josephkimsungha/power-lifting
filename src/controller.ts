@@ -13,8 +13,6 @@ const ALL_MINIGAMES = [
   FlingMinigame,
   TypingMinigame,
   TimingMinigame,
-  // TODO: Only play this at the end of a phase.
-  CheckpointMinigame,
 ];
 /** Controls the flow of the game. */
 export class Controller implements MinigameDelegate, InterludeDelegate {
@@ -23,17 +21,17 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
   private minigameQueue: Minigame[] = [];
   private minigameWinCount = 0;
 
-  private currentScreen?: Minigame | Interlude;
+  private currentMinigame?: Minigame;
 
   constructor(private readonly app: Application) {}
 
   start() {
-    this.populateMinigameQueue(10);
-    this.startNextMinigame();
+    const intro = new Interlude(this.app, this, 0);
+    intro.start();
   }
 
   onMinigameEnd(passed: boolean) {
-    this.currentScreen!.detach();
+    this.currentMinigame!.detach();
     if (passed) {
       this.minigameWinCount++;
     }
@@ -43,13 +41,14 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
       this.minigameWinCount,
     );
 
-    if (this.minigameWinCount >= 5) {
+    if (this.minigameWinCount === 5) {
+      this.currentMinigame = new CheckpointMinigame(this.app, this);
+      this.currentMinigame.attach();
+      return;
+    }
+    if (this.minigameWinCount >= 6) {
       // Player has met the requirements to proceed to the next phase.
       this.completedMinigamePhases++;
-      if (this.completedMinigamePhases >= 3) {
-        console.log("You are the power lifting champion!");
-        return;
-      }
 
       this.startNextInterlude();
       this.minigameWinCount = 0;
@@ -66,7 +65,11 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
   }
 
   onInterludeEnd() {
-    this.currentScreen!.detach();
+    if (this.completedMinigamePhases >= 3) {
+      // TODO: What should we do once the player has finished?
+      location.reload();
+      return;
+    }
 
     this.populateMinigameQueue(10);
     this.startNextMinigame();
@@ -86,16 +89,16 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
   }
 
   private startNextMinigame() {
-    this.currentScreen?.detach();
-
-    this.currentScreen = this.minigameQueue.shift();
-    this.currentScreen.attach();
+    this.currentMinigame = this.minigameQueue.shift();
+    this.currentMinigame.attach();
   }
 
   private startNextInterlude() {
-    this.currentScreen?.detach();
-
-    this.currentScreen = new Interlude(this.app, this);
-    this.currentScreen.attach();
+    const interlude = new Interlude(
+      this.app,
+      this,
+      this.completedMinigamePhases,
+    );
+    interlude.start();
   }
 }
