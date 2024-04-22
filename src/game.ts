@@ -7,7 +7,7 @@ import { AudioController } from "./audio/audio_controller";
 class Game {
   private app: Application;
   private controller: Controller;
-  // Keep this public as main  menu needs to be able to play
+  // Keep this public as main menu needs to be able to play
   // music before the game has started.
   audioController = new AudioController();
 

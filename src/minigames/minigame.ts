@@ -28,17 +28,17 @@ export class Minigame {
    * minigame needs. Return a promise that resolves when
    * assets are ready.
    */
-  static async preload() {}
+  static async preload() { }
 
   attach() {
-    this.populateContainer();
-    this.app.stage.addChild(this.container);
-
     this.ticker = new Ticker();
     if (this.lifetime !== undefined) {
       this.ticker.add(() => void this.onTick());
     }
     this.ticker.start();
+
+    this.populateContainer();
+    this.app.stage.addChild(this.container);
   }
 
   detach() {

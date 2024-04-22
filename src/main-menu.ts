@@ -18,13 +18,22 @@ export class MainMenu extends LitElement {
 
   @state()
   private settingsOpen = false;
+
+  /**
+   * If the game is currently loading or not. The "loaded" state
+   * accounts for the state when all assets are loaded but we are
+   * waiting on the user to click "start" to launch the main menu.
+   * Note that this state is needed so we can force a user
+   * interaction before showing the main menu which will
+   * attempt to play audio. Something we can not do before first
+   * user interaction.
+   * */
   @state()
   private loadState: "loading" | "loaded" | "done" = "loading";
 
-  protected override firstUpdated(): void {
-    game.preload().then(() => {
-      this.loadState = "loaded";
-    });
+  protected override async firstUpdated() {
+    await game.preload();
+    this.loadState = "loaded";
   }
 
   protected override render() {
