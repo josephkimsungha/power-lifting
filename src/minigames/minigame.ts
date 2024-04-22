@@ -13,8 +13,8 @@ export class Minigame {
    * undefined for a minigame with no time limit.
    */
   protected lifetime = 10_000;
-  protected elapsedMS = 0;
-  private ticker: Ticker;
+  protected cumulativeMS = 0;
+  protected ticker: Ticker;
 
   constructor(
     protected readonly app: Application,
@@ -26,8 +26,11 @@ export class Minigame {
   attach() {
     this.populateContainer();
     this.app.stage.addChild(this.container);
+
     this.ticker = new Ticker();
-    this.ticker.add(() => void this.onTick());
+    if (this.lifetime !== undefined) {
+      this.ticker.add(() => void this.onTick());
+    }
     this.ticker.start();
   }
 
@@ -58,12 +61,9 @@ export class Minigame {
   }
 
   private onTick() {
-    this.elapsedMS += this.ticker.elapsedMS;
+    this.cumulativeMS += this.ticker.elapsedMS;
 
-    if (this.lifetime === undefined) {
-      return;
-    }
-    if (this.elapsedMS > this.lifetime) {
+    if (this.cumulativeMS > this.lifetime) {
       this.delegate.onMinigameEnd(false);
     }
   }
