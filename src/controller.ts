@@ -25,6 +25,10 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
 
   constructor(private readonly app: Application) {}
 
+  preload() {
+    return Promise.all(ALL_MINIGAMES.map((mg) => mg.preload()));
+  }
+
   start() {
     this.populateMinigameQueue(10);
     this.startNextMinigame();

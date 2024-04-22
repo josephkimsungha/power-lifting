@@ -2,10 +2,14 @@ import "pixi.js/lib/math-extras/init";
 
 import { Application } from "pixi.js";
 import { Controller } from "./controller";
+import { AudioController } from "./audio/audio_controller";
 
 class Game {
   private app: Application;
   private controller: Controller;
+  // Keep this public as main menu needs to be able to play
+  // music before the game has started.
+  audioController = new AudioController();
 
   constructor() {
     this.app = new Application();
@@ -17,6 +21,11 @@ class Game {
     document.body.appendChild(this.app.canvas);
 
     this.controller.start();
+  }
+
+  async preload() {
+    this.controller.preload();
+    this.audioController.preload();
   }
 }
 
