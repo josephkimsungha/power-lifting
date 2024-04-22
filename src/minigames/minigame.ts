@@ -23,16 +23,22 @@ export class Minigame {
     this.container = new Container();
   }
 
+  /**
+   * Override this function to load any assets the
+   * minigame needs. Return a promise that resolves when
+   * assets are ready.
+   */
+  static async preload() {}
+
   attach() {
     this.ticker = new Ticker();
-
-    this.populateContainer();
-    this.app.stage.addChild(this.container);
-
     if (this.lifetime !== undefined) {
       this.ticker.add(() => void this.onTick());
     }
     this.ticker.start();
+
+    this.populateContainer();
+    this.app.stage.addChild(this.container);
   }
 
   detach() {
