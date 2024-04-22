@@ -40,25 +40,7 @@ export class CheckpointMinigame extends KeyboardMinigame {
 
       // Update indicator.
       text.text = Math.round(this.chargeBar);
-      const hexValues = [
-        "f",
-        "e",
-        "d",
-        "c",
-        "b",
-        "a",
-        "9",
-        "8",
-        "7",
-        "6",
-        "5",
-        "4",
-        "3",
-        "2",
-        "1",
-        "0",
-      ];
-      const redValue = hexValues[Math.round((this.chargeBar * 15) / 100)];
+      const redValue = Math.round((this.chargeBar * 15) / 100).toString(16);
       background.tint = `#${redValue}ff`;
 
       if (this.chargeBar === 100) {
