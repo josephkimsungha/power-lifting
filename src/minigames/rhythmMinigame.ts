@@ -26,9 +26,7 @@ export class RhythmMinigame extends KeyboardMinigame {
         await this.waitFor(1000);
         this.text.text = "NOW";
         this.waitingForPress = true;
-        console.log("bf");
         await this.waitFor(500);
-        console.log("af");
         this.waitingForPress = false;
     }
 
