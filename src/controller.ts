@@ -16,8 +16,7 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
     FlingMinigame,
     TypingMinigame,
     TimingMinigame,
-    // TODO: Only play this at the end of a phase.
-    CheckpointMinigame,
+    RhythmMinigame,
   ];
 
   private completedMinigamePhases = 0;
