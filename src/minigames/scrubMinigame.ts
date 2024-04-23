@@ -2,12 +2,12 @@ import { Application, Graphics, Point } from "pixi.js";
 import { Minigame } from "./minigame";
 
 interface DirtySpotDelegate {
+  isPointerDown(): boolean;
   markCleaned(spot: DirtySpot): void;
 }
 
 class DirtySpot {
   private health = 100;
-  private pointerDown = false;
 
   constructor(
     private readonly app: Application,
@@ -25,7 +25,7 @@ class DirtySpot {
 
     spot.eventMode = "static";
     spot.on("mousemove", (event) => {
-      if (!this.pointerDown) return;
+      if (!this.delegate.isPointerDown()) return;
 
       this.health = Math.max(this.health - event.movement.magnitude() * 0.1, 0);
       spot.alpha = this.health / 100;
@@ -37,14 +37,12 @@ class DirtySpot {
 
     return spot;
   }
-
-  updatePointerDown(isDown: boolean) {
-    this.pointerDown = isDown;
-  }
 }
 
 export class ScrubMinigame extends Minigame implements DirtySpotDelegate {
+  private pointerDown = false;
   private remainingDirtySpots: Set<DirtySpot> = new Set();
+
   protected override populateContainer(): void {
     const dirtySpots = [
       new DirtySpot(this.app, this),
@@ -58,15 +56,14 @@ export class ScrubMinigame extends Minigame implements DirtySpotDelegate {
 
     this.container.eventMode = "static";
     this.container.hitArea = this.app.screen;
-    const updateSpotsPointerDown = (isDown: boolean) => {
-      this.remainingDirtySpots.forEach(
-        (spot) => void spot.updatePointerDown(isDown),
-      );
-    };
     this.container
-      .on("pointerdown", () => void updateSpotsPointerDown(true))
-      .on("pointerup", () => void updateSpotsPointerDown(false))
-      .on("pointerupoutside", () => void updateSpotsPointerDown(false));
+      .on("pointerdown", () => (this.pointerDown = true))
+      .on("pointerup", () => (this.pointerDown = false))
+      .on("pointerupoutside", () => (this.pointerDown = false));
+  }
+
+  isPointerDown() {
+    return this.pointerDown;
   }
 
   markCleaned(spot: DirtySpot) {
