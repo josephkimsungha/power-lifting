@@ -9,15 +9,18 @@ import { Interlude, InterludeDelegate } from "./interlude/interlude";
 import { CheckpointMinigame } from "./minigames/checkpointMinigame";
 import { ScrubMinigame } from "./minigames/scrubMinigame";
 
-const MINIGAMES_POOL = [
-  Minigame,
-  KeyboardMinigame,
-  FlingMinigame,
-  TypingMinigame,
-  TimingMinigame,
-  RhythmMinigame,
-  ScrubMinigame,
-];
+const MINIGAMES_POOL = new URLSearchParams(window.location.search).get("quick")
+  ? [Minigame]
+  : [
+      Minigame,
+      KeyboardMinigame,
+      FlingMinigame,
+      TypingMinigame,
+      TimingMinigame,
+      RhythmMinigame,
+      ScrubMinigame,
+    ];
+
 /** Controls the flow of the game. */
 export class Controller implements MinigameDelegate, InterludeDelegate {
   private completedMinigamePhases = 0;
