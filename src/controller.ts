@@ -10,7 +10,7 @@ import { CheckpointMinigame } from "./minigames/checkpointMinigame";
 
 /** Controls the flow of the game. */
 export class Controller implements MinigameDelegate, InterludeDelegate {
-  private ALL_MINIGAMES = [
+  private MINIGAMES_POOL = [
     Minigame,
     KeyboardMinigame,
     FlingMinigame,
@@ -30,12 +30,12 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
   constructor(private readonly app: Application) {}
 
   preload() {
-    return Promise.all(this.ALL_MINIGAMES.map((mg) => mg.preload()));
+    return Promise.all(this.MINIGAMES_POOL.map((mg) => mg.preload()));
   }
 
   start(quickMinigames = false) {
     if (quickMinigames) {
-      this.ALL_MINIGAMES = [Minigame];
+      this.MINIGAMES_POOL = [Minigame];
     }
     const intro = new Interlude(this.app, this, 0);
     intro.start();
@@ -86,7 +86,7 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
     this.startNextMinigame();
   }
 
-  private populateMinigameQueue(count: number, pool = this.ALL_MINIGAMES) {
+  private populateMinigameQueue(count: number, pool = this.MINIGAMES_POOL) {
     // Reset the current queue.
     this.minigameQueue.length = 0;
     for (let i = 0; i < count; i++) {
