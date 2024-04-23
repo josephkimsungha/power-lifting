@@ -7,7 +7,7 @@ export class AudioController {
     this.tracks.set(
       "titleScreen",
       new Howl({
-        src: ["./assets/titlescreen.mp3"],
+        src: ["./assets/audio/titlescreen.mp3"],
         volume: 0.01,
       }),
     );

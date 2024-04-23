@@ -1,8 +1,25 @@
-import { Application, Container, Text, TextStyle } from "pixi.js";
+import { Application, Assets, Container } from "pixi.js";
 import { getIntroFrames } from "./frames/introFrames";
 import { getDayOneFrames } from "./frames/dayOneFrames";
 import { getDayTwoFrames } from "./frames/dayTwoFrames";
 import { getDayThreeFrames } from "./frames/dayThreeFrames";
+
+export function preloadInterludeAssets() {
+  Assets.add({
+    alias: "intro1",
+    src: "./assets/sprites/intro/opening-gym-panel-1.png",
+  });
+  Assets.add({
+    alias: "intro2",
+    src: "./assets/sprites/intro/opening-gym-panel-2.png",
+  });
+  Assets.add({
+    alias: "intro3",
+    src: "./assets/sprites/intro/opening-gym-panel-3.png",
+  });
+
+  Assets.backgroundLoad(["intro1", "intro2", "intro3"]);
+}
 
 export interface InterludeDelegate {
   onInterludeEnd: () => void;
@@ -22,15 +39,14 @@ export class Interlude {
   constructor(
     private readonly app: Application,
     private readonly delegate: InterludeDelegate,
-    day: number,
-  ) {
-    const getFrames = framesMap[day];
+    private readonly day: number,
+  ) {}
+
+  async start() {
+    const getFrames = framesMap[this.day];
     if (getFrames === undefined) return;
+    this.frames = await getFrames(this.app);
 
-    this.frames = getFrames(app);
-  }
-
-  start() {
     this.showNextFrame();
   }
 
