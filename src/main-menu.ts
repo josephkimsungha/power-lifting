@@ -50,9 +50,6 @@ export class MainMenu extends LitElement {
     return html`
       <h1>Power Lifter</h1>
       <button @click=${this.startGame}>Play</button>
-      <button @click=${() => void this.startGame(true)}>
-        Play with only quick minigames
-      </button>
       <button @click=${() => (this.settingsOpen = true)}>Settings</button>
     `;
   }
@@ -75,9 +72,9 @@ export class MainMenu extends LitElement {
     `;
   }
 
-  private startGame(quickMinigames = false) {
+  private startGame() {
     this.remove();
-    game.start(quickMinigames);
+    game.start();
   }
 
   private launch() {

@@ -16,11 +16,11 @@ class Game {
     this.controller = new Controller(this.app);
   }
 
-  async start(quickMinigames = false): Promise<void> {
+  async start(): Promise<void> {
     await this.app.init({ resizeTo: window });
     document.body.appendChild(this.app.canvas);
 
-    this.controller.start(quickMinigames);
+    this.controller.start();
   }
 
   async preload() {

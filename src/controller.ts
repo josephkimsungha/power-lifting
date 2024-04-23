@@ -9,18 +9,20 @@ import { Interlude, InterludeDelegate } from "./interlude/interlude";
 import { CheckpointMinigame } from "./minigames/checkpointMinigame";
 import { ScrubMinigame } from "./minigames/scrubMinigame";
 
+const MINIGAMES_POOL = new URLSearchParams(window.location.search).get("quick")
+  ? [Minigame]
+  : [
+      Minigame,
+      KeyboardMinigame,
+      FlingMinigame,
+      TypingMinigame,
+      TimingMinigame,
+      RhythmMinigame,
+      ScrubMinigame,
+    ];
+
 /** Controls the flow of the game. */
 export class Controller implements MinigameDelegate, InterludeDelegate {
-  private MINIGAMES_POOL = [
-    Minigame,
-    KeyboardMinigame,
-    FlingMinigame,
-    TypingMinigame,
-    TimingMinigame,
-    RhythmMinigame,
-    ScrubMinigame,
-  ];
-
   private completedMinigamePhases = 0;
 
   private minigameQueue: Minigame[] = [];
@@ -31,13 +33,10 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
   constructor(private readonly app: Application) {}
 
   preload() {
-    return Promise.all(this.MINIGAMES_POOL.map((mg) => mg.preload()));
+    return Promise.all(MINIGAMES_POOL.map((mg) => mg.preload()));
   }
 
-  start(quickMinigames = false) {
-    if (quickMinigames) {
-      this.MINIGAMES_POOL = [Minigame];
-    }
+  start() {
     const intro = new Interlude(this.app, this, 0);
     intro.start();
   }
@@ -87,7 +86,7 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
     this.startNextMinigame();
   }
 
-  private populateMinigameQueue(count: number, pool = this.MINIGAMES_POOL) {
+  private populateMinigameQueue(count: number, pool = MINIGAMES_POOL) {
     // Reset the current queue.
     this.minigameQueue.length = 0;
     for (let i = 0; i < count; i++) {
