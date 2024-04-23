@@ -7,6 +7,7 @@ import { TimingMinigame } from "./minigames/timingMinigame";
 import { RhythmMinigame } from "./minigames/rhythmMinigame";
 import { Interlude, InterludeDelegate } from "./interlude/interlude";
 import { CheckpointMinigame } from "./minigames/checkpointMinigame";
+import { ScrubMinigame } from "./minigames/scrubMinigame";
 
 const MINIGAMES_POOL = [
   Minigame,
@@ -15,6 +16,7 @@ const MINIGAMES_POOL = [
   TypingMinigame,
   TimingMinigame,
   RhythmMinigame,
+  ScrubMinigame,
 ];
 /** Controls the flow of the game. */
 export class Controller implements MinigameDelegate, InterludeDelegate {
