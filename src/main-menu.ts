@@ -78,6 +78,25 @@ export class MainMenu extends LitElement {
     :host([settings-hovered]) #mirror-sheen {
       transform: translate(30px, -40px);
     }
+
+    @media (min-aspect-ratio: 16/9) {
+      :host {
+        height: 100%;
+        width: unset;
+      }
+      .large-title {
+        font-size: calc(12vh * 16 / 9);
+      }
+      .text-button {
+        font-size: calc(3vh * 16 / 9);
+      }
+      #play-button {
+        padding: 0 calc(15vh * 16 / 9) calc(15vh * 16 / 9) calc(15vh * 16 / 9);
+      }
+      #settings-button {
+        padding-bottom: calc(25vh * 16 / 9);
+      }
+    }
   `;
 
   @property({ type: Boolean, reflect: true, attribute: "play-hovered" })
