@@ -26,7 +26,8 @@ export class MainMenu extends LitElement {
     }
     #play-button,
     #settings-button,
-    #start-button {
+    #start-button,
+    #back-button {
       position: absolute;
       background: none;
       border: none;
@@ -37,7 +38,8 @@ export class MainMenu extends LitElement {
       opacity: 60%;
       transition: all 0.25s ease-in-out;
     }
-    #start-button:hover {
+    #start-button:hover,
+    #back-button:hover {
       opacity: 100%;
     }
     #play-button {
@@ -892,7 +894,9 @@ export class MainMenu extends LitElement {
   private renderSettings() {
     return html`
       <h1>Settings</h1>
-      <button @click=${() => (this.settingsOpen = false)}>Back</button>
+      <button id="back-button" @click=${() => (this.settingsOpen = false)}>
+        Back
+      </button>
     `;
   }
 
