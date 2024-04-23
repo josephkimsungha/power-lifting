@@ -1,5 +1,4 @@
 import { LitElement, css, html } from "lit";
-
 import { customElement, property, state } from "lit/decorators.js";
 import { game } from "./game";
 
@@ -16,7 +15,7 @@ export class MainMenu extends LitElement {
       flex-direction: column;
       background: rgb(240, 200, 98);
     }
-    h1 {
+    .large-title {
       font-family: "Poppins", sans-serif;
       font-size: 12vw;
       position: absolute;
@@ -24,10 +23,7 @@ export class MainMenu extends LitElement {
       top: 5%;
       color: #d69b04;
     }
-    #play-button,
-    #settings-button,
-    #start-button,
-    #back-button {
+    .text-button {
       position: absolute;
       background: none;
       border: none;
@@ -38,8 +34,7 @@ export class MainMenu extends LitElement {
       opacity: 60%;
       transition: all 0.25s ease-in-out;
     }
-    #start-button:hover,
-    #back-button:hover {
+    .text-button:hover {
       opacity: 100%;
     }
     #play-button {
@@ -53,12 +48,10 @@ export class MainMenu extends LitElement {
       top: 35%;
       padding-bottom: 25vw;
     }
-    :host([play-hovered]) #play-button,
-    #play-button:hover {
+    :host([play-hovered]) #play-button {
       opacity: 100%;
     }
-    :host([settings-hovered]) #settings-button,
-    #settings-button:hover {
+    :host([settings-hovered]) #settings-button {
       opacity: 100%;
     }
     .bg {
@@ -87,12 +80,13 @@ export class MainMenu extends LitElement {
     }
   `;
 
-  @state()
-  private settingsOpen = false;
   @property({ type: Boolean, reflect: true, attribute: "play-hovered" })
   private playHovered = false;
   @property({ type: Boolean, reflect: true, attribute: "settings-hovered" })
   private settingsHovered = false;
+
+  @state()
+  private settingsOpen = false;
   /**
    * If the game is currently loading or not. The "loaded" state
    * accounts for the state when all assets are loaded but we are
@@ -860,12 +854,13 @@ export class MainMenu extends LitElement {
           </defs>
         </svg>
       </div>
-      <h1>Power Lifter</h1>
+      <h1 class="large-title">Power Lifter</h1>
       <button
         @click=${this.startGame}
         @mouseenter=${() => (this.playHovered = true)}
         @mouseleave=${() => (this.playHovered = false)}
         id="play-button"
+        class="text-button"
       >
         Play
       </button>
@@ -874,6 +869,7 @@ export class MainMenu extends LitElement {
         @mouseleave=${() => (this.settingsHovered = false)}
         @click=${() => (this.settingsOpen = true)}
         id="settings-button"
+        class="text-button"
       >
         Settings
       </button>
@@ -881,20 +877,20 @@ export class MainMenu extends LitElement {
   }
 
   private renderLoadingScreen() {
-    return html` <h1>Loading...</h1> `;
+    return html`<h1 class="large-title">Loading...</h1> `;
   }
 
   private renderLoadedScreen() {
     return html`
-      <h1>Loaded.</h1>
-      <button id="start-button" @click=${this.launch}>Start</button>
+      <h1 class="large-title">Loaded.</h1>
+      <button class="text-button" @click=${this.launch}>Start</button>
     `;
   }
 
   private renderSettings() {
     return html`
-      <h1>Settings</h1>
-      <button id="back-button" @click=${() => (this.settingsOpen = false)}>
+      <h1 class="large-title">Settings</h1>
+      <button class="text-button" @click=${() => (this.settingsOpen = false)}>
         Back
       </button>
     `;
