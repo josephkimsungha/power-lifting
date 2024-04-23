@@ -8,14 +8,13 @@ import { RhythmMinigame } from "./minigames/rhythmMinigame";
 import { Interlude, InterludeDelegate } from "./interlude/interlude";
 import { CheckpointMinigame } from "./minigames/checkpointMinigame";
 
-const ALL_MINIGAMES = [
+const MINIGAMES_POOL = [
   Minigame,
   KeyboardMinigame,
   FlingMinigame,
   TypingMinigame,
   TimingMinigame,
-  // TODO: Only play this at the end of a phase.
-  CheckpointMinigame,
+  RhythmMinigame,
 ];
 /** Controls the flow of the game. */
 export class Controller implements MinigameDelegate, InterludeDelegate {
@@ -29,7 +28,7 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
   constructor(private readonly app: Application) {}
 
   preload() {
-    return Promise.all(ALL_MINIGAMES.map((mg) => mg.preload()));
+    return Promise.all(MINIGAMES_POOL.map((mg) => mg.preload()));
   }
 
   start() {
@@ -82,7 +81,7 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
     this.startNextMinigame();
   }
 
-  private populateMinigameQueue(count: number, pool = ALL_MINIGAMES) {
+  private populateMinigameQueue(count: number, pool = MINIGAMES_POOL) {
     // Reset the current queue.
     this.minigameQueue.length = 0;
     for (let i = 0; i < count; i++) {
