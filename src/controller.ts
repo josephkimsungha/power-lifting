@@ -7,6 +7,7 @@ import { TimingMinigame } from "./minigames/timingMinigame";
 import { RhythmMinigame } from "./minigames/rhythmMinigame";
 import { Interlude, InterludeDelegate } from "./interlude/interlude";
 import { CheckpointMinigame } from "./minigames/checkpointMinigame";
+import { ScrubMinigame } from "./minigames/scrubMinigame";
 
 /** Controls the flow of the game. */
 export class Controller implements MinigameDelegate, InterludeDelegate {
@@ -17,6 +18,7 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
     TypingMinigame,
     TimingMinigame,
     RhythmMinigame,
+    ScrubMinigame,
   ];
 
   private completedMinigamePhases = 0;
