@@ -17,7 +17,25 @@ class Game {
   }
 
   async start(): Promise<void> {
-    await this.app.init({ resizeTo: window });
+    const screenHeight = Math.max(
+      document.documentElement.clientHeight,
+      window.innerHeight || 0,
+    );
+    const screenWidth = Math.max(
+      document.documentElement.clientWidth,
+      window.innerWidth || 0,
+    );
+
+    const constrainByWidth = (screenHeight * 16) / 9 > screenWidth;
+
+    await this.app.init({
+      width: constrainByWidth
+        ? screenWidth
+        : Math.floor((screenHeight * 16) / 9),
+      height: constrainByWidth
+        ? Math.floor((screenWidth / 16) * 9)
+        : screenHeight,
+    });
     document.body.appendChild(this.app.canvas);
 
     this.controller.start();
