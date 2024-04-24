@@ -1,31 +1,45 @@
-import { Application, Assets, Container } from "pixi.js";
+import { Application, Assets, Ticker } from "pixi.js";
 import { getIntroFrames } from "./frames/introFrames";
 import { getDayOneFrames } from "./frames/dayOneFrames";
 import { getDayTwoFrames } from "./frames/dayTwoFrames";
 import { getDayThreeFrames } from "./frames/dayThreeFrames";
+import { FrameData } from "./frames/types";
+
+const INTERLUDE_ASSET_PATHS = {
+  intro1: "./assets/sprites/intro/opening-gym-panel-1.png",
+  intro2: "./assets/sprites/intro/opening-gym-panel-2.png",
+  intro3: "./assets/sprites/intro/opening-gym-panel-3.png",
+  intro4: "./assets/sprites/intro/exercise1.png",
+  intro5: "./assets/sprites/intro/exercise2.png",
+  intro6: "./assets/sprites/intro/exercise3.png",
+  intro7: "./assets/sprites/intro/exercise4.png",
+  intro8: "./assets/sprites/intro/exercise5.png",
+  intro9: "./assets/sprites/intro/exercise6.png",
+  intro10: "./assets/sprites/intro/gymconvo1.png",
+  intro11: "./assets/sprites/intro/gymconvo2.png",
+  intro12: "./assets/sprites/intro/gymconvo3.png",
+  intro13: "./assets/sprites/intro/gymconvo4.png",
+  intro14: "./assets/sprites/intro/gymconvo5.png",
+  intro15: "./assets/sprites/intro/gymconvo6.png",
+};
 
 export function preloadInterludeAssets() {
-  Assets.add({
-    alias: "intro1",
-    src: "./assets/sprites/intro/opening-gym-panel-1.png",
-  });
-  Assets.add({
-    alias: "intro2",
-    src: "./assets/sprites/intro/opening-gym-panel-2.png",
-  });
-  Assets.add({
-    alias: "intro3",
-    src: "./assets/sprites/intro/opening-gym-panel-3.png",
+  const aliases = Object.keys(INTERLUDE_ASSET_PATHS);
+  aliases.forEach((alias) => {
+    Assets.add({
+      alias: alias,
+      src: INTERLUDE_ASSET_PATHS[alias],
+    });
   });
 
-  Assets.backgroundLoad(["intro1", "intro2", "intro3"]);
+  Assets.backgroundLoad(aliases);
 }
 
 export interface InterludeDelegate {
   onInterludeEnd: () => void;
 }
 
-const framesMap = [
+const framesList = [
   getIntroFrames,
   getDayOneFrames,
   getDayTwoFrames,
@@ -33,7 +47,7 @@ const framesMap = [
 ];
 
 export class Interlude {
-  private frames: Container[] = [];
+  private frames: FrameData[] = [];
   private currentFrame = -1;
 
   constructor(
@@ -43,9 +57,10 @@ export class Interlude {
   ) {}
 
   async start() {
-    const getFrames = framesMap[this.day];
-    if (getFrames === undefined) return;
-    this.frames = await getFrames(this.app);
+    const getFrames = framesList[this.day];
+    if (getFrames !== undefined) {
+      this.frames = await getFrames(this.app);
+    }
 
     this.showNextFrame();
   }
@@ -57,12 +72,26 @@ export class Interlude {
       return;
     }
 
-    const container = this.frames[this.currentFrame];
+    const { container, advanceMode } = this.frames[this.currentFrame];
     container.eventMode = "static";
-    container.on("click", () => {
-      this.app.stage.removeChild(container);
-      this.showNextFrame();
-    });
+    if (advanceMode === "click") {
+      container.on("click", () => {
+        this.app.stage.removeChild(container);
+        this.showNextFrame();
+      });
+    } else if (advanceMode === "auto") {
+      let remainingTime = 300;
+      const ticker = new Ticker();
+      ticker.add((time) => {
+        remainingTime -= time.deltaMS;
+        if (remainingTime > 0) return;
+
+        this.app.stage.removeChild(container);
+        this.showNextFrame();
+        ticker.destroy();
+      });
+      ticker.start();
+    }
 
     this.app.stage.addChild(container);
   }
