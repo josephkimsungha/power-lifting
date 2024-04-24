@@ -1,7 +1,7 @@
 import { Application, Container, Text, TextStyle } from "pixi.js";
 import { GetFrames } from "./types";
 
-export const getDayTwoFrames: GetFrames = (app: Application) => {
+export const getDayTwoFrames: GetFrames = async (app: Application) => {
   const allFrames: Container[] = [getFrame1(app), getFrame2(app)];
 
   return allFrames;
