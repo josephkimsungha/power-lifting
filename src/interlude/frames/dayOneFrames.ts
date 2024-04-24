@@ -1,13 +1,13 @@
 import { Application, Container, Text, TextStyle } from "pixi.js";
-import { GetFrames } from "./types";
+import { FrameData, GetFrame, GetFrames } from "./types";
 
-export const getDayOneFrames: GetFrames = (app: Application) => {
-  const allFrames: Container[] = [getFrame1(app), getFrame2(app)];
+export const getDayOneFrames: GetFrames = async (app: Application) => {
+  const allFrames: FrameData[] = [await getFrame1(app), await getFrame2(app)];
 
   return allFrames;
 };
 
-function getFrame1(app: Application) {
+const getFrame1: GetFrame = async (app: Application) => {
   const frame = new Container();
   frame.hitArea = app.screen;
 
@@ -17,10 +17,10 @@ function getFrame1(app: Application) {
   });
   frame.addChild(text);
 
-  return frame;
-}
+  return { container: frame, advanceMode: "click" };
+};
 
-function getFrame2(app: Application) {
+const getFrame2: GetFrame = async (app: Application) => {
   const frame = new Container();
   frame.hitArea = app.screen;
 
@@ -30,5 +30,5 @@ function getFrame2(app: Application) {
   });
   frame.addChild(text);
 
-  return frame;
-}
+  return { container: frame, advanceMode: "click" };
+};

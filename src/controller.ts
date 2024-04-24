@@ -5,7 +5,11 @@ import { FlingMinigame } from "./minigames/flingMinigame";
 import { TypingMinigame } from "./minigames/typingMinigame";
 import { TimingMinigame } from "./minigames/timingMinigame";
 import { RhythmMinigame } from "./minigames/rhythmMinigame";
-import { Interlude, InterludeDelegate } from "./interlude/interlude";
+import {
+  Interlude,
+  InterludeDelegate,
+  preloadInterludeAssets,
+} from "./interlude/interlude";
 import { CheckpointMinigame } from "./minigames/checkpointMinigame";
 import { ScrubMinigame } from "./minigames/scrubMinigame";
 
@@ -32,8 +36,10 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
 
   constructor(private readonly app: Application) {}
 
-  preload() {
-    return Promise.all(MINIGAMES_POOL.map((mg) => mg.preload()));
+  async preload() {
+    preloadInterludeAssets();
+    await Promise.all(MINIGAMES_POOL.map((mg) => mg.preload()));
+    await CheckpointMinigame.preload();
   }
 
   start() {

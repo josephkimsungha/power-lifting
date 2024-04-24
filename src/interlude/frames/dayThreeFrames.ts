@@ -1,18 +1,18 @@
 import { Application, Container, Point, Text, TextStyle } from "pixi.js";
-import { GetFrames } from "./types";
+import { FrameData, GetFrame, GetFrames } from "./types";
 
-export const getDayThreeFrames: GetFrames = (app: Application) => {
-  const allFrames: Container[] = [
-    getFrame1(app),
-    getFrame2(app),
-    getFrame3(app),
-    getFrame4(app),
+export const getDayThreeFrames: GetFrames = async (app: Application) => {
+  const allFrames: FrameData[] = [
+    await getFrame1(app),
+    await getFrame2(app),
+    await getFrame3(app),
+    await getFrame4(app),
   ];
 
   return allFrames;
 };
 
-function getFrame1(app: Application) {
+const getFrame1: GetFrame = async (app: Application) => {
   const frame = new Container();
   frame.hitArea = app.screen;
 
@@ -22,10 +22,10 @@ function getFrame1(app: Application) {
   });
   frame.addChild(text);
 
-  return frame;
-}
+  return { container: frame, advanceMode: "click" };
+};
 
-function getFrame2(app: Application) {
+const getFrame2: GetFrame = async (app: Application) => {
   const frame = new Container();
   frame.hitArea = app.screen;
 
@@ -35,10 +35,10 @@ function getFrame2(app: Application) {
   });
   frame.addChild(text);
 
-  return frame;
-}
+  return { container: frame, advanceMode: "click" };
+};
 
-function getFrame3(app: Application) {
+const getFrame3: GetFrame = async (app: Application) => {
   const frame = new Container();
   frame.hitArea = app.screen;
 
@@ -48,10 +48,10 @@ function getFrame3(app: Application) {
   });
   frame.addChild(text);
 
-  return frame;
-}
+  return { container: frame, advanceMode: "click" };
+};
 
-function getFrame4(app: Application) {
+const getFrame4: GetFrame = async (app: Application) => {
   const frame = new Container();
   frame.hitArea = app.screen;
 
@@ -61,5 +61,5 @@ function getFrame4(app: Application) {
   });
   frame.addChild(text);
 
-  return frame;
-}
+  return { container: frame, advanceMode: "click" };
+};
