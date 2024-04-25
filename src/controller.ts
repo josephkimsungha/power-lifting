@@ -31,7 +31,7 @@ const MINIGAMES_POOL = new URLSearchParams(window.location.search).get("quick")
 
 /** Controls the flow of the game. */
 export class Controller implements MinigameDelegate, InterludeDelegate {
-  private completedMinigamePhases = 0;
+  private completedMinigamePhases = 3;
 
   private minigameQueue: Minigame[] = [];
   private minigameLoseCount = 0;
