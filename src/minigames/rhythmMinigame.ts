@@ -36,11 +36,9 @@ export class RhythmMinigame extends KeyboardMinigame {
   protected override onKeyDown(key: string) {
     console.log(key, "pressed");
     if (this.waitingForPress == true) {
-      this.app.renderer.background.color = "#00FF00";
       this.finishMinigame(true);
       this.waitingForPress = false;
     } else {
-      this.app.renderer.background.color = "#de3249";
       this.finishMinigame(false);
     }
   }
