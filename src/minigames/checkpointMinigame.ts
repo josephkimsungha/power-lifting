@@ -1,5 +1,6 @@
-import { Container, Graphics, Point, Text, TextStyle } from "pixi.js";
+import { Assets, Point, Sprite, Ticker } from "pixi.js";
 import { KeyboardMinigame } from "./keyboardMinigame";
+import { MINIGAME_ASSET_ALIASES } from "./assets";
 
 /** Minigame that plays at the end of each day. Generally just a button masher. */
 export class CheckpointMinigame extends KeyboardMinigame {
@@ -7,48 +8,49 @@ export class CheckpointMinigame extends KeyboardMinigame {
   protected override lifetime = undefined;
 
   // Charge bar goes from 0 -> 100 but drains at some rate.
-  private chargeBar = 0;
-  private chargeRate = 10;
-  private drainRate = 0.1;
+  protected chargeBar = 0;
+  protected chargeRate = 10;
+  protected drainRate = 0.1;
+
+  protected background: Sprite;
+  protected initialBackgroundAlias = MINIGAME_ASSET_ALIASES.CHECKPOINT_1_1;
+  private initialBackgroundScale: Point;
+
+  private bounceProgress = 0;
 
   protected async populateContainer() {
-    const chargeIndicator = new Container();
-    const x = this.app.screen.width / 2 - 200;
-    const y = this.app.screen.height / 2 - 200;
-    chargeIndicator.setSize(400);
-    chargeIndicator.position = new Point(x, y);
+    const { screen } = this.app;
+    await this.cacheAssets();
+    const texture = await Assets.load(this.initialBackgroundAlias);
+    this.background = new Sprite(texture);
+    this.background.setSize(screen);
+    this.background.anchor = 0.5;
+    this.background.position = new Point(screen.width / 2, screen.height / 2);
+    this.initialBackgroundScale = this.background.scale.clone();
+    this.background.zIndex = -1;
 
-    const background = new Graphics();
-    background.rect(0, 0, 400, 400);
-    background.fill(0xde3249);
-    background.zIndex = -1;
+    this.container.addChild(this.background);
 
-    const text = new Text({
-      text: this.chargeBar,
-      style: new TextStyle({ fill: "#abcdef" }),
-    });
-    text.anchor.set(0.5);
-    text.position = new Point(background.width / 2, background.height / 2);
-
-    chargeIndicator.addChild(background, text);
-
-    this.ticker.add((time) => {
+    this.ticker.add(async (time) => {
       if (this.chargeBar > 0 && this.chargeBar < 100) {
         // Slowly drain.
         this.chargeBar -= this.drainRate * time.deltaTime;
       }
 
-      // Update indicator.
-      text.text = Math.round(this.chargeBar);
-      const redValue = Math.round((this.chargeBar * 15) / 100).toString(16);
-      background.tint = `#${redValue}ff`;
+      await this.updateBackground();
 
       if (this.chargeBar === 100) {
         this.finishMinigame(true);
       }
     });
+  }
 
-    this.container.addChild(chargeIndicator);
+  protected async cacheAssets() {}
+
+  protected async updateBackground() {}
+
+  protected async changeBackgroundTexture(alias: MINIGAME_ASSET_ALIASES) {
+    this.background.texture = await Assets.load(alias);
   }
 
   protected override onKeyDown(key: string, e: KeyboardEvent) {
@@ -56,5 +58,39 @@ export class CheckpointMinigame extends KeyboardMinigame {
     if (key != " " || e.repeat) return;
 
     this.chargeBar = Math.min(this.chargeBar + this.chargeRate, 100);
+
+    const ticker = new Ticker();
+    ticker.add((time) =>
+      this.bounce(
+        time,
+        this.initialBackgroundScale.clone().multiplyScalar(1.05),
+        150,
+      ),
+    );
+    ticker.start();
+  }
+
+  private async bounce(
+    ticker: Ticker,
+    peakScale: Point,
+    timeToFinishMs: number,
+  ) {
+    this.bounceProgress = Math.min(
+      this.bounceProgress + ticker.deltaMS / timeToFinishMs,
+      1,
+    );
+
+    const bounce = (f: number) => -Math.pow(1 - 2 * f, 2) + 1;
+    const directionVector = peakScale
+      .clone()
+      .subtract(this.initialBackgroundScale);
+    this.background.scale = this.initialBackgroundScale
+      .clone()
+      .add(directionVector.multiplyScalar(bounce(this.bounceProgress)));
+
+    if (this.bounceProgress === 1) {
+      this.bounceProgress = 0;
+      ticker.destroy();
+    }
   }
 }

@@ -15,6 +15,9 @@ import {
   InterludeDelegate,
   backgroundLoadInterludeAssets,
 } from "./interlude/interlude";
+import { CheckpointOneMinigame } from "./minigames/final/checkpointOneMinigame";
+import { CheckpointTwoMinigame } from "./minigames/final/checkpointTwoMinigame";
+import { CheckpointThreeMinigame } from "./minigames/final/checkpointThreeMinigame";
 
 const MINIGAMES_POOL = new URLSearchParams(window.location.search).get("quick")
   ? [Minigame]
@@ -57,7 +60,7 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
       this.minigameLoseCount = 0;
     }
 
-    if (this.minigameLoseCount > 10) {
+    if (this.minigameLoseCount > 1) {
       // Player has run out of chances to proceed to the next phase.
       console.log("You lose!");
       return;
