@@ -57,7 +57,7 @@ export class CheckpointThreeMinigame extends CheckpointMinigame {
         }
       });
     });
-    await new Promise((res) => setTimeout(res, 700));
+    await new Promise((res) => setTimeout(res, 300));
 
     await this.changeBackgroundTexture(MINIGAME_ASSET_ALIASES.CHECKPOINT_3_5);
     await new Promise((res) => setTimeout(res, 500));
