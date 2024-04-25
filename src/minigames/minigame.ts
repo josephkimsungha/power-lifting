@@ -90,6 +90,7 @@ export class Minigame {
 
     this.clockArc.removeFromParent();
     this.clockArc = new Graphics();
+    this.clockArc.zIndex = 2;
     const percentage = this.cumulativeMS / this.lifetime;
     const start = -Math.PI / 2 + percentage * 2 * Math.PI;
     const x = CLOCK_PADDING + CLOCK_RADIUS;

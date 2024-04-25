@@ -13,59 +13,56 @@ import { Minigame } from "../minigame";
 
 export class FlingMinigame extends Minigame {
   private dragTarget?: Container;
-
   private dragListener = (e: FederatedMouseEvent) => void this.onDragMove(e);
-
   private dragTargetVelocity = new Point(0, 0);
+  private timeToNextPopup = 0;
   private readonly velocityInfo: Record<string, Point> = {};
-
   private readonly tickerCallbacks: Record<string, TickerCallback<this>[]> = {};
+  private spawnedPopups = 0;
 
   private addPopup() {
-      const square = new Graphics();
+    const square = new Graphics();
 
-      const x = (this.app.screen.width - 100) * Math.random() + 50;
-      const y = (this.app.screen.height - 100) * Math.random() + 50;
-      square.rect(-50, -50, 100, 100);
-      square.fill(0xde3249);
-      square.position = new Point(x, y);
-      this.velocityInfo[square.label] = new Point(0, 0);
+    const x = (this.app.screen.width - 100) * Math.random() + 50;
+    const y = (this.app.screen.height - 100) * Math.random() + 50;
+    square.rect(-50, -50, 100, 100);
+    square.label = String(this.spawnedPopups++);
+    square.fill(0xde3249);
+    square.position = new Point(x, y);
+    this.velocityInfo[square.label] = new Point(0, 0);
 
-      square.eventMode = "static";
-      square.cursor = "pointer";
-      square.on("pointerdown", () => this.onDragStart(square));
+    square.eventMode = "static";
+    square.cursor = "pointer";
+    square.on("pointerdown", () => this.onDragStart(square));
 
-      const checkSquarePos = () => {
-        const squarePos = square.getGlobalPosition();
-        if (
-          squarePos.x < 0 ||
-          squarePos.x > this.app.screen.width ||
-          squarePos.y < 0 ||
-          squarePos.y > this.app.screen.height
-        ) {
-          // Clean up ticker.
-          const tickerCallbacks = this.tickerCallbacks[square.label];
-          if (tickerCallbacks) {
-            tickerCallbacks.forEach((callback) => {
-              this.app.ticker.remove(callback);
-            });
-          }
-
-          square.removeFromParent();
+    const checkSquarePos = () => {
+      const squarePos = square.getGlobalPosition();
+      if (
+        squarePos.x < 0 ||
+        squarePos.x > this.app.screen.width ||
+        squarePos.y < 0 ||
+        squarePos.y > this.app.screen.height
+      ) {
+        // Clean up ticker.
+        const tickerCallbacks = this.tickerCallbacks[square.label];
+        if (tickerCallbacks) {
+          tickerCallbacks.forEach((callback) => {
+            this.app.ticker.remove(callback);
+          });
         }
-      };
-      const handleSquarePhysics = (time: Ticker) =>
-        this.handlePhysics(time, square);
 
-      this.app.ticker.add(checkSquarePos);
-      this.app.ticker.add(handleSquarePhysics);
+        square.removeFromParent();
+      }
+    };
+    const handleSquarePhysics = (time: Ticker) =>
+      this.handlePhysics(time, square);
 
-      this.tickerCallbacks[square.label] = [
-        checkSquarePos,
-        handleSquarePhysics,
-      ];
+    this.app.ticker.add(checkSquarePos);
+    this.app.ticker.add(handleSquarePhysics);
 
-      this.container.addChild(square);
+    this.tickerCallbacks[square.label] = [checkSquarePos, handleSquarePhysics];
+
+    this.container.addChild(square);
   }
 
   protected override async populateContainer() {
@@ -87,8 +84,16 @@ export class FlingMinigame extends Minigame {
     this.container.hitArea = this.app.screen;
     this.container.on("pointerup", () => this.onDragEnd());
     this.container.on("pointerupoutside", () => this.onDragEnd());
+    this.ticker.add((ticker: Ticker) => void this.periodicallyAddPopup(ticker));
+  }
 
-    for (let i = 0; i < 3; i++) {
+  private periodicallyAddPopup(ticker: Ticker) {
+    this.timeToNextPopup -= ticker.deltaMS;
+    const minTime = [1000, 500, 200][this.week];
+    if (this.timeToNextPopup <= 0) {
+      this.addPopup();
+      this.timeToNextPopup = minTime + Math.random() * 2000;
+    }
   }
 
   private handlePhysics(time: Ticker, object: Container) {
