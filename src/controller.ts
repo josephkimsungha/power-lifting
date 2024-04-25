@@ -74,11 +74,24 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
       this.startNextInterlude();
     } else if (this.minigameQueue.length === 0) {
       // Trigger check point and go around again.
-      this.currentMinigame = new CheckpointMinigame(
-        this.app,
-        this,
-        this.completedMinigamePhases,
-      );
+      this.currentMinigame =
+        this.completedMinigamePhases === 0
+          ? new CheckpointOneMinigame(
+              this.app,
+              this,
+              this.completedMinigamePhases,
+            )
+          : this.completedMinigamePhases === 1
+            ? new CheckpointTwoMinigame(
+                this.app,
+                this,
+                this.completedMinigamePhases,
+              )
+            : new CheckpointThreeMinigame(
+                this.app,
+                this,
+                this.completedMinigamePhases,
+              );
       this.currentMinigame.attach(); // No await.
       this.populateMinigameQueue();
     } else {
