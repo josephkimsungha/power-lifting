@@ -55,6 +55,14 @@ const MINIGAME_ASSET_FILENAMES = {
   [MINIGAME_ASSET_ALIASES.PROTEIN]: getAssetPath("protein.png"),
   [MINIGAME_ASSET_ALIASES.STRAWBERRIES]: getAssetPath("strawberries.png"),
   [MINIGAME_ASSET_ALIASES.YOGHURT]: getAssetPath("yoghurt.png"),
+  [MINIGAME_ASSET_ALIASES.BATH_BG_1]: getAssetPath("bath_bg_1.png"),
+  [MINIGAME_ASSET_ALIASES.BATH_DIRT_1]: getAssetPath("bath_dirt_1.png"),
+  [MINIGAME_ASSET_ALIASES.BATH_DIRT_2]: getAssetPath("bath_dirt_2.png"),
+  [MINIGAME_ASSET_ALIASES.BATH_DIRT_3]: getAssetPath("bath_dirt_3.png"),
+  [MINIGAME_ASSET_ALIASES.BATH_DIRT_4]: getAssetPath("bath_dirt_4.png"),
+  [MINIGAME_ASSET_ALIASES.BATH_MC_1]: getAssetPath("bath_mc_1.png"),
+  [MINIGAME_ASSET_ALIASES.BATH_MC_2]: getAssetPath("bath_mc_2.png"),
+  [MINIGAME_ASSET_ALIASES.BATH_MC_3]: getAssetPath("bath_mc_3.png"),
   [MINIGAME_ASSET_ALIASES.BLOG_POST_1]: getAssetPath("blog_post_1.png"),
   [MINIGAME_ASSET_ALIASES.BLOG_POST_2]: getAssetPath("blog_post_2.png"),
   [MINIGAME_ASSET_ALIASES.BLOG_POST_3]: getAssetPath("blog_post_3.png"),
@@ -69,7 +77,7 @@ const MINIGAME_ASSET_FILENAMES = {
   [MINIGAME_ASSET_ALIASES.PROGRESS_BAR]: getAssetPath("progress_bar.png"),
 };
 
-export function getAssetPath(filename: string) {
+function getAssetPath(filename: string) {
   return `./assets/sprites/minigames/${filename}`;
 }
 
