@@ -12,8 +12,9 @@ import {
 } from "./interlude/interlude";
 import { CheckpointMinigame } from "./minigames/checkpointMinigame";
 import { ScrubMinigame } from "./minigames/scrubMinigame";
-import { backgroundLoadMinigameAssets } from "./minigames/assets";
 import { ShakingMinigame } from "./minigames/shakingMinigame";
+import { ShoppingMinigame } from "./minigames/final/shoppingMinigame";
+import { backgroundLoadMinigameAssets } from "./minigames/assets";
 
 const MINIGAMES_POOL = new URLSearchParams(window.location.search).get("quick")
   ? [Minigame]
@@ -25,6 +26,7 @@ const MINIGAMES_POOL = new URLSearchParams(window.location.search).get("quick")
       TimingMinigame,
       RhythmMinigame,
       ScrubMinigame,
+      ShoppingMinigame,
     ];
 
 /** Controls the flow of the game. */
@@ -60,7 +62,11 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
     );
 
     if (this.minigameWinCount === 5) {
-      this.currentMinigame = new CheckpointMinigame(this.app, this);
+      this.currentMinigame = new CheckpointMinigame(
+        this.app,
+        this,
+        this.completedMinigamePhases,
+      );
       this.currentMinigame.attach(); // No await.
       return;
     }
@@ -101,6 +107,7 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
       const minigame = new pool[Math.floor(Math.random() * pool.length)](
         this.app,
         this,
+        this.completedMinigamePhases,
       );
       this.minigameQueue.push(minigame);
     }

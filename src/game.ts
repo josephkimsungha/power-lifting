@@ -35,6 +35,9 @@ class Game {
       height: constrainByWidth
         ? Math.floor((screenWidth / 16) * 9)
         : screenHeight,
+      resolution: window.devicePixelRatio || 1,
+      antialias: true,
+      autoDensity: true,
     });
     document.body.appendChild(this.app.canvas);
 
