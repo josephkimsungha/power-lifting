@@ -3,13 +3,21 @@ import {
   Sprite,
   Container,
   FederatedMouseEvent,
-  Graphics,
   Point,
   Ticker,
   TickerCallback,
 } from "pixi.js";
+import { ProgressBar } from "@pixi/ui";
 import { MINIGAME_ASSET_ALIASES } from "../assets";
 import { Minigame } from "../minigame";
+
+const POPUP_ASSETS = [
+  MINIGAME_ASSET_ALIASES.POPUP_1,
+  MINIGAME_ASSET_ALIASES.POPUP_2,
+  MINIGAME_ASSET_ALIASES.POPUP_3,
+  MINIGAME_ASSET_ALIASES.POPUP_4,
+  MINIGAME_ASSET_ALIASES.POPUP_5,
+];
 
 export class FlingMinigame extends Minigame {
   private dragTarget?: Container;
@@ -19,15 +27,24 @@ export class FlingMinigame extends Minigame {
   private readonly velocityInfo: Record<string, Point> = {};
   private readonly tickerCallbacks: Record<string, TickerCallback<this>[]> = {};
   private spawnedPopups = 0;
+  private popupsOnScreen = 0;
+  private learningTime = 0;
 
-  private addPopup() {
-    const square = new Graphics();
+  lifetime = 20_000;
 
-    const x = (this.app.screen.width - 100) * Math.random() + 50;
-    const y = (this.app.screen.height - 100) * Math.random() + 50;
-    square.rect(-50, -50, 100, 100);
+  private async addPopup() {
+    const popupAssetId =
+      POPUP_ASSETS[Math.floor(POPUP_ASSETS.length * Math.random())];
+    const square = new Sprite(await Assets.load(popupAssetId));
     square.label = String(this.spawnedPopups++);
-    square.fill(0xde3249);
+    const { screen } = this.app;
+    const aspectRatio = square.height / square.width;
+    square.width = screen.width * 0.3;
+    square.height = square.width * aspectRatio;
+    square.anchor = 0.5;
+
+    const x = screen.width * 0.2 + Math.random() * (screen.width * 0.6);
+    const y = screen.height * 0.2 + Math.random() * (screen.height * 0.6);
     square.position = new Point(x, y);
     this.velocityInfo[square.label] = new Point(0, 0);
 
@@ -43,6 +60,7 @@ export class FlingMinigame extends Minigame {
         squarePos.y < 0 ||
         squarePos.y > this.app.screen.height
       ) {
+        this.popupsOnScreen--;
         // Clean up ticker.
         const tickerCallbacks = this.tickerCallbacks[square.label];
         if (tickerCallbacks) {
@@ -62,6 +80,7 @@ export class FlingMinigame extends Minigame {
 
     this.tickerCallbacks[square.label] = [checkSquarePos, handleSquarePhysics];
 
+    this.popupsOnScreen++;
     this.container.addChild(square);
   }
 
@@ -80,18 +99,50 @@ export class FlingMinigame extends Minigame {
     bg.zIndex = -1;
     this.container.addChild(bg);
 
+    const progressBar = new ProgressBar({
+      bg: new Sprite(
+        await Assets.load(MINIGAME_ASSET_ALIASES.LEARNING_PROGRESS_CONTAINER),
+      ),
+      fill: new Sprite(await Assets.load(MINIGAME_ASSET_ALIASES.PROGRESS_BAR)),
+      progress: 0,
+      fillPaddings: {
+        top: 75,
+        bottom: 0,
+        right: 0,
+        left: 228,
+      },
+    });
+    const aspectRatio = progressBar.width / progressBar.height;
+    progressBar.height = 48;
+    progressBar.width = aspectRatio * 48;
+    progressBar.x = 16;
+    progressBar.y = 16;
+    this.container.addChild(progressBar);
+
     this.container.eventMode = "static";
     this.container.hitArea = this.app.screen;
     this.container.on("pointerup", () => this.onDragEnd());
     this.container.on("pointerupoutside", () => this.onDragEnd());
-    this.ticker.add((ticker: Ticker) => void this.periodicallyAddPopup(ticker));
+    this.ticker.add(
+      (ticker: Ticker) => void this.processPopups(ticker, progressBar),
+    );
   }
 
-  private periodicallyAddPopup(ticker: Ticker) {
+  private async processPopups(ticker: Ticker, progressBar: ProgressBar) {
+    if (this.popupsOnScreen < 1) {
+      this.learningTime += ticker.deltaMS;
+    }
     this.timeToNextPopup -= ticker.deltaMS;
-    const minTime = [1000, 500, 200][this.week];
+
+    const goal = this.lifetime * [0.2, 0.3, 0.4][this.week];
+    const minTime = [1000, 700, 500][this.week];
+    if (this.learningTime > goal) {
+      this.finishMinigame(true);
+      return;
+    }
+    progressBar.progress = (this.learningTime / goal) * 100;
     if (this.timeToNextPopup <= 0) {
-      this.addPopup();
+      await this.addPopup();
       this.timeToNextPopup = minTime + Math.random() * 2000;
     }
   }

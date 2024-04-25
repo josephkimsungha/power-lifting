@@ -26,6 +26,9 @@ export enum MINIGAME_ASSET_ALIASES {
   POPUP_3 = "popup-3",
   POPUP_4 = "popup-4",
   POPUP_5 = "popup-5",
+  LEARNING_PROGRESS_CONTAINER = "learning-progress-container",
+  /* Misc */
+  PROGRESS_BAR = "progress-bar",
 }
 
 const MINIGAME_ASSET_FILENAMES = {
@@ -52,9 +55,13 @@ const MINIGAME_ASSET_FILENAMES = {
   [MINIGAME_ASSET_ALIASES.POPUP_3]: getAssetPath("popup_3.png"),
   [MINIGAME_ASSET_ALIASES.POPUP_4]: getAssetPath("popup_4.png"),
   [MINIGAME_ASSET_ALIASES.POPUP_5]: getAssetPath("popup_5.png"),
+  [MINIGAME_ASSET_ALIASES.LEARNING_PROGRESS_CONTAINER]: getAssetPath(
+    "progress_learning.png",
+  ),
+  [MINIGAME_ASSET_ALIASES.PROGRESS_BAR]: getAssetPath("progress_bar.png"),
 };
 
-function getAssetPath(filename: string) {
+export function getAssetPath(filename: string) {
   return `./assets/sprites/minigames/${filename}`;
 }
 
