@@ -1,6 +1,7 @@
 import { Trie, TrieNode } from "@datastructures-js/trie";
 import { KeyboardMinigame } from "./keyboardMinigame";
-import { Point, Text, TextStyle } from "pixi.js";
+import { Assets, Point, Sprite, Text, TextStyle } from "pixi.js";
+import { MINIGAME_ASSET_ALIASES, MINIGAME_ASSET_FILENAMES } from "./assets";
 
 // TODO: Update this list later.
 const ALL_WORDS = ["act", "ale", "all", "and", "ball", "bang", "bat"];
@@ -10,7 +11,20 @@ export class TypingMinigame extends KeyboardMinigame {
   private currentNode?: TrieNode;
   private remainingWords = new Set(ALL_WORDS);
 
-  protected override populateContainer(): void {
+  protected override async populateContainer() {
+    const phonescreenTexture = await Assets.load(
+      MINIGAME_ASSET_FILENAMES[MINIGAME_ASSET_ALIASES.PHONE_SCREEN],
+    );
+
+    const phonescreen = new Sprite(phonescreenTexture);
+    phonescreen.anchor = 0.5;
+    phonescreen.position = new Point(
+      this.app.screen.width / 2,
+      this.app.screen.height / 2,
+    );
+
+    this.container.addChild(phonescreen);
+
     ALL_WORDS.forEach((word) => {
       this.trie.insert(word);
 

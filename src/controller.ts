@@ -8,10 +8,11 @@ import { RhythmMinigame } from "./minigames/rhythmMinigame";
 import {
   Interlude,
   InterludeDelegate,
-  preloadInterludeAssets,
+  backgroundLoadInterludeAssets,
 } from "./interlude/interlude";
 import { CheckpointMinigame } from "./minigames/checkpointMinigame";
 import { ScrubMinigame } from "./minigames/scrubMinigame";
+import { backgroundLoadMinigameAssets } from "./minigames/assets";
 import { ShakingMinigame } from "./minigames/shakingMinigame";
 
 const MINIGAMES_POOL = new URLSearchParams(window.location.search).get("quick")
@@ -37,10 +38,9 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
 
   constructor(private readonly app: Application) {}
 
-  async preload() {
-    preloadInterludeAssets();
-    await Promise.all(MINIGAMES_POOL.map((mg) => mg.preload()));
-    await CheckpointMinigame.preload();
+  preload() {
+    backgroundLoadInterludeAssets();
+    backgroundLoadMinigameAssets();
   }
 
   start() {
@@ -61,7 +61,7 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
 
     if (this.minigameWinCount === 5) {
       this.currentMinigame = new CheckpointMinigame(this.app, this);
-      this.currentMinigame.attach();
+      this.currentMinigame.attach(); // No await.
       return;
     }
     if (this.minigameWinCount >= 6) {
@@ -108,7 +108,7 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
 
   private startNextMinigame() {
     this.currentMinigame = this.minigameQueue.shift();
-    this.currentMinigame.attach();
+    this.currentMinigame.attach(); // No await.
   }
 
   private startNextInterlude() {
