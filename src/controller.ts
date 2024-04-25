@@ -6,7 +6,7 @@ import { TypingMinigame } from "./minigames/typingMinigame";
 import { TimingMinigame } from "./minigames/timingMinigame";
 import { RhythmMinigame } from "./minigames/rhythmMinigame";
 import { CheckpointMinigame } from "./minigames/checkpointMinigame";
-import { ScrubMinigame } from "./minigames/scrubMinigame";
+import { ScrubMinigame } from "./minigames/final/scrubMinigame";
 import { ShakingMinigame } from "./minigames/shakingMinigame";
 import { ShoppingMinigame } from "./minigames/final/shoppingMinigame";
 import { backgroundLoadMinigameAssets } from "./minigames/assets";
@@ -19,7 +19,7 @@ import {
 } from "./interlude/interlude";
 
 const MINIGAMES_POOL = new URLSearchParams(window.location.search).get("quick")
-  ? [Minigame]
+  ? [ScrubMinigame]
   : [
       Minigame,
       KeyboardMinigame,
@@ -28,6 +28,7 @@ const MINIGAMES_POOL = new URLSearchParams(window.location.search).get("quick")
       TimingMinigame,
       RhythmMinigame,
       ScrubMinigame,
+      ShakingMinigame,
       ShoppingMinigame,
       BalancingMinigame,
     ];
