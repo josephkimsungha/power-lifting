@@ -6,7 +6,7 @@ export class RhythmMinigame extends KeyboardMinigame {
   protected text: Text | null = null;
   private waitingForPress: boolean = false;
 
-  protected override populateContainer(): void {
+  protected override async populateContainer() {
     this.text = new Text({
       label: "text",
       text: "3",

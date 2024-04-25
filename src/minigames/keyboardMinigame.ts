@@ -4,8 +4,8 @@ import { Minigame } from "./minigame";
 export class KeyboardMinigame extends Minigame {
   private keyDownListener = (e: KeyboardEvent) => void this.onKeyDown(e.key, e);
 
-  override attach() {
-    super.attach();
+  override async attach() {
+    await super.attach();
     window.addEventListener("keydown", this.keyDownListener);
   }
 
@@ -14,7 +14,7 @@ export class KeyboardMinigame extends Minigame {
     super.detach();
   }
 
-  protected override populateContainer(): void {
+  protected override async populateContainer() {
     const text = new Text({
       label: "text",
       text: Math.floor(Math.random() * 10).toString(),

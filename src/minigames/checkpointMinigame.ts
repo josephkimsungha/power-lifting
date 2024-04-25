@@ -11,7 +11,7 @@ export class CheckpointMinigame extends KeyboardMinigame {
   private chargeRate = 10;
   private drainRate = 0.1;
 
-  protected populateContainer() {
+  protected async populateContainer() {
     const chargeIndicator = new Container();
     const x = this.app.screen.width / 2 - 200;
     const y = this.app.screen.height / 2 - 200;

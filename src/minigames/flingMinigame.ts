@@ -19,7 +19,7 @@ export class FlingMinigame extends Minigame {
 
   private readonly tickerCallbacks: Record<string, TickerCallback<this>[]> = {};
 
-  protected override populateContainer(): void {
+  protected override async populateContainer() {
     this.container.eventMode = "static";
     this.container.hitArea = this.app.screen;
     this.container.on("pointerup", () => this.onDragEnd());

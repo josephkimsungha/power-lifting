@@ -23,7 +23,7 @@ const INTERLUDE_ASSET_PATHS = {
   intro15: "./assets/sprites/intro/gymconvo6.png",
 };
 
-export function preloadInterludeAssets() {
+export function backgroundLoadInterludeAssets() {
   const aliases = Object.keys(INTERLUDE_ASSET_PATHS);
   aliases.forEach((alias) => {
     Assets.add({

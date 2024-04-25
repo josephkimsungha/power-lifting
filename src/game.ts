@@ -43,7 +43,7 @@ class Game {
 
   async preload() {
     this.controller.preload();
-    this.audioController.preload();
+    await this.audioController.preload();
   }
 }
 
