@@ -11,12 +11,12 @@ import {
   backgroundLoadInterludeAssets,
 } from "./interlude/interlude";
 import { CheckpointMinigame } from "./minigames/checkpointMinigame";
-import { ScrubMinigame } from "./minigames/scrubMinigame";
+import { ScrubMinigame } from "./minigames/final/scrubMinigame";
 import { backgroundLoadMinigameAssets } from "./minigames/assets";
 import { ShakingMinigame } from "./minigames/shakingMinigame";
 
 const MINIGAMES_POOL = new URLSearchParams(window.location.search).get("quick")
-  ? [Minigame]
+  ? [ScrubMinigame]
   : [
       Minigame,
       KeyboardMinigame,
@@ -25,6 +25,7 @@ const MINIGAMES_POOL = new URLSearchParams(window.location.search).get("quick")
       TimingMinigame,
       RhythmMinigame,
       ScrubMinigame,
+      ShakingMinigame,
     ];
 
 /** Controls the flow of the game. */
