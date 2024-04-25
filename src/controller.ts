@@ -18,13 +18,13 @@ import { ShoppingMinigame } from "./minigames/final/shoppingMinigame";
 const MINIGAMES_POOL = new URLSearchParams(window.location.search).get("quick")
   ? [Minigame]
   : [
-      // Minigame,
-      // KeyboardMinigame,
-      // FlingMinigame,
-      // TypingMinigame,
-      // TimingMinigame,
-      // RhythmMinigame,
-      // ScrubMinigame,
+      Minigame,
+      KeyboardMinigame,
+      FlingMinigame,
+      TypingMinigame,
+      TimingMinigame,
+      RhythmMinigame,
+      ScrubMinigame,
       ShoppingMinigame,
     ];
 
