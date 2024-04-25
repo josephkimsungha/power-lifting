@@ -16,6 +16,9 @@ import {
   InterludeDelegate,
   backgroundLoadInterludeAssets,
 } from "./interlude/interlude";
+import { CheckpointOneMinigame } from "./minigames/final/checkpointOneMinigame";
+import { CheckpointTwoMinigame } from "./minigames/final/checkpointTwoMinigame";
+import { CheckpointThreeMinigame } from "./minigames/final/checkpointThreeMinigame";
 
 const MINIGAMES_POOL = new URLSearchParams(window.location.search).get("quick")
   ? [FlingMinigame]
@@ -65,11 +68,24 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
     );
 
     if (this.minigameWinCount === 5) {
-      this.currentMinigame = new CheckpointMinigame(
-        this.app,
-        this,
-        this.completedMinigamePhases,
-      );
+      this.currentMinigame =
+        this.completedMinigamePhases === 0
+          ? new CheckpointOneMinigame(
+              this.app,
+              this,
+              this.completedMinigamePhases,
+            )
+          : this.completedMinigamePhases === 1
+            ? new CheckpointTwoMinigame(
+                this.app,
+                this,
+                this.completedMinigamePhases,
+              )
+            : new CheckpointThreeMinigame(
+                this.app,
+                this,
+                this.completedMinigamePhases,
+              );
       this.currentMinigame.attach(); // No await.
       return;
     }
