@@ -8,11 +8,11 @@ import { RhythmMinigame } from "./minigames/rhythmMinigame";
 import {
   Interlude,
   InterludeDelegate,
-  preloadInterludeAssets,
+  backgroundLoadInterludeAssets,
 } from "./interlude/interlude";
 import { CheckpointMinigame } from "./minigames/checkpointMinigame";
 import { ScrubMinigame } from "./minigames/scrubMinigame";
-import { addMinigameAssetAliases } from "./minigames/assets";
+import { backgroundLoadMinigameAssets } from "./minigames/assets";
 
 const MINIGAMES_POOL = new URLSearchParams(window.location.search).get("quick")
   ? [Minigame]
@@ -37,9 +37,9 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
 
   constructor(private readonly app: Application) {}
 
-  async preload() {
-    preloadInterludeAssets();
-    addMinigameAssetAliases();
+  preload() {
+    backgroundLoadInterludeAssets();
+    backgroundLoadMinigameAssets();
   }
 
   start() {

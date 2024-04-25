@@ -12,7 +12,7 @@ function getAssetPath(filename: string) {
   return `./assets/sprites/minigames/${filename}`;
 }
 
-export function addMinigameAssetAliases() {
+export function backgroundLoadMinigameAssets() {
   const aliases = Object.keys(MINIGAME_ASSET_FILENAMES);
   aliases.forEach((alias) => {
     Assets.add({
