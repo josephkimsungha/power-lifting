@@ -32,9 +32,9 @@ export class Minigame {
     this.container = new Container();
 
     this.clock = new Graphics();
-    this.clock.zIndex = 1;
+    this.clock.zIndex = 9999998;
     this.clockArc = new Graphics();
-    this.clockArc.zIndex = 2;
+    this.clockArc.zIndex = 9999999;
     this.clock.fillStyle = "#f0cfbb";
     this.clock.circle(
       CLOCK_PADDING + CLOCK_RADIUS,
@@ -91,7 +91,7 @@ export class Minigame {
 
     this.clockArc.removeFromParent();
     this.clockArc = new Graphics();
-    this.clockArc.zIndex = 2;
+    this.clockArc.zIndex = 9999999;
     const percentage = this.cumulativeMS / this.lifetime;
     const start = -Math.PI / 2 + percentage * 2 * Math.PI;
     const x = CLOCK_PADDING + CLOCK_RADIUS;
