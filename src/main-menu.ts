@@ -13,7 +13,7 @@ export class MainMenu extends LitElement {
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      background: rgb(240, 200, 98);
+      background: #f0cfbb;
     }
     .large-title {
       font-family: "Poppins", sans-serif;
@@ -21,7 +21,7 @@ export class MainMenu extends LitElement {
       position: absolute;
       margin: 0;
       top: 5%;
-      color: #d69b04;
+      color: #a0484c;
     }
     .text-button {
       position: absolute;
@@ -29,7 +29,7 @@ export class MainMenu extends LitElement {
       border: none;
       font-size: 3vw;
       font-weight: bold;
-      color: #644903;
+      color: #a0484c;
       cursor: pointer;
       opacity: 60%;
       transition: all 0.25s ease-in-out;
@@ -142,7 +142,7 @@ export class MainMenu extends LitElement {
           xmlns="http://www.w3.org/2000/svg"
         >
           <g clip-path="url(#clip0_61_2)">
-            <rect width="1600" height="900" fill="#F0C862" />
+            <rect width="1600" height="900" fill="#f0cfbb" />
             <rect
               x="-28"
               y="653"
