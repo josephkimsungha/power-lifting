@@ -1,7 +1,7 @@
 import { Application } from "pixi.js";
 import { Minigame, MinigameDelegate } from "./minigames/minigame";
 import { KeyboardMinigame } from "./minigames/keyboardMinigame";
-import { FlingMinigame } from "./minigames/flingMinigame";
+import { FlingMinigame } from "./minigames/final/flingMinigame";
 import { TypingMinigame } from "./minigames/typingMinigame";
 import { TimingMinigame } from "./minigames/timingMinigame";
 import { RhythmMinigame } from "./minigames/rhythmMinigame";
@@ -21,7 +21,7 @@ import { CheckpointTwoMinigame } from "./minigames/final/checkpointTwoMinigame";
 import { CheckpointThreeMinigame } from "./minigames/final/checkpointThreeMinigame";
 
 const MINIGAMES_POOL = new URLSearchParams(window.location.search).get("quick")
-  ? [ScrubMinigame]
+  ? [FlingMinigame]
   : [
       Minigame,
       KeyboardMinigame,
