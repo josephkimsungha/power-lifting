@@ -84,7 +84,7 @@ export class Minigame {
     this.delegate.onMinigameEnd(passed);
   }
 
-  protected onTick() {
+  private onTick() {
     this.cumulativeMS += this.ticker.elapsedMS;
 
     this.clockArc.removeFromParent();

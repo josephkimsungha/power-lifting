@@ -21,6 +21,14 @@ import {
 const MINIGAMES_POOL = new URLSearchParams(window.location.search).get("quick")
   ? [Minigame]
   : [
+      Minigame,
+      KeyboardMinigame,
+      FlingMinigame,
+      TypingMinigame,
+      TimingMinigame,
+      RhythmMinigame,
+      ScrubMinigame,
+      ShoppingMinigame,
       BalancingMinigame,
     ];
 
