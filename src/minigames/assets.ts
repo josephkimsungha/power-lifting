@@ -3,6 +3,15 @@ import { Assets } from "pixi.js";
 export enum MINIGAME_ASSET_ALIASES {
   /* Typing minigame */
   PHONE_SCREEN = "phone-screen",
+  /* Bath minigame */
+  BATH_BG_1 = "bath-bg-1",
+  BATH_DIRT_1 = "bath-dirt-1",
+  BATH_DIRT_2 = "bath-dirt-2",
+  BATH_DIRT_3 = "bath-dirt-3",
+  BATH_DIRT_4 = "bath-dirt-4",
+  BATH_MC_1 = "bath-mc-1",
+  BATH_MC_2 = "bath-mc-2",
+  BATH_MC_3 = "bath-mc-3",
   /* Shopping minigame */
   SHOPPING_BACKGROUND = "shopping-background",
   SHOPPING_PHONE = "shopping-phone",
@@ -17,6 +26,7 @@ export enum MINIGAME_ASSET_ALIASES {
   PROTEIN = "protein",
   STRAWBERRIES = "strawberries",
   YOGHURT = "yoghurt",
+  PROGRESS_BAR = "progress-bar",
   /* Browser game sprites */
   BLOG_POST_1 = "blog-post-1",
   BLOG_POST_2 = "blog-post-2",
@@ -27,8 +37,6 @@ export enum MINIGAME_ASSET_ALIASES {
   POPUP_4 = "popup-4",
   POPUP_5 = "popup-5",
   LEARNING_PROGRESS_CONTAINER = "learning-progress-container",
-  /* Misc */
-  PROGRESS_BAR = "progress-bar",
 }
 
 const MINIGAME_ASSET_FILENAMES = {

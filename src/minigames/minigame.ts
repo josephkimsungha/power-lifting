@@ -21,6 +21,7 @@ export class Minigame {
 
   private clock: Graphics;
   private clockArc: Graphics;
+  protected succeedOnTimeout: boolean = false;
 
   constructor(
     protected readonly app: Application,
@@ -102,7 +103,7 @@ export class Minigame {
     this.app.stage.addChild(this.clockArc);
 
     if (this.cumulativeMS > this.lifetime) {
-      this.delegate.onMinigameEnd(false);
+      this.delegate.onMinigameEnd(this.succeedOnTimeout);
     }
   }
 }

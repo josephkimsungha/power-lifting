@@ -5,18 +5,20 @@ import { FlingMinigame } from "./minigames/final/flingMinigame";
 import { TypingMinigame } from "./minigames/typingMinigame";
 import { TimingMinigame } from "./minigames/timingMinigame";
 import { RhythmMinigame } from "./minigames/rhythmMinigame";
+import { CheckpointMinigame } from "./minigames/checkpointMinigame";
+import { ScrubMinigame } from "./minigames/final/scrubMinigame";
+import { ShakingMinigame } from "./minigames/shakingMinigame";
+import { ShoppingMinigame } from "./minigames/final/shoppingMinigame";
+import { backgroundLoadMinigameAssets } from "./minigames/assets";
+import { BalancingMinigame } from "./minigames/balancingMinigame";
 import {
   Interlude,
   InterludeDelegate,
   backgroundLoadInterludeAssets,
 } from "./interlude/interlude";
-import { CheckpointMinigame } from "./minigames/checkpointMinigame";
-import { ScrubMinigame } from "./minigames/scrubMinigame";
-import { ShoppingMinigame } from "./minigames/final/shoppingMinigame";
-import { backgroundLoadMinigameAssets } from "./minigames/assets";
 
 const MINIGAMES_POOL = new URLSearchParams(window.location.search).get("quick")
-  ? [FlingMinigame]
+  ? [Minigame]
   : [
       Minigame,
       KeyboardMinigame,
@@ -25,7 +27,9 @@ const MINIGAMES_POOL = new URLSearchParams(window.location.search).get("quick")
       TimingMinigame,
       RhythmMinigame,
       ScrubMinigame,
+      ShakingMinigame,
       ShoppingMinigame,
+      BalancingMinigame,
     ];
 
 /** Controls the flow of the game. */
