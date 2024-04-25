@@ -43,6 +43,7 @@ export enum MINIGAME_ASSET_ALIASES {
   PROTEIN = "protein",
   STRAWBERRIES = "strawberries",
   YOGHURT = "yoghurt",
+<<<<<<< Updated upstream
   PROGRESS_BAR = "progress-bar",
   /* Browser game sprites */
   BLOG_POST_1 = "blog-post-1",
@@ -54,6 +55,16 @@ export enum MINIGAME_ASSET_ALIASES {
   POPUP_4 = "popup-4",
   POPUP_5 = "popup-5",
   LEARNING_PROGRESS_CONTAINER = "learning-progress-container",
+=======
+  PROGRESS = "progress",
+  BLENDERPROG = "blenderProgress",
+  BLENDERFILL = "barFill",
+  BLENDER = "blender",
+  BALANCE_BG = "balancebg",
+  BALANCE_C1 = "balancec1",
+  BALANCE_C2 = "balancec2",
+  BALANCE_C3 = "balancec3",
+>>>>>>> Stashed changes
 }
 
 const MINIGAME_ASSET_FILENAMES = {
@@ -80,6 +91,7 @@ const MINIGAME_ASSET_FILENAMES = {
   [MINIGAME_ASSET_ALIASES.BATH_MC_1]: getAssetPath("bath_mc_1.png"),
   [MINIGAME_ASSET_ALIASES.BATH_MC_2]: getAssetPath("bath_mc_2.png"),
   [MINIGAME_ASSET_ALIASES.BATH_MC_3]: getAssetPath("bath_mc_3.png"),
+<<<<<<< Updated upstream
   [MINIGAME_ASSET_ALIASES.CHECKPOINT_1_1]: getAssetPath(
     "checkpoints/check1.1.png",
   ),
@@ -136,6 +148,15 @@ const MINIGAME_ASSET_FILENAMES = {
     "progress_learning.png",
   ),
   [MINIGAME_ASSET_ALIASES.PROGRESS_BAR]: getAssetPath("progress_bar.png"),
+=======
+  [MINIGAME_ASSET_ALIASES.PROGRESS]: getAssetPath("progress.png"),
+  [MINIGAME_ASSET_ALIASES.BLENDERPROG]: getAssetPath("progress_blender.png"),
+  [MINIGAME_ASSET_ALIASES.BLENDERFILL]: getAssetPath("progress_bar.png"),
+  [MINIGAME_ASSET_ALIASES.BLENDER]: getAssetPath("blender.png"),
+  [MINIGAME_ASSET_ALIASES.BALANCE_BG]: getAssetPath("balance_background.png"),
+  [MINIGAME_ASSET_ALIASES.BALANCE_C1]: getAssetPath("balance_character-1.png"),
+
+>>>>>>> Stashed changes
 };
 
 function getAssetPath(filename: string) {

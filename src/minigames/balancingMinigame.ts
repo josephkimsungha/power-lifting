@@ -1,10 +1,11 @@
-import { TextStyle, Text, Graphics, Point, Ticker } from "pixi.js";
+import { TextStyle, Text, Graphics, Point, Ticker, Sprite, Assets, assignWithIgnore } from "pixi.js";
 import { KeyboardMinigame } from "./keyboardMinigame";
+import { MINIGAME_ASSET_ALIASES } from "./assets";
 
 export class BalancingMinigame extends KeyboardMinigame{
    
-    private balancingObject: Graphics | null = null;
-    private pos: Point = new Point(1300, 700);
+    private balancingObject: Sprite | null = null;
+    private pos: Point = new Point(1300, 1200);
     private flag: boolean;
     private currentForce: number = 0;
     private forceAmount: number = 0.8;
@@ -14,24 +15,31 @@ export class BalancingMinigame extends KeyboardMinigame{
     override async attach() {
         super.attach();
         
-        this.ticker.add((time)=> this.onUpdate(time))
+        const texture = await Assets.load(
+            MINIGAME_ASSET_ALIASES.BALANCE_BG,
+         );
+        const background = new Sprite(texture);
+        background.setSize(this.app.screen);
+        background.zIndex = -1;
+        this.container.addChild(background);
+        this.ticker.add((time) => this.onUpdate(time))
     }
 
     protected override async populateContainer() {
-        this.balancingObject = new Graphics();
-        this.balancingObject.circle(0, 0, 300)
+        this.pos = new Point(this.app.screen.height/6 * 5, this.app.screen.width/2);
+        this.balancingObject = new Sprite(await Assets.load(MINIGAME_ASSET_ALIASES.BALANCE_C1))
         this.balancingObject.position = this.pos;
-        this.balancingObject.fill(0xde3249);
+        this.balancingObject.anchor = new Point(0.5,0.85);
+        
         this.container.addChild(this.balancingObject);
-        const square = new Graphics();
-        square.rect(-50, -325, 100, 100);
-        square.fill(0x0000);
-        this.balancingObject.addChild(square);
+        
+    
         
         
     }
 
     protected override onKeyDown(key: string, e: KeyboardEvent): void {
+        if(e.repeat){return}
         if (key == "ArrowRight") { 
             this.addRotForce(this.forceAmount);
         }
