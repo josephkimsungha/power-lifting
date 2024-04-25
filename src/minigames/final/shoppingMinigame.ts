@@ -1,6 +1,7 @@
 import {
   Assets,
   BoundsData,
+  Container,
   FederatedMouseEvent,
   Point,
   Polygon,
@@ -42,10 +43,16 @@ export class ShoppingMinigame extends Minigame {
   private readonly shelves: Record<string, GroceryItem> = {};
   private timeUntilNextStockMs = 0;
 
+  private basket: Container;
+  private collectedItemCount = 0;
+
   private securityIsWatching = false;
   private timeUntilNextSecurityToggleMs = 0;
 
   private dragListener = (e: FederatedMouseEvent) => void this.onDragMove(e);
+
+  // Maps some ID to the elapsed percentage (from 0~1) for this ease.
+  private easeMap: Record<string, number> = {};
 
   protected override async populateContainer() {
     const appDimensions = this.app.screen;
@@ -57,12 +64,11 @@ export class ShoppingMinigame extends Minigame {
 
     this.container.addChild(await this.constructBackground(appDimensions));
 
-    const basket = await this.constructBasket(appDimensions);
-    basket.on("pointerup", () => this.onBasketDrop());
-    basket.on("pointerupoutside", () => this.onBasketDrop());
-    this.container.addChild(basket);
+    this.basket = await this.constructBasket(appDimensions);
+    this.basket.on("pointerup", () => this.onBasketDrop());
+    this.container.addChild(this.basket);
 
-    if (this.week >= 1) {
+    if (this.week >= 0) {
       const security = await this.constructSecurity(appDimensions);
       this.ticker.add(
         (time) => void this.periodicallyToggleSecurity(time, security),
@@ -123,13 +129,48 @@ export class ShoppingMinigame extends Minigame {
     if (!this.dragTarget) return;
 
     if (this.securityIsWatching) {
-      this.dragTarget.sprite.position = this.dragTarget.originalPosition;
+      const ticker = new Ticker();
+      const item = this.dragTarget.sprite;
+      const originalPosition = this.dragTarget.originalPosition.clone();
+      ticker.add((time) =>
+        this.easeToPos(
+          time,
+          item.position,
+          originalPosition,
+          1000,
+          item,
+          `caughtredhanded${stringifyPoint(originalPosition)}`,
+        ),
+      );
+      ticker.start();
       return;
     }
 
+    const item = this.dragTarget.sprite;
+    // Prevent drag and drop for this item.
+    item.eventMode = "none";
+    const collectedItemPosition = this.basket.position.clone();
+    collectedItemPosition.y -= item.height / 2;
+    collectedItemPosition.x += this.basket.width / 2 - item.width * 0.6;
+    // Stack the items from left to right
+    collectedItemPosition.x += item.width * 0.3 * (this.collectedItemCount % 5);
+    item.zIndex = this.collectedItemCount;
+    const ticker = new Ticker();
+    ticker.add((time) =>
+      this.easeToPos(
+        time,
+        item.position,
+        collectedItemPosition,
+        1000,
+        item,
+        `collected${this.collectedItemCount}`,
+      ),
+    );
+    ticker.start();
+
     delete this.shelves[stringifyPoint(this.dragTarget.originalPosition)];
     this.shoppingList[this.dragTarget.type]--;
-    this.dragTarget.sprite.destroy();
+    this.collectedItemCount++;
 
     if (
       Object.values(this.shoppingList).filter((remaining) => remaining > 0)
@@ -250,7 +291,7 @@ export class ShoppingMinigame extends Minigame {
       appDimensions.width * 0.05,
       appDimensions.height * 1.05,
     );
-    basket.zIndex = 1;
+    basket.zIndex = 99999;
     // minY because we've set the anchor to be at the bottom left corner.
     const { maxX: boundsWidth, minY: boundsHeight } = basket.bounds;
     const hitArea = new Polygon(
@@ -306,6 +347,31 @@ export class ShoppingMinigame extends Minigame {
     item.eventMode = "static";
 
     return item;
+  }
+
+  private async easeToPos(
+    ticker: Ticker,
+    startPos: Point,
+    endPos: Point,
+    timeToArriveMs: number,
+    object: Container,
+    id: string,
+  ) {
+    this.easeMap[id] = Math.min(
+      (this.easeMap[id] ?? 0) + ticker.deltaMS / timeToArriveMs,
+      1,
+    );
+
+    const ease = (f: number) => Math.sqrt(1 - Math.pow(f - 1, 2)); // https://easings.net/#easeOutCirc
+    const directionVector = endPos.subtract(startPos);
+    object.position = startPos
+      .clone()
+      .add(directionVector.multiplyScalar(ease(this.easeMap[id])));
+
+    if (this.easeMap[id] === 1) {
+      this.easeMap[id] = 0;
+      ticker.destroy();
+    }
   }
 }
 
