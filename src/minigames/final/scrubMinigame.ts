@@ -1,13 +1,6 @@
-import {
-  Application,
-  Graphics,
-  Sprite,
-  Point,
-  Assets,
-  Rectangle,
-} from "pixi.js";
+import { Sprite, Point, Assets, Rectangle } from "pixi.js";
 import { Minigame } from "../minigame";
-import { MINIGAME_ASSET_FILENAMES, MINIGAME_ASSET_ALIASES } from "../assets";
+import { MINIGAME_ASSET_ALIASES } from "../assets";
 
 interface DirtySpotDelegate {
   isPointerDown(): boolean;
@@ -26,18 +19,15 @@ const DIRT_SIZE = 50;
 class DirtySpot {
   private health = 100;
 
-  constructor(
-    private readonly app: Application,
-    private readonly delegate: DirtySpotDelegate,
-  ) {}
+  constructor(private readonly delegate: DirtySpotDelegate) {}
 
-  async getObject(characterArea: Rectangle) {
+  async getObject(area: Rectangle) {
     const dirtAssetId =
       DIRT_ASSETS[Math.floor(DIRT_ASSETS.length * Math.random())];
-    const dirtAsset = await Assets.load(MINIGAME_ASSET_FILENAMES[dirtAssetId]);
+    const dirtAsset = await Assets.load(dirtAssetId);
     const spot = new Sprite(dirtAsset);
-    const x = characterArea.x + characterArea.width * Math.random();
-    const y = characterArea.y + characterArea.height * Math.random();
+    const x = area.x + area.width * Math.random();
+    const y = area.y + area.height * Math.random();
     spot.width = DIRT_SIZE;
     spot.height = DIRT_SIZE;
     spot.anchor = 0.5;
@@ -47,7 +37,7 @@ class DirtySpot {
     spot.on("mousemove", (event) => {
       if (!this.delegate.isPointerDown()) return;
 
-      this.health = Math.max(this.health - event.movement.magnitude() * 0.1, 0);
+      this.health = Math.max(this.health - event.movement.magnitude() * 0.3, 0);
       spot.alpha = this.health / 100;
       if (this.health === 0) {
         this.delegate.markCleaned(this);
@@ -62,10 +52,15 @@ class DirtySpot {
 export class ScrubMinigame extends Minigame implements DirtySpotDelegate {
   private pointerDown = false;
   private remainingDirtySpots: Set<DirtySpot> = new Set();
+  protected override lifetime = 15_000;
 
   override async attach() {
     await super.attach();
-    this.app.canvas.style.cursor = `url('./assets/sprites/minigames/loofa.png'), auto`;
+    // sometimes attach gets called before canvas sets it's own cursor state.
+    // Only update the cursor _after_ this to make sure we don't get overriden.
+    setTimeout(() => {
+      this.app.canvas.style.cursor = `url('./assets/sprites/minigames/loofa.png'), auto`;
+    }, 20);
   }
 
   override detach() {
@@ -75,12 +70,14 @@ export class ScrubMinigame extends Minigame implements DirtySpotDelegate {
   }
 
   protected override async populateContainer() {
-    const bgAsset = await Assets.load(
-      MINIGAME_ASSET_FILENAMES[MINIGAME_ASSET_ALIASES.BATH_BG_1],
-    );
-    const characterAsset = await Assets.load(
-      MINIGAME_ASSET_FILENAMES[MINIGAME_ASSET_ALIASES.BATH_MC_1],
-    );
+    const bgAsset = await Assets.load(MINIGAME_ASSET_ALIASES.BATH_BG_1);
+    const characterAssetId = [
+      MINIGAME_ASSET_ALIASES.BATH_MC_1,
+      MINIGAME_ASSET_ALIASES.BATH_MC_2,
+      MINIGAME_ASSET_ALIASES.BATH_MC_3,
+    ][this.week];
+    const numSpots = 3 + 2 * this.week;
+    const characterAsset = await Assets.load(characterAssetId);
 
     const { screen } = this.app;
 
@@ -102,17 +99,20 @@ export class ScrubMinigame extends Minigame implements DirtySpotDelegate {
     mc.y = screen.height / 2;
     this.container.addChild(mc);
 
-    const numSpots = 3;
-    const characterArea = new Rectangle(
-      screen.width / 2 - characterSize.width / 2,
-      screen.height / 2 - characterSize.height / 2,
-      characterSize.width - DIRT_SIZE,
-      characterSize.height - DIRT_SIZE,
+    const dirtableSize = {
+      width: characterSize.width - 150,
+      height: characterSize.height - 100,
+    };
+    const dirtableArea = new Rectangle(
+      screen.width / 2 - dirtableSize.width / 2,
+      screen.height / 2 - dirtableSize.height / 2,
+      dirtableSize.width,
+      dirtableSize.height,
     );
     for (let i = 0; i < numSpots; i++) {
-      const spot = new DirtySpot(this.app, this);
+      const spot = new DirtySpot(this);
       this.remainingDirtySpots.add(spot);
-      this.container.addChild(await spot.getObject(characterArea));
+      this.container.addChild(await spot.getObject(dirtableArea));
     }
 
     this.container.eventMode = "static";
