@@ -23,21 +23,14 @@ export class Minigame {
     this.container = new Container();
   }
 
-  /**
-   * Override this function to load any assets the
-   * minigame needs. Return a promise that resolves when
-   * assets are ready.
-   */
-  static async preload() {}
-
-  attach() {
+  async attach() {
     this.ticker = new Ticker();
     if (this.lifetime !== undefined) {
       this.ticker.add(() => void this.onTick());
     }
     this.ticker.start();
 
-    this.populateContainer();
+    await this.populateContainer();
     this.app.stage.addChild(this.container);
   }
 
@@ -47,7 +40,7 @@ export class Minigame {
     this.app.stage.removeChild(this.container);
   }
 
-  protected populateContainer() {
+  protected async populateContainer() {
     const square = new Graphics();
     const x = (this.app.screen.width - 100) * Math.random();
     const y = (this.app.screen.height - 100) * Math.random();

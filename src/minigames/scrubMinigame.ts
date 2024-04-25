@@ -43,7 +43,7 @@ export class ScrubMinigame extends Minigame implements DirtySpotDelegate {
   private pointerDown = false;
   private remainingDirtySpots: Set<DirtySpot> = new Set();
 
-  protected override populateContainer(): void {
+  protected override async populateContainer() {
     const dirtySpots = [
       new DirtySpot(this.app, this),
       new DirtySpot(this.app, this),

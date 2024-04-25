@@ -13,7 +13,7 @@ export class TimingMinigame extends Minigame {
 
   private recticleXVel = 10;
 
-  protected override populateContainer(): void {
+  protected override async populateContainer() {
     this.container.eventMode = "static";
     this.container.hitArea = this.app.screen;
     this.container.on("pointerdown", () => this.checkHit());

@@ -12,17 +12,18 @@ import {
 } from "./interlude/interlude";
 import { CheckpointMinigame } from "./minigames/checkpointMinigame";
 import { ScrubMinigame } from "./minigames/scrubMinigame";
+import { addMinigameAssetAliases } from "./minigames/assets";
 
 const MINIGAMES_POOL = new URLSearchParams(window.location.search).get("quick")
   ? [Minigame]
   : [
-      Minigame,
-      KeyboardMinigame,
-      FlingMinigame,
+      // Minigame,
+      // KeyboardMinigame,
+      // FlingMinigame,
       TypingMinigame,
-      TimingMinigame,
-      RhythmMinigame,
-      ScrubMinigame,
+      // TimingMinigame,
+      // RhythmMinigame,
+      // ScrubMinigame,
     ];
 
 /** Controls the flow of the game. */
@@ -38,8 +39,7 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
 
   async preload() {
     preloadInterludeAssets();
-    await Promise.all(MINIGAMES_POOL.map((mg) => mg.preload()));
-    await CheckpointMinigame.preload();
+    addMinigameAssetAliases();
   }
 
   start() {
@@ -60,7 +60,7 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
 
     if (this.minigameWinCount === 5) {
       this.currentMinigame = new CheckpointMinigame(this.app, this);
-      this.currentMinigame.attach();
+      this.currentMinigame.attach(); // No await.
       return;
     }
     if (this.minigameWinCount >= 6) {
@@ -107,7 +107,7 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
 
   private startNextMinigame() {
     this.currentMinigame = this.minigameQueue.shift();
-    this.currentMinigame.attach();
+    this.currentMinigame.attach(); // No await.
   }
 
   private startNextInterlude() {
