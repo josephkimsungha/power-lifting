@@ -3,8 +3,8 @@ import { MINIGAME_ASSET_ALIASES } from "../assets";
 import { CheckpointMinigame } from "../checkpointMinigame";
 
 export class CheckpointThreeMinigame extends CheckpointMinigame {
-  protected override chargeRate = 10;
-  protected override drainRate = 0.1;
+  protected override chargeRate = 6;
+  protected override drainRate = 0.25;
 
   protected override initialBackgroundAlias =
     MINIGAME_ASSET_ALIASES.CHECKPOINT_3_1;
