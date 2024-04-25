@@ -119,6 +119,10 @@ export class FlingMinigame extends Minigame {
     progressBar.y = 16;
     this.container.addChild(progressBar);
 
+    for (let i = 0; i < 3 + this.week; i++) {
+      this.addPopup();
+    }
+
     this.container.eventMode = "static";
     this.container.hitArea = this.app.screen;
     this.container.on("pointerup", () => this.onDragEnd());
@@ -134,7 +138,7 @@ export class FlingMinigame extends Minigame {
     }
     this.timeToNextPopup -= ticker.deltaMS;
 
-    const goal = this.lifetime * [0.2, 0.3, 0.4][this.week];
+    const goal = this.lifetime * 0.3;
     const minTime = [1000, 700, 500][this.week];
     if (this.learningTime > goal) {
       this.finishMinigame(true);

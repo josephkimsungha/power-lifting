@@ -18,7 +18,7 @@ import {
 } from "./interlude/interlude";
 
 const MINIGAMES_POOL = new URLSearchParams(window.location.search).get("quick")
-  ? [Minigame]
+  ? [FlingMinigame]
   : [
       Minigame,
       KeyboardMinigame,
