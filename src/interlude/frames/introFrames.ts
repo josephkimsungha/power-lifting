@@ -2,6 +2,8 @@ import { Application, Assets, Container, Sprite } from "pixi.js";
 import { FrameData, GetFrames } from "./types";
 
 export const getIntroFrames: GetFrames = async (app: Application) => {
+  if (new URLSearchParams(window.location.search).get("skipIntro")) return [];
+
   const allFrames: FrameData[] = [
     await spriteFrame(app, "intro1"),
     await spriteFrame(app, "intro2"),
