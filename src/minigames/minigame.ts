@@ -19,6 +19,8 @@ export class Minigame {
   constructor(
     protected readonly app: Application,
     protected readonly delegate: MinigameDelegate,
+    /** Uses zero indexing (0 === first day). */
+    protected readonly day: number,
   ) {
     this.container = new Container();
   }
