@@ -2,9 +2,7 @@ import { Application } from "pixi.js";
 import { Minigame, MinigameDelegate } from "./minigames/minigame";
 import { FlingMinigame } from "./minigames/final/flingMinigame";
 import { TypingMinigame } from "./minigames/typingMinigame";
-import { TimingMinigame } from "./minigames/timingMinigame";
 import { RhythmMinigame } from "./minigames/rhythmMinigame";
-import { CheckpointMinigame } from "./minigames/checkpointMinigame";
 import { ScrubMinigame } from "./minigames/final/scrubMinigame";
 import { ShakingMinigame } from "./minigames/shakingMinigame";
 import { ShoppingMinigame } from "./minigames/final/shoppingMinigame";
@@ -75,13 +73,13 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
     } else if (this.minigameQueue.length === 0) {
       // Trigger check point and go around again.
       this.currentMinigame =
-        this.completedMinigamePhases === 0
+        this.completedMinigamePhases === 1
           ? new CheckpointOneMinigame(
               this.app,
               this,
               this.completedMinigamePhases,
             )
-          : this.completedMinigamePhases === 1
+          : this.completedMinigamePhases === 2
             ? new CheckpointTwoMinigame(
                 this.app,
                 this,
