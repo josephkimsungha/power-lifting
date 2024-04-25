@@ -1,7 +1,7 @@
 import { Application } from "pixi.js";
 import { Minigame, MinigameDelegate } from "./minigames/minigame";
 import { KeyboardMinigame } from "./minigames/keyboardMinigame";
-import { FlingMinigame } from "./minigames/flingMinigame";
+import { FlingMinigame } from "./minigames/final/flingMinigame";
 import { TypingMinigame } from "./minigames/typingMinigame";
 import { TimingMinigame } from "./minigames/timingMinigame";
 import { RhythmMinigame } from "./minigames/rhythmMinigame";
@@ -10,7 +10,6 @@ import { ScrubMinigame } from "./minigames/final/scrubMinigame";
 import { ShakingMinigame } from "./minigames/shakingMinigame";
 import { ShoppingMinigame } from "./minigames/final/shoppingMinigame";
 import { backgroundLoadMinigameAssets } from "./minigames/assets";
-import { ShakingMinigame } from "./minigames/shakingMinigame";
 import { BalancingMinigame } from "./minigames/balancingMinigame";
 import {
   Interlude,
@@ -19,7 +18,7 @@ import {
 } from "./interlude/interlude";
 
 const MINIGAMES_POOL = new URLSearchParams(window.location.search).get("quick")
-  ? [ScrubMinigame]
+  ? [FlingMinigame]
   : [
       Minigame,
       KeyboardMinigame,

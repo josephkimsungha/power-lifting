@@ -26,6 +26,17 @@ export enum MINIGAME_ASSET_ALIASES {
   PROTEIN = "protein",
   STRAWBERRIES = "strawberries",
   YOGHURT = "yoghurt",
+  PROGRESS_BAR = "progress-bar",
+  /* Browser game sprites */
+  BLOG_POST_1 = "blog-post-1",
+  BLOG_POST_2 = "blog-post-2",
+  BLOG_POST_3 = "blog-post-3",
+  POPUP_1 = "popup-1",
+  POPUP_2 = "popup-2",
+  POPUP_3 = "popup-3",
+  POPUP_4 = "popup-4",
+  POPUP_5 = "popup-5",
+  LEARNING_PROGRESS_CONTAINER = "learning-progress-container",
 }
 
 const MINIGAME_ASSET_FILENAMES = {
@@ -52,6 +63,18 @@ const MINIGAME_ASSET_FILENAMES = {
   [MINIGAME_ASSET_ALIASES.BATH_MC_1]: getAssetPath("bath_mc_1.png"),
   [MINIGAME_ASSET_ALIASES.BATH_MC_2]: getAssetPath("bath_mc_2.png"),
   [MINIGAME_ASSET_ALIASES.BATH_MC_3]: getAssetPath("bath_mc_3.png"),
+  [MINIGAME_ASSET_ALIASES.BLOG_POST_1]: getAssetPath("blog_post_1.png"),
+  [MINIGAME_ASSET_ALIASES.BLOG_POST_2]: getAssetPath("blog_post_2.png"),
+  [MINIGAME_ASSET_ALIASES.BLOG_POST_3]: getAssetPath("blog_post_3.png"),
+  [MINIGAME_ASSET_ALIASES.POPUP_1]: getAssetPath("popup_1.png"),
+  [MINIGAME_ASSET_ALIASES.POPUP_2]: getAssetPath("popup_2.png"),
+  [MINIGAME_ASSET_ALIASES.POPUP_3]: getAssetPath("popup_3.png"),
+  [MINIGAME_ASSET_ALIASES.POPUP_4]: getAssetPath("popup_4.png"),
+  [MINIGAME_ASSET_ALIASES.POPUP_5]: getAssetPath("popup_5.png"),
+  [MINIGAME_ASSET_ALIASES.LEARNING_PROGRESS_CONTAINER]: getAssetPath(
+    "progress_learning.png",
+  ),
+  [MINIGAME_ASSET_ALIASES.PROGRESS_BAR]: getAssetPath("progress_bar.png"),
 };
 
 function getAssetPath(filename: string) {
