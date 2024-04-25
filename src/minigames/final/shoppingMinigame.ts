@@ -68,14 +68,6 @@ export class ShoppingMinigame extends Minigame {
     this.basket.on("pointerup", () => this.onBasketDrop());
     this.container.addChild(this.basket);
 
-    if (this.week >= 0) {
-      const security = await this.constructSecurity(appDimensions);
-      this.ticker.add(
-        (time) => void this.periodicallyToggleSecurity(time, security),
-      );
-      this.container.addChild(security);
-    }
-
     if (this.week >= 1) {
       const security = await this.constructSecurity(appDimensions);
       this.ticker.add(
