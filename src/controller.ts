@@ -17,7 +17,7 @@ import { ShoppingMinigame } from "./minigames/final/shoppingMinigame";
 import { backgroundLoadMinigameAssets } from "./minigames/assets";
 
 const MINIGAMES_POOL = new URLSearchParams(window.location.search).get("quick")
-  ? [ScrubMinigame]
+  ? [Minigame]
   : [
       Minigame,
       KeyboardMinigame,
