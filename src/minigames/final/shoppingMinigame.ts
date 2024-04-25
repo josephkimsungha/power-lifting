@@ -6,6 +6,7 @@ import {
   Polygon,
   Rectangle,
   Sprite,
+  Ticker,
 } from "pixi.js";
 import { Minigame } from "../minigame";
 import { MINIGAME_ASSET_ALIASES } from "../assets";
@@ -29,6 +30,7 @@ type GroceryItem = {
 
 export class ShoppingMinigame extends Minigame {
   private dragTarget?: GroceryItem;
+
   private readonly shoppingList: Record<GroceryItemType, number> = {
     [GroceryItemType.BANANA]: 0,
     [GroceryItemType.MILK]: 0,
@@ -39,6 +41,9 @@ export class ShoppingMinigame extends Minigame {
   };
   private readonly shelves: Record<string, GroceryItem> = {};
   private timeUntilNextStockMs = 0;
+
+  private securityIsWatching = false;
+  private timeUntilNextSecurityToggleMs = 0;
 
   private dragListener = (e: FederatedMouseEvent) => void this.onDragMove(e);
 
@@ -56,6 +61,14 @@ export class ShoppingMinigame extends Minigame {
     basket.on("pointerup", () => this.onBasketDrop());
     basket.on("pointerupoutside", () => this.onBasketDrop());
     this.container.addChild(basket);
+
+    if (this.week >= 1) {
+      const security = await this.constructSecurity(appDimensions);
+      this.ticker.add(
+        (time) => void this.periodicallyToggleSecurity(time, security),
+      );
+      this.container.addChild(security);
+    }
 
     const allItems = [
       GroceryItemType.BANANA,
@@ -86,72 +99,10 @@ export class ShoppingMinigame extends Minigame {
       new Point(appDimensions.width * 0.5, appDimensions.height * 0.4),
       new Point(appDimensions.width * 0.7, appDimensions.height * 0.4),
     ];
-    this.ticker.add(async (time) => {
-      this.timeUntilNextStockMs -= time.deltaMS;
-      if (this.timeUntilNextStockMs > 0) return;
-
-      this.timeUntilNextStockMs = 400;
-
-      // Find an item that needs to be purchased which is not already accounted
-      // for by stock on the shelves.
-      const currentlyOnShelf: Record<GroceryItemType, number> = {
-        [GroceryItemType.BANANA]: 0,
-        [GroceryItemType.MILK]: 0,
-        [GroceryItemType.PEANUT_BUTTER]: 0,
-        [GroceryItemType.PROTEIN]: 0,
-        [GroceryItemType.STRAWBERRIES]: 0,
-        [GroceryItemType.YOGHURT]: 0,
-      };
-      Object.values(this.shelves).forEach(
-        (item) => void currentlyOnShelf[item.type]++,
-      );
-      const requiredUnstockedItems = [];
-      Object.keys(this.shoppingList).forEach((item) => {
-        for (
-          let i = 0;
-          i < this.shoppingList[item] - currentlyOnShelf[item];
-          i++
-        ) {
-          requiredUnstockedItems.push(item);
-        }
-      });
-
-      if (requiredUnstockedItems.length === 0) return;
-
-      // Look for a free spot on the shelves.
-      const availablePositions = allPositions.filter(
-        (position) =>
-          !Object.keys(this.shelves).includes(stringifyPoint(position)),
-      );
-
-      if (availablePositions.length === 0) return;
-
-      // Choose an item to add, and a shelf position to place it.
-      const itemType =
-        requiredUnstockedItems[
-          Math.floor(Math.random() * requiredUnstockedItems.length)
-        ];
-      const position =
-        availablePositions[
-          Math.floor(Math.random() * availablePositions.length)
-        ];
-
-      const itemSprite = await this.constructItem(
-        itemType,
-        position,
-        appDimensions,
-      );
-      const item = {
-        type: itemType,
-        originalPosition: position,
-        sprite: itemSprite,
-      };
-      itemSprite.on("pointerdown", () => this.onDragStart(item));
-
-      this.container.addChild(itemSprite);
-
-      this.shelves[stringifyPoint(position)] = item;
-    });
+    this.ticker.add(
+      (time) =>
+        void this.periodicallyAddItems(time, allPositions, appDimensions),
+    );
   }
 
   private onDragStart(item: GroceryItem) {
@@ -171,6 +122,11 @@ export class ShoppingMinigame extends Minigame {
   private onBasketDrop() {
     if (!this.dragTarget) return;
 
+    if (this.securityIsWatching) {
+      this.dragTarget.sprite.position = this.dragTarget.originalPosition;
+      return;
+    }
+
     delete this.shelves[stringifyPoint(this.dragTarget.originalPosition)];
     this.shoppingList[this.dragTarget.type]--;
     this.dragTarget.sprite.destroy();
@@ -189,6 +145,87 @@ export class ShoppingMinigame extends Minigame {
     this.dragTarget.sprite.position = event.getLocalPosition(
       this.dragTarget.sprite.parent,
     );
+  }
+
+  private async periodicallyToggleSecurity(time: Ticker, security: Sprite) {
+    this.timeUntilNextSecurityToggleMs -= time.deltaMS;
+    if (this.timeUntilNextSecurityToggleMs > 0) return;
+
+    this.timeUntilNextSecurityToggleMs = 2000;
+
+    this.securityIsWatching = !this.securityIsWatching;
+    security.texture = this.securityIsWatching
+      ? await Assets.load(MINIGAME_ASSET_ALIASES.SECURITY_ON)
+      : await Assets.load(MINIGAME_ASSET_ALIASES.SECURITY_OFF);
+  }
+
+  private async periodicallyAddItems(
+    time: Ticker,
+    allPositions: Point[],
+    appDimensions: Rectangle,
+  ) {
+    this.timeUntilNextStockMs -= time.deltaMS;
+    if (this.timeUntilNextStockMs > 0) return;
+
+    this.timeUntilNextStockMs = 400;
+
+    // Find an item that needs to be purchased which is not already accounted
+    // for by stock on the shelves.
+    const currentlyOnShelf: Record<GroceryItemType, number> = {
+      [GroceryItemType.BANANA]: 0,
+      [GroceryItemType.MILK]: 0,
+      [GroceryItemType.PEANUT_BUTTER]: 0,
+      [GroceryItemType.PROTEIN]: 0,
+      [GroceryItemType.STRAWBERRIES]: 0,
+      [GroceryItemType.YOGHURT]: 0,
+    };
+    Object.values(this.shelves).forEach(
+      (item) => void currentlyOnShelf[item.type]++,
+    );
+    const requiredUnstockedItems = [];
+    Object.keys(this.shoppingList).forEach((item) => {
+      for (
+        let i = 0;
+        i < this.shoppingList[item] - currentlyOnShelf[item];
+        i++
+      ) {
+        requiredUnstockedItems.push(item);
+      }
+    });
+
+    if (requiredUnstockedItems.length === 0) return;
+
+    // Look for a free spot on the shelves.
+    const availablePositions = allPositions.filter(
+      (position) =>
+        !Object.keys(this.shelves).includes(stringifyPoint(position)),
+    );
+
+    if (availablePositions.length === 0) return;
+
+    // Choose an item to add, and a shelf position to place it.
+    const itemType =
+      requiredUnstockedItems[
+        Math.floor(Math.random() * requiredUnstockedItems.length)
+      ];
+    const position =
+      availablePositions[Math.floor(Math.random() * availablePositions.length)];
+
+    const itemSprite = await this.constructItem(
+      itemType,
+      position,
+      appDimensions,
+    );
+    const item = {
+      type: itemType,
+      originalPosition: position,
+      sprite: itemSprite,
+    };
+    itemSprite.on("pointerdown", () => this.onDragStart(item));
+
+    this.container.addChild(itemSprite);
+
+    this.shelves[stringifyPoint(position)] = item;
   }
 
   private async constructBackground(appDimensions: Rectangle) {
@@ -231,6 +268,24 @@ export class ShoppingMinigame extends Minigame {
     basket.eventMode = "static";
 
     return basket;
+  }
+
+  private async constructSecurity(appDimensions: Rectangle) {
+    const texture = await Assets.load(MINIGAME_ASSET_ALIASES.SECURITY_OFF);
+    // Cache the other texture.
+    await Assets.load(MINIGAME_ASSET_ALIASES.SECURITY_ON);
+    const security = new Sprite(texture);
+    const aspectRatio = security.width / security.height;
+    security.height = appDimensions.height * 0.3;
+    security.width = security.height * aspectRatio;
+    security.anchor = new Point(1, 0);
+    security.position = new Point(
+      appDimensions.width,
+      appDimensions.height * 0.05,
+    );
+    security.zIndex = 1;
+
+    return security;
   }
 
   private async constructItem(
