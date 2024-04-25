@@ -60,7 +60,11 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
     );
 
     if (this.minigameWinCount === 5) {
-      this.currentMinigame = new CheckpointMinigame(this.app, this);
+      this.currentMinigame = new CheckpointMinigame(
+        this.app,
+        this,
+        this.completedMinigamePhases,
+      );
       this.currentMinigame.attach(); // No await.
       return;
     }
@@ -101,6 +105,7 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
       const minigame = new pool[Math.floor(Math.random() * pool.length)](
         this.app,
         this,
+        this.completedMinigamePhases,
       );
       this.minigameQueue.push(minigame);
     }
