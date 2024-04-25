@@ -67,6 +67,6 @@ export class CheckpointTwoMinigame extends CheckpointMinigame {
     rabbit.removeFromParent();
     await this.changeBackgroundTexture(MINIGAME_ASSET_ALIASES.CHECKPOINT_2_5);
 
-    await new Promise((res) => setTimeout(res, 3000));
+    await new Promise((res) => setTimeout(res, 2000));
   }
 }

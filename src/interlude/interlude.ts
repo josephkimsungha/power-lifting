@@ -1,9 +1,8 @@
 import { Application, Assets, Ticker } from "pixi.js";
 import { getIntroFrames } from "./frames/introFrames";
-import { getDayOneFrames } from "./frames/dayOneFrames";
-import { getDayTwoFrames } from "./frames/dayTwoFrames";
-import { getDayThreeFrames } from "./frames/dayThreeFrames";
+import { getWeekThreeFrames } from "./frames/weekThreeFrames";
 import { FrameData } from "./frames/types";
+import { getOutroFrames } from "./frames/outroFrames";
 
 const INTERLUDE_ASSET_PATHS = {
   intro1: "./assets/sprites/intro/opening-gym-panel-1.png",
@@ -21,6 +20,17 @@ const INTERLUDE_ASSET_PATHS = {
   intro13: "./assets/sprites/intro/gymconvo4.png",
   intro14: "./assets/sprites/intro/gymconvo5.png",
   intro15: "./assets/sprites/intro/gymconvo6.png",
+  beforeComp1: "./assets/sprites/beforecomp/before-comp-1.png",
+  beforeComp2: "./assets/sprites/beforecomp/before-comp-2.png",
+  beforeComp3: "./assets/sprites/beforecomp/before-comp-3.png",
+  beforeComp4: "./assets/sprites/beforecomp/before-comp-4.png",
+  beforeComp5: "./assets/sprites/beforecomp/before-comp-5.png",
+  beforeComp6: "./assets/sprites/beforecomp/lastday-gym-1.png",
+  beforeComp7: "./assets/sprites/beforecomp/lastday-gym-2.png",
+  beforeComp8: "./assets/sprites/beforecomp/lastday-gym-3.png",
+  afterComp1: "./assets/sprites/aftercomp/aftercomp1.png",
+  afterComp2: "./assets/sprites/aftercomp/aftercomp2.png",
+  afterComp3: "./assets/sprites/aftercomp/aftercomp3.png",
 };
 
 export function backgroundLoadInterludeAssets() {
@@ -41,9 +51,10 @@ export interface InterludeDelegate {
 
 const framesList = [
   getIntroFrames,
-  getDayOneFrames,
-  getDayTwoFrames,
-  getDayThreeFrames,
+  () => [],
+  () => [],
+  getWeekThreeFrames,
+  getOutroFrames,
 ];
 
 export class Interlude {
@@ -53,11 +64,11 @@ export class Interlude {
   constructor(
     private readonly app: Application,
     private readonly delegate: InterludeDelegate,
-    private readonly day: number,
+    private readonly week: number,
   ) {}
 
   async start() {
-    const getFrames = framesList[this.day];
+    const getFrames = framesList[this.week];
     if (getFrames !== undefined) {
       this.frames = await getFrames(this.app);
     }
@@ -72,7 +83,8 @@ export class Interlude {
       return;
     }
 
-    const { container, advanceMode } = this.frames[this.currentFrame];
+    const { container, advanceMode, autoAdvanceMs } =
+      this.frames[this.currentFrame];
     container.eventMode = "static";
     if (advanceMode === "click") {
       container.on("click", () => {
@@ -80,7 +92,7 @@ export class Interlude {
         this.showNextFrame();
       });
     } else if (advanceMode === "auto") {
-      let remainingTime = 300;
+      let remainingTime = autoAdvanceMs;
       const ticker = new Ticker();
       ticker.add((time) => {
         remainingTime -= time.deltaMS;

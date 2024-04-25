@@ -17,7 +17,7 @@ export const getIntroFrames: GetFrames = async (app: Application) => {
     await spriteFrame(app, "intro10"),
     await spriteFrame(app, "intro11"),
     await spriteFrame(app, "intro12"),
-    await spriteFrame(app, "intro13", "auto"),
+    await spriteFrame(app, "intro13", "auto", 1200),
     await spriteFrame(app, "intro14"),
     await spriteFrame(app, "intro15"),
   ];
@@ -29,6 +29,7 @@ const spriteFrame = async (
   app: Application,
   assetAlias: string,
   advanceMode: "auto" | "click" = "click",
+  autoAdvanceMs = 400,
 ) => {
   const frame = new Container();
   frame.hitArea = app.screen;
@@ -39,5 +40,5 @@ const spriteFrame = async (
 
   frame.addChild(sprite);
 
-  return { container: frame, advanceMode };
+  return { container: frame, advanceMode, autoAdvanceMs };
 };
