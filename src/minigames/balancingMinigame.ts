@@ -4,10 +4,10 @@ import { KeyboardMinigame } from "./keyboardMinigame";
 export class BalancingMinigame extends KeyboardMinigame{
    
     private balancingObject: Graphics | null = null;
-    private pos: Point = new Point(1300, 600);
+    private pos: Point = new Point(1300, 700);
     private flag: boolean;
     private currentForce: number = 0;
-    private forceAmount: number = 0.7;
+    private forceAmount: number = 0.5;
     
     //temporary pos for the graphic instantiation
     override async attach() {
@@ -18,12 +18,12 @@ export class BalancingMinigame extends KeyboardMinigame{
 
     protected override async populateContainer() {
         this.balancingObject = new Graphics();
-        this.balancingObject.circle(0, 0, 100)
+        this.balancingObject.circle(0, 0, 300)
         this.balancingObject.position = this.pos;
         this.balancingObject.fill(0xde3249);
         this.container.addChild(this.balancingObject);
         const square = new Graphics();
-        square.rect(-50, -125, 100, 100);
+        square.rect(-50, -325, 100, 100);
         square.fill(0x0000);
         this.balancingObject.addChild(square);
         
@@ -59,11 +59,14 @@ export class BalancingMinigame extends KeyboardMinigame{
             this.finishMinigame(false);
         }
 
+        
+
         if (this.balancingObject.rotation >= 0) {
-            this.balancingObject.rotation += 0.01;
+            this.balancingObject.rotation += 0.003 + Math.abs(this.balancingObject.rotation)*0.008;
         }
         else {
-            this.balancingObject.rotation -= 0.01;
+            this.balancingObject.rotation -= 0.003 + Math.abs(this.balancingObject.rotation)*0.008;
+            
         }
     }
 
