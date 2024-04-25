@@ -35,6 +35,7 @@ export enum MINIGAME_ASSET_ALIASES {
   CHECKPOINT_3_2 = "check-3-2",
   CHECKPOINT_3_3 = "check-3-3",
   CHECKPOINT_3_4 = "check-3-4",
+  CHECKPOINT_3_5 = "check-3-5",
   BAR = "bar",
   /* Common sprites */
   BANANA = "banana",
@@ -122,6 +123,9 @@ const MINIGAME_ASSET_FILENAMES = {
   ),
   [MINIGAME_ASSET_ALIASES.CHECKPOINT_3_4]: getAssetPath(
     "checkpoints/check-3.4.png",
+  ),
+  [MINIGAME_ASSET_ALIASES.CHECKPOINT_3_5]: getAssetPath(
+    "checkpoints/check-3.5.png",
   ),
   [MINIGAME_ASSET_ALIASES.BAR]: getAssetPath("checkpoints/bar.png"),
   [MINIGAME_ASSET_ALIASES.BLOG_POST_1]: getAssetPath("blog_post_1.png"),

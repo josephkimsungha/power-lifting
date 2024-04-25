@@ -81,7 +81,14 @@ export class Minigame {
     this.container.addChild(square);
   }
 
-  protected finishMinigame(passed: boolean) {
+  // It's recommended to not use `this.ticker()` for these final promises.
+  // Create your own.
+  protected async finishMinigame(
+    passed: boolean,
+    pendingPromises?: Promise<void>,
+  ) {
+    this.ticker.stop();
+    await pendingPromises;
     // Show the player they've won or lost.
     this.delegate.onMinigameEnd(passed);
   }
