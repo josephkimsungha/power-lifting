@@ -44,14 +44,14 @@ const MINIGAME_ASSET_FILENAMES = {
   [MINIGAME_ASSET_ALIASES.PROTEIN]: getAssetPath("protein.png"),
   [MINIGAME_ASSET_ALIASES.STRAWBERRIES]: getAssetPath("strawberries.png"),
   [MINIGAME_ASSET_ALIASES.YOGHURT]: getAssetPath("yoghurt.png"),
-  [MINIGAME_ASSET_ALIASES.BLOG_POST_1]: getAssetPath("blog-post-1.png"),
-  [MINIGAME_ASSET_ALIASES.BLOG_POST_2]: getAssetPath("blog-post-2.png"),
-  [MINIGAME_ASSET_ALIASES.BLOG_POST_3]: getAssetPath("blog-post-3.png"),
-  [MINIGAME_ASSET_ALIASES.POPUP_1]: getAssetPath("popup-1.png"),
-  [MINIGAME_ASSET_ALIASES.POPUP_2]: getAssetPath("popup-2.png"),
-  [MINIGAME_ASSET_ALIASES.POPUP_3]: getAssetPath("popup-3.png"),
-  [MINIGAME_ASSET_ALIASES.POPUP_4]: getAssetPath("popup-4.png"),
-  [MINIGAME_ASSET_ALIASES.POPUP_5]: getAssetPath("popup-5.png"),
+  [MINIGAME_ASSET_ALIASES.BLOG_POST_1]: getAssetPath("blog_post_1.png"),
+  [MINIGAME_ASSET_ALIASES.BLOG_POST_2]: getAssetPath("blog_post_2.png"),
+  [MINIGAME_ASSET_ALIASES.BLOG_POST_3]: getAssetPath("blog_post_3.png"),
+  [MINIGAME_ASSET_ALIASES.POPUP_1]: getAssetPath("popup_1.png"),
+  [MINIGAME_ASSET_ALIASES.POPUP_2]: getAssetPath("popup_2.png"),
+  [MINIGAME_ASSET_ALIASES.POPUP_3]: getAssetPath("popup_3.png"),
+  [MINIGAME_ASSET_ALIASES.POPUP_4]: getAssetPath("popup_4.png"),
+  [MINIGAME_ASSET_ALIASES.POPUP_5]: getAssetPath("popup_5.png"),
 };
 
 function getAssetPath(filename: string) {
