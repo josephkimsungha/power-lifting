@@ -7,7 +7,8 @@ export class BalancingMinigame extends KeyboardMinigame{
     private pos: Point = new Point(1300, 700);
     private flag: boolean;
     private currentForce: number = 0;
-    private forceAmount: number = 0.5;
+    private forceAmount: number = 0.8;
+    protected override succeedOnTimeout: boolean = true;
     
     //temporary pos for the graphic instantiation
     override async attach() {
@@ -52,7 +53,7 @@ export class BalancingMinigame extends KeyboardMinigame{
     
     protected onUpdate(time: Ticker): void {
         console.log(this.balancingObject.rotation);
-        const increment = this.currentForce * time.deltaTime;
+        const increment = this.currentForce * time.deltaTime* 0.1;
         this.balancingObject.rotation += increment;
         this.currentForce -= increment;
         if (Math.abs(this.balancingObject.rotation) >= 2) {
