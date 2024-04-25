@@ -38,7 +38,7 @@ class DirtySpot {
       if (!this.delegate.isPointerDown()) return;
 
       this.health = Math.max(this.health - event.movement.magnitude() * 0.3, 0);
-      spot.alpha = this.health / 100;
+      spot.alpha = 0.15 + 0.7 * (this.health / 100);
       if (this.health === 0) {
         this.delegate.markCleaned(this);
         spot.removeFromParent();
@@ -87,9 +87,10 @@ export class ScrubMinigame extends Minigame implements DirtySpotDelegate {
     this.container.addChild(bg);
 
     const mc = new Sprite(characterAsset);
+    const heightScale = [0.8, 0.9, 1][this.week];
     const characterSize = {
-      width: mc.width * 0.7,
-      height: mc.height * 0.7,
+      width: screen.height * heightScale * (mc.width / mc.height),
+      height: screen.height * heightScale,
     };
     mc.width = characterSize.width;
     mc.height = characterSize.height;
@@ -98,9 +99,10 @@ export class ScrubMinigame extends Minigame implements DirtySpotDelegate {
     mc.y = screen.height / 2;
     this.container.addChild(mc);
 
+    const torsoRatio = [0.5, 0.4, 0.35][this.week];
     const dirtableSize = {
-      width: 150,
-      height: 400,
+      width: characterSize.width * torsoRatio,
+      height: characterSize.height * torsoRatio,
     };
     const dirtableArea = new Rectangle(
       screen.width / 2 - dirtableSize.width / 2,
