@@ -1,7 +1,7 @@
 import { Trie, TrieNode } from "@datastructures-js/trie";
 import { KeyboardMinigame } from "./keyboardMinigame";
 import { Assets, Point, Sprite, Text, TextStyle } from "pixi.js";
-import { MINIGAME_ASSET_ALIASES, MINIGAME_ASSET_FILENAMES } from "./assets";
+import { MINIGAME_ASSET_ALIASES } from "./assets";
 
 // TODO: Update this list later.
 const ALL_WORDS = ["act", "ale", "all", "and", "ball", "bang", "bat"];
@@ -13,7 +13,7 @@ export class TypingMinigame extends KeyboardMinigame {
 
   protected override async populateContainer() {
     const phonescreenTexture = await Assets.load(
-      MINIGAME_ASSET_FILENAMES[MINIGAME_ASSET_ALIASES.PHONE_SCREEN],
+      MINIGAME_ASSET_ALIASES.PHONE_SCREEN,
     );
 
     const phonescreen = new Sprite(phonescreenTexture);
