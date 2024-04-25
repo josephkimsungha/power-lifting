@@ -20,7 +20,7 @@ export class ShakingMinigame extends Minigame{
 
 
     
-    override attach() {
+    override async attach() {
         super.attach();
         
         this.container.eventMode = 'static';
@@ -31,14 +31,15 @@ export class ShakingMinigame extends Minigame{
     
 
 
-    protected override populateContainer(): void {
+    protected override async populateContainer() {
         const shakeAble = new Graphics();
         const x = (this.app.screen.width - 100) * Math.random();
         const y = (this.app.screen.height - 100) * Math.random();
         
-        shakeAble.rect(-50, -50, 60, 60);
+        shakeAble.rect(0, 0, 60, 60);
         shakeAble.fill(0xde3249);
         shakeAble.scale.set(10);
+        shakeAble.position = new Point(x, y);
         
         shakeAble.eventMode = 'static';
         shakeAble.on('pointerdown', () => { 
@@ -78,7 +79,7 @@ export class ShakingMinigame extends Minigame{
         this.score += Math.floor((Math.abs(this.vel.x) + Math.abs(this.vel.y))/10);
         //console.log(this.score);
         this.scoreText.text = this.score;
-        if (this.score > 4000) {
+        if (this.score > 3000) {
             this.finishMinigame(true);
         }
         
