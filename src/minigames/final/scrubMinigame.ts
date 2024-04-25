@@ -56,11 +56,11 @@ export class ScrubMinigame extends Minigame implements DirtySpotDelegate {
 
   override async attach() {
     await super.attach();
-    // sometimes attach gets called before canvas sets it's own cursor state.
+    // Sometimes attach gets called before canvas sets it's own cursor state.
     // Only update the cursor _after_ this to make sure we don't get overriden.
     setTimeout(() => {
       this.app.canvas.style.cursor = `url('./assets/sprites/minigames/loofa.png'), auto`;
-    }, 20);
+    }, 200);
   }
 
   override detach() {
