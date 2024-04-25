@@ -19,6 +19,23 @@ export enum MINIGAME_ASSET_ALIASES {
   SECURITY_ON = "security-on",
   SECURITY_OFF = "security-off",
   TILL = "till",
+  /* Checkpoint sprites */
+  CHECKPOINT_1_1 = "check-1-1",
+  CHECKPOINT_1_2 = "check-1-2",
+  CHECKPOINT_1_3 = "check-1-3",
+  CHECKPOINT_1_4 = "check-1-4",
+  ROOMBA = "roomba",
+  CHECKPOINT_2_1 = "check-2-1",
+  CHECKPOINT_2_2 = "check-2-2",
+  CHECKPOINT_2_3 = "check-2-3",
+  CHECKPOINT_2_4 = "check-2-4",
+  CHECKPOINT_2_5 = "check-2-5",
+  RABBIT = "rabbit",
+  CHECKPOINT_3_1 = "check-3-1",
+  CHECKPOINT_3_2 = "check-3-2",
+  CHECKPOINT_3_3 = "check-3-3",
+  CHECKPOINT_3_4 = "check-3-4",
+  BAR = "bar",
   /* Common sprites */
   BANANA = "banana",
   MILK = "milk",
@@ -52,6 +69,50 @@ const MINIGAME_ASSET_FILENAMES = {
   [MINIGAME_ASSET_ALIASES.BATH_MC_1]: getAssetPath("bath_mc_1.png"),
   [MINIGAME_ASSET_ALIASES.BATH_MC_2]: getAssetPath("bath_mc_2.png"),
   [MINIGAME_ASSET_ALIASES.BATH_MC_3]: getAssetPath("bath_mc_3.png"),
+  [MINIGAME_ASSET_ALIASES.CHECKPOINT_1_1]: getAssetPath(
+    "checkpoints/check1.1.png",
+  ),
+  [MINIGAME_ASSET_ALIASES.CHECKPOINT_1_2]: getAssetPath(
+    "checkpoints/check1.2.png",
+  ),
+  [MINIGAME_ASSET_ALIASES.CHECKPOINT_1_3]: getAssetPath(
+    "checkpoints/check1.3.png",
+  ),
+  [MINIGAME_ASSET_ALIASES.CHECKPOINT_1_4]: getAssetPath(
+    "checkpoints/check1.4.png",
+  ),
+  [MINIGAME_ASSET_ALIASES.ROOMBA]: getAssetPath("checkpoints/roomba.png"),
+  [MINIGAME_ASSET_ALIASES.CHECKPOINT_2_1]: getAssetPath(
+    "checkpoints/check2.1.png",
+  ),
+  [MINIGAME_ASSET_ALIASES.CHECKPOINT_2_2]: getAssetPath(
+    "checkpoints/check2.2.png",
+  ),
+  [MINIGAME_ASSET_ALIASES.CHECKPOINT_2_3]: getAssetPath(
+    "checkpoints/check2.3.png",
+  ),
+  [MINIGAME_ASSET_ALIASES.CHECKPOINT_2_4]: getAssetPath(
+    "checkpoints/check2.4.png",
+  ),
+  [MINIGAME_ASSET_ALIASES.CHECKPOINT_2_5]: getAssetPath(
+    "checkpoints/check2.5.png",
+  ),
+  [MINIGAME_ASSET_ALIASES.RABBIT]: getAssetPath(
+    "checkpoints/rabbit-flying.png",
+  ),
+  [MINIGAME_ASSET_ALIASES.CHECKPOINT_3_1]: getAssetPath(
+    "checkpoints/check-3.1.png",
+  ),
+  [MINIGAME_ASSET_ALIASES.CHECKPOINT_3_2]: getAssetPath(
+    "checkpoints/check-3.2.png",
+  ),
+  [MINIGAME_ASSET_ALIASES.CHECKPOINT_3_3]: getAssetPath(
+    "checkpoints/check-3.3.png",
+  ),
+  [MINIGAME_ASSET_ALIASES.CHECKPOINT_3_4]: getAssetPath(
+    "checkpoints/check-3.4.png",
+  ),
+  [MINIGAME_ASSET_ALIASES.BAR]: getAssetPath("checkpoints/bar.png"),
 };
 
 function getAssetPath(filename: string) {
