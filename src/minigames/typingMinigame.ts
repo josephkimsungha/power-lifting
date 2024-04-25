@@ -18,6 +18,9 @@ export class TypingMinigame extends KeyboardMinigame {
 
     const phonescreen = new Sprite(phonescreenTexture);
     phonescreen.anchor = 0.5;
+    const aspectRatio = phonescreen.width / phonescreen.height;
+    phonescreen.height = this.app.screen.height;
+    phonescreen.width = phonescreen.height * aspectRatio;
     phonescreen.position = new Point(
       this.app.screen.width / 2,
       this.app.screen.height / 2,

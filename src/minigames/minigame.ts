@@ -4,6 +4,9 @@ export interface MinigameDelegate {
   onMinigameEnd: (passed: boolean) => void;
 }
 
+const CLOCK_PADDING = 16;
+const CLOCK_RADIUS = 16;
+
 /** Base class for all minigames to extend. */
 export class Minigame {
   protected container: Container;
@@ -16,17 +19,31 @@ export class Minigame {
   protected cumulativeMS = 0;
   protected ticker: Ticker;
 
+  private clock: Graphics;
+  private clockArc: Graphics;
+
   constructor(
     protected readonly app: Application,
     protected readonly delegate: MinigameDelegate,
   ) {
     this.container = new Container();
+
+    this.clock = new Graphics();
+    this.clockArc = new Graphics();
+    this.clock.fillStyle = "#f0cfbb";
+    this.clock.circle(
+      CLOCK_PADDING + CLOCK_RADIUS,
+      this.app.screen.height - CLOCK_PADDING - CLOCK_RADIUS,
+      CLOCK_RADIUS,
+    );
+    this.clock.fill();
   }
 
   async attach() {
     this.ticker = new Ticker();
     if (this.lifetime !== undefined) {
       this.ticker.add(() => void this.onTick());
+      this.app.stage.addChild(this.clock);
     }
     this.ticker.start();
 
@@ -38,6 +55,10 @@ export class Minigame {
     this.ticker?.destroy();
     this.ticker = null;
     this.app.stage.removeChild(this.container);
+    if (this.lifetime !== undefined) {
+      this.app.stage.removeChild(this.clock);
+      this.app.stage.removeChild(this.clockArc);
+    }
   }
 
   protected async populateContainer() {
@@ -62,6 +83,18 @@ export class Minigame {
 
   private onTick() {
     this.cumulativeMS += this.ticker.elapsedMS;
+
+    this.clockArc.removeFromParent();
+    this.clockArc = new Graphics();
+    const percentage = this.cumulativeMS / this.lifetime;
+    const start = -Math.PI / 2 + percentage * 2 * Math.PI;
+    const x = CLOCK_PADDING + CLOCK_RADIUS;
+    const y = this.app.screen.height - CLOCK_PADDING - CLOCK_RADIUS;
+
+    this.clockArc.arc(x, y, CLOCK_RADIUS - 2, start, -Math.PI / 2);
+    this.clockArc.lineTo(x, y);
+    this.clockArc.fill("#A0484C");
+    this.app.stage.addChild(this.clockArc);
 
     if (this.cumulativeMS > this.lifetime) {
       this.delegate.onMinigameEnd(false);
