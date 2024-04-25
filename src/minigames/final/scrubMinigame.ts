@@ -100,8 +100,8 @@ export class ScrubMinigame extends Minigame implements DirtySpotDelegate {
     this.container.addChild(mc);
 
     const dirtableSize = {
-      width: characterSize.width - 150,
-      height: characterSize.height - 100,
+      width: 150,
+      height: 400,
     };
     const dirtableArea = new Rectangle(
       screen.width / 2 - dirtableSize.width / 2,
