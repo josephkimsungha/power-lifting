@@ -1,7 +1,6 @@
 import {
   Assets,
   BoundsData,
-  Container,
   FederatedMouseEvent,
   Point,
   Polygon,
