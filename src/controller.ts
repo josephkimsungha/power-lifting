@@ -17,13 +17,13 @@ import { addMinigameAssetAliases } from "./minigames/assets";
 const MINIGAMES_POOL = new URLSearchParams(window.location.search).get("quick")
   ? [Minigame]
   : [
-      // Minigame,
-      // KeyboardMinigame,
-      // FlingMinigame,
+      Minigame,
+      KeyboardMinigame,
+      FlingMinigame,
       TypingMinigame,
-      // TimingMinigame,
-      // RhythmMinigame,
-      // ScrubMinigame,
+      TimingMinigame,
+      RhythmMinigame,
+      ScrubMinigame,
     ];
 
 /** Controls the flow of the game. */
