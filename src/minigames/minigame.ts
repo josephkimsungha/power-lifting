@@ -31,7 +31,9 @@ export class Minigame {
     this.container = new Container();
 
     this.clock = new Graphics();
+    this.clock.zIndex = 1;
     this.clockArc = new Graphics();
+    this.clockArc.zIndex = 2;
     this.clock.fillStyle = "#f0cfbb";
     this.clock.circle(
       CLOCK_PADDING + CLOCK_RADIUS,
