@@ -223,10 +223,10 @@ export class PoseMinigame extends KeyboardMinigame {
       },
     });
     const aspectRatio = progressBar.width / progressBar.height;
-    progressBar.height = 48;
-    progressBar.width = aspectRatio * 48;
-    progressBar.x = 16;
-    progressBar.y = 16;
+    progressBar.width = appDimensions.width * 0.25;
+    progressBar.height = progressBar.width / aspectRatio;
+    progressBar.x = progressBar.height / 2;
+    progressBar.y = progressBar.height / 2;
 
     this.progressBar = progressBar;
     return this.progressBar;
