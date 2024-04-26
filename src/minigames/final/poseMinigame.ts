@@ -67,11 +67,6 @@ export class PoseMinigame extends KeyboardMinigame {
   }
 
   protected override async onKeyDown(key: string) {
-    if (key === "a" || key === "l") {
-      this.finishMinigame(true);
-      return;
-    }
-
     if (!this.character) return;
 
     if (key === "ArrowUp" || key === "Up") {
