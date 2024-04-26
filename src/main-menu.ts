@@ -23,7 +23,7 @@ export class MainMenu extends LitElement {
       top: 5%;
       color: #a0484c;
     }
-    .credit{
+    .credit {
       aspect-ratio: 16 / 9;
       position: absolute;
       display: grid;
@@ -50,13 +50,13 @@ export class MainMenu extends LitElement {
       transform: translate(-50%);
     }
     #settings-button {
-      right: 8%;
+      right: 9%;
       top: 35%;
       padding-bottom: 25vw;
     }
-    #credits-button{
+    #credits-button {
       padding-bottom: 3vw;
-      bottom:5%;
+      bottom: 5%;
     }
     :host([play-hovered]) #play-button {
       opacity: 100%;
@@ -894,7 +894,7 @@ export class MainMenu extends LitElement {
         id="settings-button"
         class="text-button"
       >
-        Settings
+        Credits
       </button>
     `;
   }
@@ -912,8 +912,12 @@ export class MainMenu extends LitElement {
 
   private renderSettings() {
     return html`
-      <img src="./assets/sprites/credits.png" class="credit">
-      <button class="text-button" id="credits-button" @click=${() => (this.settingsOpen = false)}>
+      <img src="./assets/sprites/credits.png" class="credit" />
+      <button
+        class="text-button"
+        id="credits-button"
+        @click=${() => (this.settingsOpen = false)}
+      >
         Back
       </button>
     `;
