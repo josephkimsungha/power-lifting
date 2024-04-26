@@ -1,4 +1,5 @@
 import { Application, Container, Graphics, Ticker } from "pixi.js";
+import { game } from "../game";
 
 export interface MinigameDelegate {
   onMinigameEnd: (passed: boolean) => void;
@@ -48,6 +49,7 @@ export class Minigame {
 
   async attach() {
     this.ticker = new Ticker();
+    this.playAudio();
     if (this.lifetime !== undefined) {
       this.ticker.add(() => void this.onTick());
       this.app.stage.addChild(this.clock);
@@ -170,5 +172,9 @@ export class Minigame {
     if (this.cumulativeMS > this.lifetime) {
       this.delegate.onMinigameEnd(this.succeedOnTimeout);
     }
+  }
+
+  playAudio() {
+    game.audioController.playMinigameMusic(this.week);
   }
 }
