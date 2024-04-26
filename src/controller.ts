@@ -21,7 +21,7 @@ import { GameOver } from "./game-over";
 import { game } from "./game";
 
 const MINIGAMES_POOL = new URLSearchParams(window.location.search).get("quick")
-  ? [Minigame]
+  ? [TypingMinigame]
   : [
       TypingMinigame,
       BalancingMinigame,
