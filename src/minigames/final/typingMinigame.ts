@@ -189,7 +189,7 @@ export class TypingMinigame extends KeyboardMinigame {
     ] as HTMLElement[]) {
       if (
         child.id.startsWith(substring) &&
-        this.remainingWords?.has(child.innerText)
+        this.remainingWords?.has(child.id)
       ) {
         (child.children[0] as HTMLElement).innerText = substring;
       } else {
