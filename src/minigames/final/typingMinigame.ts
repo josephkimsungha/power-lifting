@@ -6,7 +6,7 @@ import { MINIGAME_ASSET_ALIASES } from "../assets";
 const TARGET_SENTENCES = [
   "the pain you feel today is the strength you feel tomorrow",
   "no pain no gain no train no muscle #power #grind #alpha",
-  "they told me i could not do it they said i would fail i ignored them and kept going #bulk #swole",
+  "they told me racoons could not do it they said racoons would fail, we ignored them and kept going #bulk #swole",
 ];
 
 export class TypingMinigame extends KeyboardMinigame {
@@ -110,7 +110,10 @@ export class TypingMinigame extends KeyboardMinigame {
     this.currentNode = this.trie.find("");
   }
 
-  protected override onKeyDown(key: string) {
+  protected override onKeyDown(key: string, e: KeyboardEvent) {
+    if (e.repeat) {
+      return;
+    }
     if (!this.currentNode.hasChild(key)) {
       // No words match the current string. Reset the search from the beginning.
       this.currentNode = this.trie.find("");
