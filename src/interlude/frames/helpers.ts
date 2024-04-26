@@ -31,6 +31,20 @@ export async function spriteFrame(
   return { container: frame, advanceMode, autoAdvanceMs };
 }
 
+export async function addClickIndicator(app: Application) {
+  const sprite = new Sprite(
+    await Assets.load("./assets/sprites/mouse_left.png"),
+  );
+  sprite.anchor = 1;
+  const aspectRatio = sprite.width / sprite.height;
+  sprite.height = app.screen.height * 0.07;
+  sprite.width = sprite.height * aspectRatio;
+  sprite.x = app.screen.width - sprite.width;
+  sprite.y = app.screen.height - sprite.width;
+  sprite.zIndex = 1;
+  return sprite;
+}
+
 export function getRelativelyPositionedSpeech(
   content: string,
   screen: Rectangle,
