@@ -19,7 +19,7 @@ import { CheckpointThreeMinigame } from "./minigames/final/checkpointThreeMiniga
 import { PoseMinigame } from "./minigames/final/poseMinigame";
 
 const MINIGAMES_POOL = new URLSearchParams(window.location.search).get("quick")
-  ? [Minigame]
+  ? [TypingMinigame]
   : [
       TypingMinigame,
       BalancingMinigame,

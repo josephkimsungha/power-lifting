@@ -38,7 +38,7 @@ function getSpeech1(screen: Rectangle) {
     x: 0.28,
     y: 0.07,
     width: 0.095,
-    height: 0.12,
+    height: 0.13,
   });
 }
 
@@ -54,7 +54,7 @@ function getSpeech3(screen: Rectangle) {
   return getRelativelyPositionedSpeech(
     "I can show that wolf how far I've come!",
     screen,
-    { x: 0.838, y: 0.57, width: 0.125, height: 0.122 },
+    { x: 0.838, y: 0.57, width: 0.125, height: 0.125 },
   );
 }
 
@@ -62,7 +62,7 @@ function getSpeech4(screen: Rectangle) {
   return getRelativelyPositionedSpeech("Today's the day.", screen, {
     x: 0.465,
     y: 0.075,
-    width: 0.11,
+    width: 0.12,
     height: 0.21,
   });
 }
