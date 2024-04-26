@@ -3,6 +3,7 @@ import { getIntroFrames } from "./frames/introFrames";
 import { getWeekThreeFrames } from "./frames/weekThreeFrames";
 import { FrameData } from "./frames/types";
 import { getOutroFrames } from "./frames/outroFrames";
+import { game } from "../game";
 
 const INTERLUDE_ASSET_PATHS = {
   intro1: "./assets/sprites/intro/opening-gym-panel-1.png",
@@ -85,6 +86,10 @@ export class Interlude {
 
     const { container, advanceMode, autoAdvanceMs } =
       this.frames[this.currentFrame];
+
+    if (container.label === "intro13") {
+      game.audioController.playTrack("shine");
+    }
     container.eventMode = "static";
     if (advanceMode === "click") {
       container.on("click", () => {

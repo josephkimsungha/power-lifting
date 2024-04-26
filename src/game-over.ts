@@ -37,7 +37,13 @@ export class GameOver extends LitElement {
 
   protected override render() {
     return html`
-      <button @click=${() => window.location.reload()} class="text-button">
+      <button
+        @click=${() => {
+          game.audioController.playTrack("pop");
+          window.location.reload();
+        }}
+        class="text-button"
+      >
         Try again?
       </button>
     `;

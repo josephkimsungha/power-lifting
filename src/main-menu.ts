@@ -890,7 +890,10 @@ export class MainMenu extends LitElement {
       <button
         @mouseenter=${() => (this.settingsHovered = true)}
         @mouseleave=${() => (this.settingsHovered = false)}
-        @click=${() => (this.settingsOpen = true)}
+        @click=${() => {
+          game.audioController.playTrack("pop");
+          this.settingsOpen = true;
+        }}
         id="settings-button"
         class="text-button"
       >
@@ -916,7 +919,10 @@ export class MainMenu extends LitElement {
       <button
         class="text-button"
         id="credits-button"
-        @click=${() => (this.settingsOpen = false)}
+        @click=${() => {
+          game.audioController.playTrack("pop");
+          this.settingsOpen = false;
+        }}
       >
         Back
       </button>
@@ -924,6 +930,7 @@ export class MainMenu extends LitElement {
   }
 
   private startGame() {
+    game.audioController.playTrack("pop");
     this.remove();
     game.start();
   }

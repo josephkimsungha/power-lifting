@@ -2,6 +2,7 @@ import { Trie, TrieNode } from "@datastructures-js/trie";
 import { KeyboardMinigame } from "../keyboardMinigame";
 import { Assets, Sprite } from "pixi.js";
 import { MINIGAME_ASSET_ALIASES } from "../assets";
+import { game } from "../../game";
 
 const TARGET_SENTENCES = [
   "the pain you feel today is the strength you feel tomorrow",
@@ -117,6 +118,7 @@ export class TypingMinigame extends KeyboardMinigame {
     if (e.repeat) {
       return;
     }
+    game.audioController.playTrack("key");
     if (!this.currentNode.hasChild(key)) {
       // No words match the current string. Reset the search from the beginning.
       this.currentNode = this.trie.find("");
@@ -142,7 +144,7 @@ export class TypingMinigame extends KeyboardMinigame {
       if (document.getElementById(word))
         document.getElementById(word).style.opacity = "0.2";
       if (this.remainingWords.size === 0) {
-        this.finishMinigame(true, new Promise((r) => setTimeout(r, 3_000)));
+        this.finishMinigame(true, new Promise((r) => setTimeout(r, 2_000)));
       }
     }
     this.highlightSubString(this.getString(this.currentNode));
