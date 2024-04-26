@@ -11,6 +11,13 @@ export class AudioController {
         volume: 0.01,
       }),
     );
+    this.tracks.set(
+      "them",
+      new Howl({
+        src: ["./assets/audio/titlescreen.mp3"],
+        volume: 0.01,
+      }),
+    );
 
     const allTracks = Array.from(this.tracks.values());
     return Promise.all(
