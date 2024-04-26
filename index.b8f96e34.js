@@ -77,6 +77,12 @@ ${e}`)}});return await Promise.all(a),r?s[n[0].src]:s}async unload(t){let e=(0,e
       top: 5%;
       color: #a0484c;
     }
+    .credit{
+      aspect-ratio: 16 / 9;
+      position: absolute;
+      display: grid;
+      width: 95vw;
+    }
     .text-button {
       position: absolute;
       background: none;
@@ -101,6 +107,10 @@ ${e}`)}});return await Promise.all(a),r?s[n[0].src]:s}async unload(t){let e=(0,e
       right: 8%;
       top: 35%;
       padding-bottom: 25vw;
+    }
+    #credits-button{
+      padding-bottom: 3vw;
+      bottom:5%;
     }
     :host([play-hovered]) #play-button {
       opacity: 100%;
@@ -907,9 +917,9 @@ ${e}`)}});return await Promise.all(a),r?s[n[0].src]:s}async unload(t){let e=(0,e
       <h1 class="large-title">Loaded.</h1>
       <button class="text-button" @click=${this.launch}>Start</button>
     `}renderSettings(){return tv`
-      <h1 class="large-title">Settings</h1>
-      <button class="text-button" @click=${()=>this.settingsOpen=!1}>
+      <img src="./assets/sprites/credits.png" class="credit">
+      <button class="text-button" id="credits-button" @click=${()=>this.settingsOpen=!1}>
         Back
       </button>
     `}startGame(){this.remove(),iZ.start()}launch(){iZ.audioController.playTitleScreenMusic(),this.loadState="done"}constructor(...t){super(...t),this.playHovered=!1,this.settingsHovered=!1,this.settingsOpen=!1,this.loadState="loading"}}E([tY({type:Boolean,reflect:!0,attribute:"play-hovered"})],iJ.prototype,"playHovered",void 0),E([tY({type:Boolean,reflect:!0,attribute:"settings-hovered"})],iJ.prototype,"settingsHovered",void 0),E([tV()],iJ.prototype,"settingsOpen",void 0),E([tV()],iJ.prototype,"loadState",void 0),E([t$("main-menu")],iJ);
-//# sourceMappingURL=index.a114bf00.js.map
+//# sourceMappingURL=index.b8f96e34.js.map
