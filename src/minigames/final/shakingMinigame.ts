@@ -9,8 +9,8 @@ import {
   TextStyle,
 } from "pixi.js";
 import { ProgressBar } from '@pixi/ui';
-import { Minigame } from "./minigame";
-import { MINIGAME_ASSET_ALIASES } from "./assets";
+import { Minigame } from "../minigame";
+import { MINIGAME_ASSET_ALIASES } from "../assets";
 
 
 export class ShakingMinigame extends Minigame{
