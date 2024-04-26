@@ -37,7 +37,7 @@ class DirtySpot {
     spot.on("mousemove", (event) => {
       if (!this.delegate.isPointerDown()) return;
 
-      this.health = Math.max(this.health - event.movement.magnitude() * 0.3, 0);
+      this.health = Math.max(this.health - event.movement.magnitude() * 0.4, 0);
       spot.alpha = 0.15 + 0.7 * (this.health / 100);
       if (this.health === 0) {
         this.delegate.markCleaned(this);
