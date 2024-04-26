@@ -18,6 +18,7 @@ import { CheckpointTwoMinigame } from "./minigames/final/checkpointTwoMinigame";
 import { CheckpointThreeMinigame } from "./minigames/final/checkpointThreeMinigame";
 import { PoseMinigame } from "./minigames/final/poseMinigame";
 import { GameOver } from "./game-over";
+import { game } from "./game";
 
 const MINIGAMES_POOL = new URLSearchParams(window.location.search).get("quick")
   ? [Minigame]
@@ -64,6 +65,7 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
       // Player has run out of chances to proceed to the next phase.
       const gameover = new GameOver();
       document.body.append(gameover);
+      game.audioController.playFailMusic();
       return;
     }
 
@@ -75,6 +77,7 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
     if (this.completedMinigamePhases >= 3) {
       // Trigger end game loop.
       this.startNextInterlude();
+      game.audioController.playWinMusic();
       return;
     }
 

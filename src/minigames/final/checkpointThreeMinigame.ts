@@ -1,6 +1,7 @@
 import { Assets, Point, Sprite, Ticker } from "pixi.js";
 import { MINIGAME_ASSET_ALIASES } from "../assets";
 import { CheckpointMinigame } from "../checkpointMinigame";
+import { game } from "../../game";
 
 export class CheckpointThreeMinigame extends CheckpointMinigame {
   protected override chargeRate = 6;
@@ -30,6 +31,10 @@ export class CheckpointThreeMinigame extends CheckpointMinigame {
     } else {
       await this.changeBackgroundTexture(MINIGAME_ASSET_ALIASES.CHECKPOINT_3_4);
     }
+  }
+
+  override playAudio(): void {
+    game.audioController.playCheckpointMusic();
   }
 
   protected override async endContent() {

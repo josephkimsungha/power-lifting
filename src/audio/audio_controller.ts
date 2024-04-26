@@ -64,5 +64,49 @@ export class AudioController {
 
   playTitleScreenMusic() {
     this.tracks.get("titleScreen")!.play();
+    this.tracks.get("titleScreen")!.loop(true);
+  }
+
+  playMinigameMusic(week: number) {
+    let trackToPlay: string;
+    switch (week) {
+      case 0: trackToPlay = "Week1";
+        break;
+      case 1: trackToPlay = "Week2";
+        break;
+      case 2: trackToPlay = "Week3";
+        break;
+    }
+
+    if (this.tracks.get(trackToPlay)!.playing()) {
+      return;
+    }
+    else {
+      this.stopAllTracks();
+      this.tracks.get(trackToPlay)!.play();
+      this.tracks.get(trackToPlay)!.loop(true);
+    }
+  }
+
+  playCheckpointMusic() {
+    this.stopAllTracks();
+    this.tracks.get("Checkpoint")!.play();
+    this.tracks.get("Checkpoint")!.loop(true);
+  }
+  
+  playFailMusic() {
+    this.stopAllTracks();
+    this.tracks.get("Loss")!.play();
+  }
+
+  playWinMusic() {
+    this.stopAllTracks();
+    this.tracks.get("Win")!.play();
+  }
+
+  stopAllTracks(){
+    this.tracks.forEach(element => {
+      element!.stop();
+    });
   }
 }
