@@ -83,8 +83,6 @@ export class MainMenu extends LitElement {
       :host {
         height: 100%;
         width: unset;
-        --font-size-lg: calc(12vh * 16 / 9);
-        --font-size-sm: calc(3vh * 16 / 9);
       }
       #play-button {
         padding: 0 calc(15vh * 16 / 9) calc(15vh * 16 / 9) calc(15vh * 16 / 9);
