@@ -8,49 +8,49 @@ export class AudioController {
       "titleScreen",
       new Howl({
         src: ["./assets/audio/Title.mp3"],
-        volume: 0.01,
+        volume: 0.1,
       }),
     );
     this.tracks.set(
       "Win",
       new Howl({
         src: ["./assets/audio/Win.mp3"],
-        volume: 0.01,
+        volume: 0.1,
       }),
     );
     this.tracks.set(
       "Loss",
       new Howl({
         src: ["./assets/audio/Loss.mp3"],
-        volume: 0.01,
+        volume: 0.1,
       }),
     );
     this.tracks.set(
       "Checkpoint",
       new Howl({
         src: ["./assets/audio/Checkpoint.mp3"],
-        volume: 0.01,
+        volume: 0.1,
       }),
     );
     this.tracks.set(
       "Week1",
       new Howl({
         src: ["./assets/audio/Week1.mp3"],
-        volume: 0.01,
+        volume: 0.1,
       }),
     );
     this.tracks.set(
       "Week2",
       new Howl({
         src: ["./assets/audio/Week2.mp3"],
-        volume: 0.01,
+        volume: 0.1,
       }),
     );
     this.tracks.set(
       "Week3",
       new Howl({
         src: ["./assets/audio/Week2.mp3"],
-        volume: 0.01,
+        volume: 0.1,
       }),
     );
 
@@ -70,18 +70,20 @@ export class AudioController {
   playMinigameMusic(week: number) {
     let trackToPlay: string;
     switch (week) {
-      case 0: trackToPlay = "Week1";
+      case 0:
+        trackToPlay = "Week1";
         break;
-      case 1: trackToPlay = "Week2";
+      case 1:
+        trackToPlay = "Week2";
         break;
-      case 2: trackToPlay = "Week3";
+      case 2:
+        trackToPlay = "Week3";
         break;
     }
 
     if (this.tracks.get(trackToPlay)!.playing()) {
       return;
-    }
-    else {
+    } else {
       this.stopAllTracks();
       this.tracks.get(trackToPlay)!.play();
       this.tracks.get(trackToPlay)!.loop(true);
@@ -93,7 +95,7 @@ export class AudioController {
     this.tracks.get("Checkpoint")!.play();
     this.tracks.get("Checkpoint")!.loop(true);
   }
-  
+
   playFailMusic() {
     this.stopAllTracks();
     this.tracks.get("Loss")!.play();
@@ -104,8 +106,8 @@ export class AudioController {
     this.tracks.get("Win")!.play();
   }
 
-  stopAllTracks(){
-    this.tracks.forEach(element => {
+  stopAllTracks() {
+    this.tracks.forEach((element) => {
       element!.stop();
     });
   }
