@@ -7,14 +7,49 @@ export class AudioController {
     this.tracks.set(
       "titleScreen",
       new Howl({
-        src: ["./assets/audio/titlescreen.mp3"],
+        src: ["./assets/audio/Title.mp3"],
         volume: 0.01,
       }),
     );
     this.tracks.set(
-      "them",
+      "Win",
       new Howl({
-        src: ["./assets/audio/titlescreen.mp3"],
+        src: ["./assets/audio/Win.mp3"],
+        volume: 0.01,
+      }),
+    );
+    this.tracks.set(
+      "Loss",
+      new Howl({
+        src: ["./assets/audio/Loss.mp3"],
+        volume: 0.01,
+      }),
+    );
+    this.tracks.set(
+      "Checkpoint",
+      new Howl({
+        src: ["./assets/audio/Checkpoint.mp3"],
+        volume: 0.01,
+      }),
+    );
+    this.tracks.set(
+      "Week1",
+      new Howl({
+        src: ["./assets/audio/Week1.mp3"],
+        volume: 0.01,
+      }),
+    );
+    this.tracks.set(
+      "Week2",
+      new Howl({
+        src: ["./assets/audio/Week2.mp3"],
+        volume: 0.01,
+      }),
+    );
+    this.tracks.set(
+      "Week3",
+      new Howl({
+        src: ["./assets/audio/Week2.mp3"],
         volume: 0.01,
       }),
     );
