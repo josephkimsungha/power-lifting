@@ -82,7 +82,7 @@ export class CheckpointThreeMinigame extends CheckpointMinigame {
         }
       });
     });
-
-    await new Promise((res) => setTimeout(res, 2000));
+    game.audioController.playTrack("crash");
+    await new Promise((res) => setTimeout(res, 4000));
   }
 }

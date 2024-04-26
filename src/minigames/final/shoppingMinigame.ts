@@ -12,6 +12,7 @@ import {
 import { Minigame } from "../minigame";
 import { MINIGAME_ASSET_ALIASES } from "../assets";
 import { devPreviewHitArea } from "../../util/devHelpers";
+import { game } from "../../game";
 
 /* This needs to match up 1:1 with the strings in `minigames/assets.ts`. */
 enum GroceryItemType {
@@ -147,6 +148,7 @@ export class ShoppingMinigame extends Minigame {
       return;
     }
 
+    game.audioController.playTrack("bag");
     const item = this.dragTarget.sprite;
     // Prevent drag and drop for this item.
     item.eventMode = "none";

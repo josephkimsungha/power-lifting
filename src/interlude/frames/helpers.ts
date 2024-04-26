@@ -18,6 +18,7 @@ export async function spriteFrame(
   autoAdvanceMs = 400,
 ) {
   const frame = new Container();
+  frame.label = assetAlias;
   frame.hitArea = app.screen;
 
   const texture = await Assets.load(assetAlias);

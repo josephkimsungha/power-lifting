@@ -53,6 +53,42 @@ export class AudioController {
         volume: 0.1,
       }),
     );
+    // SFX
+    this.tracks.set(
+      "pop",
+      new Howl({
+        src: ["./assets/audio/happy-pop-2-185287.mp3"],
+        volume: 0.3,
+      }),
+    );
+    this.tracks.set(
+      "crash",
+      new Howl({
+        src: ["./assets/audio/large-crash-with-cataiff-14490.mp3"],
+        volume: 0.55,
+      }),
+    );
+    this.tracks.set(
+      "key",
+      new Howl({
+        src: ["./assets/audio/mech-keyboard-02-102918.mp3"],
+        volume: 0.1,
+      }),
+    );
+    this.tracks.set(
+      "bag",
+      new Howl({
+        src: ["./assets/audio/rustling-of-chips-bag-100788.mp3"],
+        volume: 0.5,
+      }),
+    );
+    this.tracks.set(
+      "shine",
+      new Howl({
+        src: ["./assets/audio/shine-193240.mp3"],
+        volume: 0.3,
+      }),
+    );
 
     const allTracks = Array.from(this.tracks.values());
     return Promise.all(
@@ -104,6 +140,10 @@ export class AudioController {
   playWinMusic() {
     this.stopAllTracks();
     this.tracks.get("Win")!.play();
+  }
+
+  playTrack(t: string) {
+    this.tracks.get(t)?.play();
   }
 
   stopAllTracks() {
