@@ -1,7 +1,7 @@
 import { Application } from "pixi.js";
 import { Minigame, MinigameDelegate } from "./minigames/minigame";
 import { FlingMinigame } from "./minigames/final/flingMinigame";
-import { TypingMinigame } from "./minigames/typingMinigame";
+import { TypingMinigame } from "./minigames/final/typingMinigame";
 import { RhythmMinigame } from "./minigames/rhythmMinigame";
 import { ScrubMinigame } from "./minigames/final/scrubMinigame";
 import { ShakingMinigame } from "./minigames/shakingMinigame";
