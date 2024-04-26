@@ -867,7 +867,7 @@ export class MainMenu extends LitElement {
           </defs>
         </svg>
       </div>
-      <h1 class="large-title">Power Lifter</h1>
+      <h1 class="large-title">Power Lifting</h1>
       <button
         @click=${this.startGame}
         @mouseenter=${() => (this.playHovered = true)}

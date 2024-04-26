@@ -29,6 +29,7 @@ export class Minigame {
     /** Uses zero indexing (0 === first week). */
     protected readonly week: number,
   ) {
+    const { screen } = app;
     this.container = new Container();
 
     this.clock = new Graphics();
@@ -36,11 +37,10 @@ export class Minigame {
     this.clockArc = new Graphics();
     this.clockArc.zIndex = 9999999;
     this.clock.fillStyle = "#f0cfbb";
-    this.clock.circle(
-      CLOCK_PADDING + CLOCK_RADIUS,
-      this.app.screen.height - CLOCK_PADDING - CLOCK_RADIUS,
-      CLOCK_RADIUS,
-    );
+    const x = ((CLOCK_PADDING + CLOCK_RADIUS) * screen.width) / 1000;
+    const y =
+      screen.height - ((CLOCK_PADDING + CLOCK_RADIUS) * screen.width) / 1000;
+    this.clock.circle(x, y, (CLOCK_RADIUS * screen.width) / 1000);
     this.clock.fill();
   }
 
@@ -101,10 +101,20 @@ export class Minigame {
     this.clockArc.zIndex = 9999999;
     const percentage = this.cumulativeMS / this.lifetime;
     const start = -Math.PI / 2 + percentage * 2 * Math.PI;
-    const x = CLOCK_PADDING + CLOCK_RADIUS;
-    const y = this.app.screen.height - CLOCK_PADDING - CLOCK_RADIUS;
 
-    this.clockArc.arc(x, y, CLOCK_RADIUS - 2, start, -Math.PI / 2);
+    const { screen } = this.app;
+
+    const x = ((CLOCK_PADDING + CLOCK_RADIUS) * screen.width) / 1000;
+    const y =
+      screen.height - ((CLOCK_PADDING + CLOCK_RADIUS) * screen.width) / 1000;
+
+    this.clockArc.arc(
+      x,
+      y,
+      ((CLOCK_RADIUS - 2) * screen.width) / 1000,
+      start,
+      -Math.PI / 2,
+    );
     this.clockArc.lineTo(x, y);
     this.clockArc.fill("#A0484C");
     this.app.stage.addChild(this.clockArc);
