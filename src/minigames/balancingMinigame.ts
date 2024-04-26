@@ -10,6 +10,8 @@ export class BalancingMinigame extends KeyboardMinigame{
     private currentForce: number = 0;
     private forceAmount: number = 0.8;
     protected override succeedOnTimeout: boolean = true;
+    private gravityAmount: number;
+    private randomFuckAssNumber: number;
     
     //temporary pos for the graphic instantiation
     override async attach() {
@@ -26,10 +28,38 @@ export class BalancingMinigame extends KeyboardMinigame{
     }
 
     protected override async populateContainer() {
-        this.pos = new Point(this.app.screen.height/6 * 5, this.app.screen.width/2);
-        this.balancingObject = new Sprite(await Assets.load(MINIGAME_ASSET_ALIASES.BALANCE_C1))
+        let tex;
+        let anchorPoint;
+        switch (this.week) {
+            case 0:
+                this.forceAmount = 0.8;
+                this.gravityAmount = 0.003;
+                this.randomFuckAssNumber = 0.008;
+                tex = MINIGAME_ASSET_ALIASES.BALANCE_C1;
+                this.pos = new Point(this.app.screen.width / 2, this.app.screen.height / 6 * 4.5);
+                anchorPoint = new Point(0.5,0.75);
+                break;
+            case 1:
+                this.forceAmount = 1.5;
+                this.gravityAmount = 0.005;
+                this.randomFuckAssNumber = 0.01;
+                tex = MINIGAME_ASSET_ALIASES.BALANCE_C2;
+                this.pos = new Point(this.app.screen.width / 2, this.app.screen.height / 6 * 4.9);
+                anchorPoint = new Point(0.5,0.8)
+                break;
+            case 2: 
+                this.forceAmount = 2;
+                this.gravityAmount = 0.01;
+                this.randomFuckAssNumber = 0.015;
+                tex = MINIGAME_ASSET_ALIASES.BALANCE_C3;
+                this.pos = new Point(this.app.screen.width / 2, this.app.screen.height / 6 * 5.3);
+                anchorPoint = new Point(0.5,0.9)
+                break;
+        }
+
+        this.balancingObject = new Sprite(await Assets.load(tex))
         this.balancingObject.position = this.pos;
-        this.balancingObject.anchor = new Point(0.5,0.85);
+        this.balancingObject.anchor = anchorPoint;
         
         this.container.addChild(this.balancingObject);
         
@@ -60,7 +90,6 @@ export class BalancingMinigame extends KeyboardMinigame{
     }
     
     protected onUpdate(time: Ticker): void {
-        console.log(this.balancingObject.rotation);
         const increment = this.currentForce * time.deltaTime* 0.1;
         this.balancingObject.rotation += increment;
         this.currentForce -= increment;
@@ -68,13 +97,11 @@ export class BalancingMinigame extends KeyboardMinigame{
             this.finishMinigame(false);
         }
 
-        
-
         if (this.balancingObject.rotation >= 0) {
-            this.balancingObject.rotation += 0.003 + Math.abs(this.balancingObject.rotation)*0.008;
+            this.balancingObject.rotation += this.gravityAmount + Math.abs(this.balancingObject.rotation)*this.randomFuckAssNumber;
         }
         else {
-            this.balancingObject.rotation -= 0.003 + Math.abs(this.balancingObject.rotation)*0.008;
+            this.balancingObject.rotation -= this.gravityAmount + Math.abs(this.balancingObject.rotation)*this.randomFuckAssNumber;
             
         }
     }

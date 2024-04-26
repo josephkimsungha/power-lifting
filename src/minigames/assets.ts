@@ -22,6 +22,21 @@ export enum MINIGAME_ASSET_ALIASES {
   SECURITY_ON = "security-on",
   SECURITY_OFF = "security-off",
   TILL = "till",
+  /* Pose minigame */
+  POSE_BACKGROUND = "pose-backgound",
+  POSE_1_DOWN = "pose-1-down",
+  POSE_1_LEFT = "pose-1-left",
+  POSE_1_RIGHT = "pose-1-right",
+  POSE_1_UP = "pose-1-up",
+  POSE_2_DOWN = "pose-2-down",
+  POSE_2_LEFT = "pose-2-left",
+  POSE_2_RIGHT = "pose-2-right",
+  POSE_2_UP = "pose-2-up",
+  POSE_3_DOWN = "pose-3-down",
+  POSE_3_LEFT = "pose-3-left",
+  POSE_3_RIGHT = "pose-3-right",
+  POSE_3_UP = "pose-3-up",
+  POSE_PROGRESS_CONTAINER = "pose-progress-container",
   /* Checkpoint sprites */
   CHECKPOINT_1_1 = "check-1-1",
   CHECKPOINT_1_2 = "check-1-2",
@@ -48,6 +63,10 @@ export enum MINIGAME_ASSET_ALIASES {
   STRAWBERRIES = "strawberries",
   YOGHURT = "yoghurt",
   PROGRESS_BAR = "progress-bar",
+  UP_ARROW = "up-arrow",
+  DOWN_ARROW = "down-arrow",
+  LEFT_ARROW = "left-arrow",
+  RIGHT_ARROW = "right-arrow",
   /* Browser game sprites */
   BLOG_POST_1 = "blog-post-1",
   BLOG_POST_2 = "blog-post-2",
@@ -93,6 +112,25 @@ const MINIGAME_ASSET_FILENAMES = {
   [MINIGAME_ASSET_ALIASES.BATH_MC_1]: getAssetPath("bath_mc_1.png"),
   [MINIGAME_ASSET_ALIASES.BATH_MC_2]: getAssetPath("bath_mc_2.png"),
   [MINIGAME_ASSET_ALIASES.BATH_MC_3]: getAssetPath("bath_mc_3.png"),
+  [MINIGAME_ASSET_ALIASES.POSE_BACKGROUND]: getAssetPath("pose_background.png"),
+  [MINIGAME_ASSET_ALIASES.POSE_1_DOWN]: getAssetPath("pose_1_down.png"),
+  [MINIGAME_ASSET_ALIASES.POSE_1_LEFT]: getAssetPath("pose_1_left.png"),
+  [MINIGAME_ASSET_ALIASES.POSE_1_RIGHT]: getAssetPath("pose_1_right.png"),
+  [MINIGAME_ASSET_ALIASES.POSE_1_UP]: getAssetPath("pose_1_up.png"),
+  [MINIGAME_ASSET_ALIASES.POSE_2_DOWN]: getAssetPath("pose_2_down.png"),
+  [MINIGAME_ASSET_ALIASES.POSE_2_LEFT]: getAssetPath("pose_2_left.png"),
+  [MINIGAME_ASSET_ALIASES.POSE_2_RIGHT]: getAssetPath("pose_2_right.png"),
+  [MINIGAME_ASSET_ALIASES.POSE_2_UP]: getAssetPath("pose_2_up.png"),
+  [MINIGAME_ASSET_ALIASES.POSE_3_DOWN]: getAssetPath("pose_3_down.png"),
+  [MINIGAME_ASSET_ALIASES.POSE_3_LEFT]: getAssetPath("pose_3_left.png"),
+  [MINIGAME_ASSET_ALIASES.POSE_3_RIGHT]: getAssetPath("pose_3_right.png"),
+  [MINIGAME_ASSET_ALIASES.POSE_3_UP]: getAssetPath("pose_3_up.png"),
+  [MINIGAME_ASSET_ALIASES.POSE_PROGRESS_CONTAINER]:
+    getAssetPath("progress_pose.png"),
+  [MINIGAME_ASSET_ALIASES.UP_ARROW]: getAssetPath("uparrow.png"),
+  [MINIGAME_ASSET_ALIASES.DOWN_ARROW]: getAssetPath("downarrow.png"),
+  [MINIGAME_ASSET_ALIASES.LEFT_ARROW]: getAssetPath("leftarrow.png"),
+  [MINIGAME_ASSET_ALIASES.RIGHT_ARROW]: getAssetPath("rightarrow.png"),
   [MINIGAME_ASSET_ALIASES.CHECKPOINT_1_1]: getAssetPath(
     "checkpoints/check1.1.png",
   ),
@@ -162,6 +200,9 @@ const MINIGAME_ASSET_FILENAMES = {
   [MINIGAME_ASSET_ALIASES.BALANCE_BG]: getAssetPath("balance_background.png"),
   [MINIGAME_ASSET_ALIASES.BALANCE_C1]: getAssetPath("balance_character-1.png"),
   [MINIGAME_ASSET_ALIASES.KITCHEN_BG]: getAssetPath("kitchenbackground.png"),
+  [MINIGAME_ASSET_ALIASES.BALANCE_C2]: getAssetPath("balance_character-2.png"),
+  [MINIGAME_ASSET_ALIASES.BALANCE_C3]: getAssetPath("balance_character-3.png"),
+
 };
 
 function getAssetPath(filename: string) {
