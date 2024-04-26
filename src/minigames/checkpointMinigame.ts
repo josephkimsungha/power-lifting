@@ -16,6 +16,8 @@ export class CheckpointMinigame extends KeyboardMinigame {
   protected initialBackgroundAlias = MINIGAME_ASSET_ALIASES.CHECKPOINT_1_1;
   private initialBackgroundScale: Point;
 
+  private minigameComplete = false;
+
   private bounceProgress = 0;
 
   protected async populateContainer() {
@@ -40,7 +42,7 @@ export class CheckpointMinigame extends KeyboardMinigame {
       await this.updateBackground();
 
       if (this.chargeBar === 100) {
-        this.finishMinigame(true);
+        this.finishCheckpoint();
       }
     });
   }
@@ -53,9 +55,11 @@ export class CheckpointMinigame extends KeyboardMinigame {
     this.background.texture = await Assets.load(alias);
   }
 
+  protected async endContent() {}
+
   protected override onKeyDown(key: string, e: KeyboardEvent) {
     // Prevent holding down the key to win.
-    if (key != " " || e.repeat) return;
+    if (this.minigameComplete || key != " " || e.repeat) return;
 
     this.chargeBar = Math.min(this.chargeBar + this.chargeRate, 100);
 
@@ -68,6 +72,11 @@ export class CheckpointMinigame extends KeyboardMinigame {
       ),
     );
     ticker.start();
+  }
+
+  private finishCheckpoint() {
+    this.minigameComplete = true;
+    this.finishMinigame(true, this.endContent());
   }
 
   private async bounce(

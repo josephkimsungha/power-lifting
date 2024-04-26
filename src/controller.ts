@@ -2,9 +2,7 @@ import { Application } from "pixi.js";
 import { Minigame, MinigameDelegate } from "./minigames/minigame";
 import { FlingMinigame } from "./minigames/final/flingMinigame";
 import { TypingMinigame } from "./minigames/typingMinigame";
-import { TimingMinigame } from "./minigames/timingMinigame";
 import { RhythmMinigame } from "./minigames/rhythmMinigame";
-import { CheckpointMinigame } from "./minigames/checkpointMinigame";
 import { ScrubMinigame } from "./minigames/final/scrubMinigame";
 import { ShakingMinigame } from "./minigames/shakingMinigame";
 import { ShoppingMinigame } from "./minigames/final/shoppingMinigame";
@@ -64,34 +62,33 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
       // Player has run out of chances to proceed to the next phase.
       console.log("You lose!");
       return;
-    } else if (this.minigameQueue.length === 0) {
+    }
+
+    if (this.minigameQueue.length === 0) {
       this.completedMinigamePhases++;
       this.minigameLoseCount = 0;
     }
 
-    if (this.completedMinigamePhases === 3) {
-      // Trigger end game.
+    if (this.completedMinigamePhases >= 3) {
+      // Trigger end game loop.
       this.startNextInterlude();
-    } else if (this.minigameQueue.length === 0) {
+      return;
+    }
+
+    if (this.minigameQueue.length === 0) {
       // Trigger check point and go around again.
       this.currentMinigame =
-        this.completedMinigamePhases === 0
+        this.completedMinigamePhases === 1
           ? new CheckpointOneMinigame(
               this.app,
               this,
               this.completedMinigamePhases,
             )
-          : this.completedMinigamePhases === 1
-            ? new CheckpointTwoMinigame(
-                this.app,
-                this,
-                this.completedMinigamePhases,
-              )
-            : new CheckpointThreeMinigame(
-                this.app,
-                this,
-                this.completedMinigamePhases,
-              );
+          : new CheckpointTwoMinigame(
+              this.app,
+              this,
+              this.completedMinigamePhases,
+            );
       this.currentMinigame.attach(); // No await.
       this.populateMinigameQueue();
     } else {
@@ -100,9 +97,19 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
   }
 
   onInterludeEnd() {
-    if (this.completedMinigamePhases >= 3) {
-      // TODO: What should we do once the player has finished?
-      location.reload();
+    if (this.completedMinigamePhases === 3) {
+      this.currentMinigame = new CheckpointThreeMinigame(
+        this.app,
+        this,
+        this.completedMinigamePhases,
+      );
+      this.currentMinigame.attach(); // No await.
+
+      return;
+    }
+
+    if (this.completedMinigamePhases > 3) {
+      console.log("The end!");
       return;
     }
 
