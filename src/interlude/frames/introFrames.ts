@@ -40,7 +40,7 @@ function getSpeech1(screen: Rectangle) {
   return getRelativelyPositionedSpeech(
     "These days I just feel so powerless.",
     screen,
-    { x: 0.465, y: 0.075, width: 0.11, height: 0.21 },
+    { x: 0.465, y: 0.075, width: 0.12, height: 0.21 },
   );
 }
 
@@ -64,7 +64,7 @@ function getSpeech4(screen: Rectangle) {
   return getRelativelyPositionedSpeech(
     "Nope, it's no good. Exercising is harder than it looks - it just makes me feel even weaker than I already did. Maybe there's no hope for me...",
     screen,
-    { x: 0.76, y: 0.495, width: 0.2, height: 0.435 },
+    { x: 0.76, y: 0.495, width: 0.21, height: 0.435 },
   );
 }
 
@@ -72,7 +72,7 @@ function getSpeech5(screen: Rectangle) {
   return getRelativelyPositionedSpeech(
     "Snap out of it! Rome wasn't built in a day, I just need to keep at it!",
     screen,
-    { x: 0.749, y: 0.32, width: 0.2, height: 0.12 },
+    { x: 0.747, y: 0.32, width: 0.215, height: 0.12 },
   );
 }
 
@@ -96,7 +96,7 @@ function getSpeech8(screen: Rectangle) {
   return getRelativelyPositionedSpeech(
     "No thanks. That seems super shady. I'm going to get stronger through my own hard work, just you watch.",
     screen,
-    { x: 0.84, y: 0.1, width: 0.12, height: 0.33 },
+    { x: 0.835, y: 0.1, width: 0.12, height: 0.33 },
     // { x: 0.73, y: 0.1, width: 0.2, height: 0.33 },
   );
 }
@@ -105,6 +105,6 @@ function getSpeech9(screen: Rectangle) {
   return getRelativelyPositionedSpeech(
     "I need to do my best to prove just how powerful I can be!",
     screen,
-    { x: 0.779, y: 0.54, width: 0.175, height: 0.14 },
+    { x: 0.777, y: 0.54, width: 0.175, height: 0.14 },
   );
 }

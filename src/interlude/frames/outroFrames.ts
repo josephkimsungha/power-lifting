@@ -54,7 +54,7 @@ function getSpeech3(screen: Rectangle) {
   return getRelativelyPositionedSpeech(
     '"Welcome home son, I\'ve missed you. Help me bring in the groceries, would you?"',
     screen,
-    { x: 0.65, y: 0.78, width: 0.18, height: 0.14 },
+    { x: 0.645, y: 0.78, width: 0.18, height: 0.14 },
   );
 }
 
@@ -62,7 +62,7 @@ function getSpeech4(screen: Rectangle) {
   return getRelativelyPositionedSpeech(
     "In that moment it was clear. The power I could use for good meant so much more to me than any competition.",
     screen,
-    { x: 0.85, y: 0.57, width: 0.1, height: 0.365 },
+    { x: 0.85, y: 0.57, width: 0.1, height: 0.367 },
   );
 }
 

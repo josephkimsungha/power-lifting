@@ -43,7 +43,7 @@ export function getRelativelyPositionedSpeech(
   const bubble = new Graphics();
   bubble.rect(0, 0, screen.width * width, screen.height * height);
   bubble.fill(0xffffff);
-  bubble.stroke({ color: 0x000000, width: screen.height / 100 });
+  bubble.stroke({ color: 0x000000, width: borderWidth });
 
   if (drawBubble) {
     container.addChild(bubble);

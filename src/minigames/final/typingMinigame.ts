@@ -31,6 +31,7 @@ export class TypingMinigame extends KeyboardMinigame {
       col.style.justifyContent = "center";
       col.style.textAlign = "center";
       col.style.gap = "4px";
+      col.style.pointerEvents = "none";
     }
 
     const canvasBB = this.app.canvas.getBoundingClientRect();
@@ -47,13 +48,14 @@ export class TypingMinigame extends KeyboardMinigame {
       postWidth / 2 +
       screenWidth * 0.027 +
       "px";
-    this.postText.style.top = screenHeight * 0.63 + "px";
+    this.postText.style.top = canvasBB.top + screenHeight * 0.63 + "px";
     this.postText.style.position = "absolute";
     this.postText.style.fontFamily = `'Poppins'`;
     this.postText.style.fontSize = "var(--font-size-x-sm)";
     this.postText.style.color = "#58676f";
     this.postText.style.textAlign = "center";
     this.postText.style.margin = "0";
+    this.postText.style.pointerEvents = "none";
     this.leftCol.style.left = `${canvasBB.left}px`;
     this.rightCol.style.right = `${canvasBB.right - screenWidth}px`;
 
@@ -183,8 +185,11 @@ export class TypingMinigame extends KeyboardMinigame {
     for (const child of [
       ...Array.from(this.leftCol.children),
       ...Array.from(this.rightCol.children),
-    ]) {
-      if (child.id.startsWith(substring)) {
+    ] as HTMLElement[]) {
+      if (
+        child.id.startsWith(substring) &&
+        this.remainingWords?.has(child.innerText)
+      ) {
         (child.children[0] as HTMLElement).innerText = substring;
       } else {
         (child.children[0] as HTMLElement).innerText = "";
