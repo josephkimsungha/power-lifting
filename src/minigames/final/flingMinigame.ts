@@ -113,10 +113,10 @@ export class FlingMinigame extends Minigame {
       },
     });
     const aspectRatio = progressBar.width / progressBar.height;
-    progressBar.height = 48;
-    progressBar.width = aspectRatio * 48;
-    progressBar.x = 16;
-    progressBar.y = 16;
+    progressBar.width = this.app.screen.width * 0.25;
+    progressBar.height = progressBar.width / aspectRatio;
+    progressBar.x = progressBar.height / 2;
+    progressBar.y = progressBar.height / 2;
     this.container.addChild(progressBar);
 
     for (let i = 0; i < 2 + this.week; i++) {

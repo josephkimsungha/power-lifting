@@ -84,11 +84,13 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
               this.app,
               this,
               this.completedMinigamePhases,
+              true,
             )
           : new CheckpointTwoMinigame(
               this.app,
               this,
               this.completedMinigamePhases,
+              true,
             );
       this.currentMinigame.attach(); // No await.
       this.populateMinigameQueue();
@@ -103,6 +105,7 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
         this.app,
         this,
         this.completedMinigamePhases,
+        true,
       );
       this.currentMinigame.attach(); // No await.
 
@@ -126,6 +129,7 @@ export class Controller implements MinigameDelegate, InterludeDelegate {
         this.app,
         this,
         this.completedMinigamePhases,
+        i === MINIGAMES_POOL.length - 1,
       );
       this.minigameQueue.push(minigame);
     }

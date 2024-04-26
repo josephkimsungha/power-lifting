@@ -18,17 +18,20 @@ export class Minigame {
   protected lifetime = 10_000;
   protected cumulativeMS = 0;
   protected ticker: Ticker;
+  protected succeedOnTimeout: boolean = false;
 
   private clock: Graphics;
   private clockArc: Graphics;
-  protected succeedOnTimeout: boolean = false;
+  private transitionOverlay = document.createElement("div");
 
   constructor(
     protected readonly app: Application,
     protected readonly delegate: MinigameDelegate,
     /** Uses zero indexing (0 === first week). */
     protected readonly week: number,
+    protected readonly isLastInPhase: boolean,
   ) {
+    const { screen } = app;
     this.container = new Container();
 
     this.clock = new Graphics();
@@ -36,11 +39,10 @@ export class Minigame {
     this.clockArc = new Graphics();
     this.clockArc.zIndex = 9999999;
     this.clock.fillStyle = "#f0cfbb";
-    this.clock.circle(
-      CLOCK_PADDING + CLOCK_RADIUS,
-      this.app.screen.height - CLOCK_PADDING - CLOCK_RADIUS,
-      CLOCK_RADIUS,
-    );
+    const x = ((CLOCK_PADDING + CLOCK_RADIUS) * screen.width) / 1000;
+    const y =
+      screen.height - ((CLOCK_PADDING + CLOCK_RADIUS) * screen.width) / 1000;
+    this.clock.circle(x, y, (CLOCK_RADIUS * screen.width) / 1000);
     this.clock.fill();
   }
 
@@ -54,6 +56,28 @@ export class Minigame {
 
     await this.populateContainer();
     this.app.stage.addChild(this.container);
+
+    const canvasBB = this.app.canvas.getBoundingClientRect();
+    this.transitionOverlay.style.position = "fixed";
+    this.transitionOverlay.style.left = `${canvasBB.left}px`;
+    this.transitionOverlay.style.top = `${canvasBB.top}px`;
+    this.transitionOverlay.style.width = `${this.app.screen.width}px`;
+    this.transitionOverlay.style.height = `${this.app.screen.height}px`;
+    this.transitionOverlay.style.background = "#F0CFBB";
+    this.transitionOverlay.style.display = "grid";
+    this.transitionOverlay.style.placeItems = "end start";
+    this.transitionOverlay.style.padding = "8px";
+    this.transitionOverlay.style.boxSizing = "border-box";
+    this.transitionOverlay.style.zIndex = "99999";
+
+    const sprite = document.createElement("div");
+    sprite.style.width = "124px";
+    sprite.style.height = "124px";
+    sprite.style.backgroundPosition = "left";
+    sprite.style.backgroundRepeat = "no-repeat";
+    sprite.style.backgroundSize = "cover";
+
+    this.transitionOverlay.append(sprite);
   }
 
   detach() {
@@ -89,8 +113,32 @@ export class Minigame {
   ) {
     this.ticker.stop();
     await pendingPromises;
-    // Show the player they've won or lost.
+
+    const sprite = this.transitionOverlay.children[0] as HTMLElement;
+    if (this.isLastInPhase) {
+      sprite.style.backgroundImage = [
+        "url('./assets/sprites/transitions/sleep_1.png')",
+        "url('./assets/sprites/transitions/sleep_2.png')",
+        "url('./assets/sprites/transitions/sleep_3.png')",
+      ][this.week];
+      sprite.style.animation = "spritewalk-2 1s steps(1, end) infinite";
+    } else {
+      sprite.style.backgroundImage = [
+        "url('./assets/sprites/transitions/pump.png')",
+        "url('./assets/sprites/transitions/pump_2.png')",
+        "url('./assets/sprites/transitions/pump_3.png')",
+      ][this.week];
+      sprite.style.animation = [
+        "spritewalk 2s steps(3, end) infinite",
+        "spritewalk-2 2s steps(1, end) infinite",
+        "spritewalk 2s steps(3, end) infinite",
+      ][this.week];
+    }
+
+    document.body.appendChild(this.transitionOverlay);
     this.delegate.onMinigameEnd(passed);
+    await new Promise((r) => setTimeout(r, 2_000));
+    this.transitionOverlay.remove();
   }
 
   private onTick() {
@@ -101,10 +149,20 @@ export class Minigame {
     this.clockArc.zIndex = 9999999;
     const percentage = this.cumulativeMS / this.lifetime;
     const start = -Math.PI / 2 + percentage * 2 * Math.PI;
-    const x = CLOCK_PADDING + CLOCK_RADIUS;
-    const y = this.app.screen.height - CLOCK_PADDING - CLOCK_RADIUS;
 
-    this.clockArc.arc(x, y, CLOCK_RADIUS - 2, start, -Math.PI / 2);
+    const { screen } = this.app;
+
+    const x = ((CLOCK_PADDING + CLOCK_RADIUS) * screen.width) / 1000;
+    const y =
+      screen.height - ((CLOCK_PADDING + CLOCK_RADIUS) * screen.width) / 1000;
+
+    this.clockArc.arc(
+      x,
+      y,
+      ((CLOCK_RADIUS - 2) * screen.width) / 1000,
+      start,
+      -Math.PI / 2,
+    );
     this.clockArc.lineTo(x, y);
     this.clockArc.fill("#A0484C");
     this.app.stage.addChild(this.clockArc);
