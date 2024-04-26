@@ -1,6 +1,10 @@
 import { Application, Rectangle } from "pixi.js";
 import { FrameData, GetFrames } from "./types";
-import { getRelativelyPositionedSpeech, spriteFrame } from "./helpers";
+import {
+  addClickIndicator,
+  getRelativelyPositionedSpeech,
+  spriteFrame,
+} from "./helpers";
 
 export const getIntroFrames: GetFrames = async (app: Application) => {
   if (new URLSearchParams(window.location.search).get("skipIntro")) return [];
@@ -8,29 +12,55 @@ export const getIntroFrames: GetFrames = async (app: Application) => {
   const { screen } = app;
 
   const allFrames: FrameData[] = [
-    await spriteFrame(app, "intro1", [getSpeech1(screen)]),
-    await spriteFrame(app, "intro2", [getSpeech1(screen), getSpeech2(screen)]),
+    await spriteFrame(app, "intro1", [
+      getSpeech1(screen),
+      await addClickIndicator(app),
+    ]),
+    await spriteFrame(app, "intro2", [
+      getSpeech1(screen),
+      getSpeech2(screen),
+      await addClickIndicator(app),
+    ]),
     await spriteFrame(app, "intro3", [
       getSpeech1(screen),
       getSpeech2(screen),
       getSpeech3(screen),
+      await addClickIndicator(app),
     ]),
     await spriteFrame(app, "intro4", [], "auto"),
     await spriteFrame(app, "intro5", [], "auto"),
     await spriteFrame(app, "intro6", [], "auto"),
     await spriteFrame(app, "intro7", [], "auto"),
     await spriteFrame(app, "intro8", [], "auto"),
-    await spriteFrame(app, "intro9", [getSpeech4(screen)]),
-    await spriteFrame(app, "intro10", [getSpeech5(screen)]),
-    await spriteFrame(app, "intro11", [getSpeech5(screen), getSpeech6(screen)]),
+    await spriteFrame(app, "intro9", [
+      getSpeech4(screen),
+      await addClickIndicator(app),
+    ]),
+    await spriteFrame(app, "intro10", [
+      getSpeech5(screen),
+      await addClickIndicator(app),
+    ]),
+    await spriteFrame(app, "intro11", [
+      getSpeech5(screen),
+      getSpeech6(screen),
+      await addClickIndicator(app),
+    ]),
     await spriteFrame(app, "intro12", [
       getSpeech5(screen),
       getSpeech6(screen),
       getSpeech7(screen),
+      await addClickIndicator(app),
     ]),
     await spriteFrame(app, "intro13", [], "auto", 1200),
-    await spriteFrame(app, "intro14", [getSpeech8(screen)]),
-    await spriteFrame(app, "intro15", [getSpeech8(screen), getSpeech9(screen)]),
+    await spriteFrame(app, "intro14", [
+      getSpeech8(screen),
+      await addClickIndicator(app),
+    ]),
+    await spriteFrame(app, "intro15", [
+      getSpeech8(screen),
+      getSpeech9(screen),
+      await addClickIndicator(app),
+    ]),
   ];
 
   return allFrames;

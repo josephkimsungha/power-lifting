@@ -1,21 +1,30 @@
 import { Application, Rectangle } from "pixi.js";
 import { FrameData, GetFrames } from "./types";
-import { getRelativelyPositionedSpeech, spriteFrame } from "./helpers";
+import {
+  addClickIndicator,
+  getRelativelyPositionedSpeech,
+  spriteFrame,
+} from "./helpers";
 
 export const getOutroFrames: GetFrames = async (app: Application) => {
   const { screen } = app;
 
   const allFrames: FrameData[] = [
-    await spriteFrame(app, "afterComp1", [getSpeech1(screen)]),
+    await spriteFrame(app, "afterComp1", [
+      getSpeech1(screen),
+      await addClickIndicator(app),
+    ]),
     await spriteFrame(app, "afterComp2", [
       getSpeech1(screen),
       getSpeech2(screen),
+      await addClickIndicator(app),
     ]),
     await spriteFrame(app, "afterComp3", [
       getSpeech1(screen),
       getSpeech2(screen),
       getSpeech3(screen),
       getSpeech4(screen),
+      await addClickIndicator(app),
     ]),
     await spriteFrame(app, "afterComp3", [
       getSpeech1(screen),
@@ -23,6 +32,7 @@ export const getOutroFrames: GetFrames = async (app: Application) => {
       getSpeech3(screen),
       getSpeech4(screen),
       getSpeech5(screen),
+      await addClickIndicator(app),
     ]),
   ];
 

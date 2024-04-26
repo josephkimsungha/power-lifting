@@ -1,31 +1,42 @@
 import { Application, Rectangle } from "pixi.js";
 import { FrameData, GetFrames } from "./types";
 import { getRelativelyPositionedSpeech, spriteFrame } from "./helpers";
+import { addClickIndicator } from "./helpers";
 
 export const getWeekThreeFrames: GetFrames = async (app: Application) => {
   const { screen } = app;
 
   const allFrames: FrameData[] = [
-    await spriteFrame(app, "beforeComp1", [getSpeech1(screen)]),
+    await spriteFrame(app, "beforeComp1", [
+      getSpeech1(screen),
+      await addClickIndicator(app),
+    ]),
     await spriteFrame(app, "beforeComp2", [getSpeech1(screen)], "auto", 800),
     await spriteFrame(app, "beforeComp3", [getSpeech1(screen)], "auto", 800),
     await spriteFrame(app, "beforeComp4", [
       getSpeech1(screen),
       getSpeech2(screen),
+      await addClickIndicator(app),
     ]),
     await spriteFrame(app, "beforeComp5", [
       getSpeech1(screen),
       getSpeech2(screen),
+      await addClickIndicator(app),
       getSpeech3(screen),
     ]),
-    await spriteFrame(app, "beforeComp6", [getSpeech4(screen)]),
+    await spriteFrame(app, "beforeComp6", [
+      getSpeech4(screen),
+      await addClickIndicator(app),
+    ]),
     await spriteFrame(app, "beforeComp7", [
       getSpeech4(screen),
+      await addClickIndicator(app),
       getSpeech5(screen),
     ]),
     await spriteFrame(app, "beforeComp8", [
       getSpeech4(screen),
       getSpeech5(screen),
+      await addClickIndicator(app),
       getSpeech6(screen),
     ]),
   ];
