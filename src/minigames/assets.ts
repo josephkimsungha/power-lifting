@@ -85,6 +85,7 @@ export enum MINIGAME_ASSET_ALIASES {
   BALANCE_C1 = "balancec1",
   BALANCE_C2 = "balancec2",
   BALANCE_C3 = "balancec3",
+  KITCHEN_BG = "kitchenbg",
 }
 
 const MINIGAME_ASSET_FILENAMES = {
@@ -195,9 +196,10 @@ const MINIGAME_ASSET_FILENAMES = {
   [MINIGAME_ASSET_ALIASES.PROGRESS]: getAssetPath("progress.png"),
   [MINIGAME_ASSET_ALIASES.BLENDERPROG]: getAssetPath("progress_blender.png"),
   [MINIGAME_ASSET_ALIASES.BLENDERFILL]: getAssetPath("progress_bar.png"),
-  [MINIGAME_ASSET_ALIASES.BLENDER]: getAssetPath("blender.png"),
+  [MINIGAME_ASSET_ALIASES.BLENDER]: getAssetPath("blenderfill.png"),
   [MINIGAME_ASSET_ALIASES.BALANCE_BG]: getAssetPath("balance_background.png"),
   [MINIGAME_ASSET_ALIASES.BALANCE_C1]: getAssetPath("balance_character-1.png"),
+  [MINIGAME_ASSET_ALIASES.KITCHEN_BG]: getAssetPath("kitchenbackground.png"),
   [MINIGAME_ASSET_ALIASES.BALANCE_C2]: getAssetPath("balance_character-2.png"),
   [MINIGAME_ASSET_ALIASES.BALANCE_C3]: getAssetPath("balance_character-3.png"),
 

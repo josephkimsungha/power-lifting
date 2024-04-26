@@ -4,7 +4,7 @@ import { FlingMinigame } from "./minigames/final/flingMinigame";
 import { TypingMinigame } from "./minigames/final/typingMinigame";
 import { RhythmMinigame } from "./minigames/rhythmMinigame";
 import { ScrubMinigame } from "./minigames/final/scrubMinigame";
-import { ShakingMinigame } from "./minigames/shakingMinigame";
+import { ShakingMinigame } from "./minigames/final/shakingMinigame";
 import { ShoppingMinigame } from "./minigames/final/shoppingMinigame";
 import { backgroundLoadMinigameAssets } from "./minigames/assets";
 import { BalancingMinigame } from "./minigames/balancingMinigame";
