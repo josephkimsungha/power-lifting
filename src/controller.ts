@@ -16,6 +16,7 @@ import {
 import { CheckpointOneMinigame } from "./minigames/final/checkpointOneMinigame";
 import { CheckpointTwoMinigame } from "./minigames/final/checkpointTwoMinigame";
 import { CheckpointThreeMinigame } from "./minigames/final/checkpointThreeMinigame";
+import { PoseMinigame } from "./minigames/final/poseMinigame";
 
 const MINIGAMES_POOL = new URLSearchParams(window.location.search).get("quick")
   ? [Minigame]
@@ -24,7 +25,7 @@ const MINIGAMES_POOL = new URLSearchParams(window.location.search).get("quick")
       BalancingMinigame,
       ShoppingMinigame,
       ShakingMinigame,
-      RhythmMinigame,
+      PoseMinigame,
       ScrubMinigame,
       FlingMinigame,
     ];
