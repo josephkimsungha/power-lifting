@@ -138,8 +138,8 @@ export class Minigame {
     }
 
     document.body.appendChild(this.transitionOverlay);
-    this.delegate.onMinigameEnd(passed);
     await new Promise((r) => setTimeout(r, 2_000));
+    this.delegate.onMinigameEnd(passed);
     this.transitionOverlay.remove();
   }
 
