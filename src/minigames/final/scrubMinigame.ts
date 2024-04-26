@@ -50,6 +50,7 @@ class DirtySpot {
 }
 
 export class ScrubMinigame extends Minigame implements DirtySpotDelegate {
+  protected override tutorialAlias = MINIGAME_ASSET_ALIASES.BATH_TUTORIAL;
   private pointerDown = false;
   private remainingDirtySpots: Set<DirtySpot> = new Set();
   protected override lifetime = 15_000;

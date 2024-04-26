@@ -1,5 +1,13 @@
-import { Application, Container, Graphics, Ticker } from "pixi.js";
+import {
+  Application,
+  Container,
+  Sprite,
+  Assets,
+  Graphics,
+  Ticker,
+} from "pixi.js";
 import { game } from "../game";
+import { MINIGAME_ASSET_ALIASES } from "./assets";
 
 export interface MinigameDelegate {
   onMinigameEnd: (passed: boolean) => void;
@@ -20,7 +28,8 @@ export class Minigame {
   protected cumulativeMS = 0;
   protected ticker: Ticker;
   protected succeedOnTimeout: boolean = false;
-
+  protected tutorialAlias: MINIGAME_ASSET_ALIASES =
+    MINIGAME_ASSET_ALIASES.TYPING_TUTORIAL;
   private clock: Graphics;
   private clockArc: Graphics;
   private transitionOverlay = document.createElement("div");
@@ -50,14 +59,22 @@ export class Minigame {
   async attach() {
     this.ticker = new Ticker();
     this.playAudio();
+
+    // Show tutorial.
+    const tutorialSprite = new Sprite(await Assets.load(this.tutorialAlias));
+    tutorialSprite.setSize(this.app.screen);
+    this.app.stage.addChild(tutorialSprite);
+    await new Promise((r) => setTimeout(r, 6_000));
+    tutorialSprite.removeFromParent();
+
+    await this.populateContainer();
+    this.app.stage.addChild(this.container);
+
     if (this.lifetime !== undefined) {
       this.ticker.add(() => void this.onTick());
       this.app.stage.addChild(this.clock);
     }
     this.ticker.start();
-
-    await this.populateContainer();
-    this.app.stage.addChild(this.container);
 
     const canvasBB = this.app.canvas.getBoundingClientRect();
     this.transitionOverlay.style.position = "fixed";

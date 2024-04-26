@@ -86,6 +86,15 @@ export enum MINIGAME_ASSET_ALIASES {
   BALANCE_C2 = "balancec2",
   BALANCE_C3 = "balancec3",
   KITCHEN_BG = "kitchenbg",
+  /* Tutorials */
+  TYPING_TUTORIAL = "typing-tutorial",
+  BALANCE_TUTORIAL = "balance_tutorial",
+  POSE_TUTORIAL = "pose_tutorial",
+  SHOPPING_TUTORIAL = "shopping_tutorial",
+  SHAKE_TUTORIAL = "shake_tutorial",
+  BATH_TUTORIAL = "bath_tutorial",
+  BROWSER_TUTORIAL = "browser_tutorial",
+  CHECKPOINT_TUTORIAL = "checkpoint_tutorial",
 }
 
 const MINIGAME_ASSET_FILENAMES = {
@@ -202,7 +211,30 @@ const MINIGAME_ASSET_FILENAMES = {
   [MINIGAME_ASSET_ALIASES.KITCHEN_BG]: getAssetPath("kitchenbackground.png"),
   [MINIGAME_ASSET_ALIASES.BALANCE_C2]: getAssetPath("balance_character-2.png"),
   [MINIGAME_ASSET_ALIASES.BALANCE_C3]: getAssetPath("balance_character-3.png"),
-
+  [MINIGAME_ASSET_ALIASES.TYPING_TUTORIAL]: getAssetPath(
+    "tutorials/typing-tutorial.png",
+  ),
+  [MINIGAME_ASSET_ALIASES.BALANCE_TUTORIAL]: getAssetPath(
+    "tutorials/balance-tutorial.png",
+  ),
+  [MINIGAME_ASSET_ALIASES.POSE_TUTORIAL]: getAssetPath(
+    "tutorials/pose-tutorial.png",
+  ),
+  [MINIGAME_ASSET_ALIASES.SHOPPING_TUTORIAL]: getAssetPath(
+    "tutorials/shopping-tutorial.png",
+  ),
+  [MINIGAME_ASSET_ALIASES.SHAKE_TUTORIAL]: getAssetPath(
+    "tutorials/shake-tutorial.png",
+  ),
+  [MINIGAME_ASSET_ALIASES.BATH_TUTORIAL]: getAssetPath(
+    "tutorials/bath-tutorial.png",
+  ),
+  [MINIGAME_ASSET_ALIASES.BROWSER_TUTORIAL]: getAssetPath(
+    "tutorials/browser-tutorial.png",
+  ),
+  [MINIGAME_ASSET_ALIASES.CHECKPOINT_TUTORIAL]: getAssetPath(
+    "tutorials/checkpoint-tutorial.png",
+  ),
 };
 
 function getAssetPath(filename: string) {

@@ -20,6 +20,7 @@ const POPUP_ASSETS = [
 ];
 
 export class FlingMinigame extends Minigame {
+  protected override tutorialAlias = MINIGAME_ASSET_ALIASES.BROWSER_TUTORIAL;
   private dragTarget?: Container;
   private dragListener = (e: FederatedMouseEvent) => void this.onDragMove(e);
   private dragTargetVelocity = new Point(0, 0);

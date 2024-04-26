@@ -10,6 +10,7 @@ const TARGET_SENTENCES = [
 ];
 
 export class TypingMinigame extends KeyboardMinigame {
+  protected override tutorialAlias = MINIGAME_ASSET_ALIASES.TYPING_TUTORIAL;
   private trie = new Trie();
   private currentNode?: TrieNode;
   private remainingWords = new Set<string>();

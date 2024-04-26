@@ -68,7 +68,7 @@ export class TypingMinigame extends KeyboardMinigame {
 
       this.remainingWords.delete(word);
       if (this.remainingWords.size === 0) {
-        this.finishMinigame(true);
+        this.finishMinigame(true, new Promise((r) => setTimeout(r, 3_000)));
       }
     }
   }
