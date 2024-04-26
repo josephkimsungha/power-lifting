@@ -127,12 +127,12 @@ export class Minigame {
         "url('./assets/sprites/transitions/pump.png')",
         "url('./assets/sprites/transitions/pump_2.png')",
         "url('./assets/sprites/transitions/pump_3.png')",
-      ][2];
+      ][this.week];
       sprite.style.animation = [
         "spritewalk 2s steps(3, end) infinite",
         "spritewalk-2 2s steps(1, end) infinite",
         "spritewalk 2s steps(3, end) infinite",
-      ][2];
+      ][this.week];
     }
 
     document.body.appendChild(this.transitionOverlay);
