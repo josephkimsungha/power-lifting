@@ -21,6 +21,16 @@
         display: grid;
         place-items: center;
         background: black;
+        --font-size-lg: 12vw;
+        --font-size-sm: 3vw;
+        --font-size-x-sm: 2vw;
+      }
+      @media (min-aspect-ratio: 16/9) {
+        body {
+          --font-size-lg: calc(12vh * 16 / 9);
+          --font-size-sm: calc(3vh * 16 / 9);
+          --font-size-x-sm: calc(2vh * 16 / 9);
+        }
       }
     </style>
   </head>

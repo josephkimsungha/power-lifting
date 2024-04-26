@@ -3,6 +3,9 @@ import { Assets } from "pixi.js";
 export enum MINIGAME_ASSET_ALIASES {
   /* Typing minigame */
   PHONE_SCREEN = "phone-screen",
+  INSTA_POST_1 = "insta-post-1",
+  INSTA_POST_2 = "insta-post-2",
+  INSTA_POST_3 = "insta-post-3",
   /* Bath minigame */
   BATH_BG_1 = "bath-bg-1",
   BATH_DIRT_1 = "bath-dirt-1",
@@ -140,6 +143,9 @@ const MINIGAME_ASSET_FILENAMES = {
     "progress_learning.png",
   ),
   [MINIGAME_ASSET_ALIASES.PROGRESS_BAR]: getAssetPath("progress_bar.png"),
+  [MINIGAME_ASSET_ALIASES.INSTA_POST_1]: getAssetPath("insta_post_1.png"),
+  [MINIGAME_ASSET_ALIASES.INSTA_POST_2]: getAssetPath("insta_post_2.png"),
+  [MINIGAME_ASSET_ALIASES.INSTA_POST_3]: getAssetPath("insta_post_3.png"),
 };
 
 function getAssetPath(filename: string) {

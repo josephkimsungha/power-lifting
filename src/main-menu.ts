@@ -17,7 +17,7 @@ export class MainMenu extends LitElement {
     }
     .large-title {
       font-family: "Poppins", sans-serif;
-      font-size: 12vw;
+      font-size: var(--font-size-lg);
       position: absolute;
       margin: 0;
       top: 5%;
@@ -27,7 +27,7 @@ export class MainMenu extends LitElement {
       position: absolute;
       background: none;
       border: none;
-      font-size: 3vw;
+      font-size: var(--font-size-sm);
       font-weight: bold;
       color: #a0484c;
       cursor: pointer;
@@ -83,12 +83,8 @@ export class MainMenu extends LitElement {
       :host {
         height: 100%;
         width: unset;
-      }
-      .large-title {
-        font-size: calc(12vh * 16 / 9);
-      }
-      .text-button {
-        font-size: calc(3vh * 16 / 9);
+        --font-size-lg: calc(12vh * 16 / 9);
+        --font-size-sm: calc(3vh * 16 / 9);
       }
       #play-button {
         padding: 0 calc(15vh * 16 / 9) calc(15vh * 16 / 9) calc(15vh * 16 / 9);
