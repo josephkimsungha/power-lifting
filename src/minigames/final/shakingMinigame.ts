@@ -4,6 +4,7 @@ import { Minigame } from "../minigame";
 import { MINIGAME_ASSET_ALIASES } from "../assets";
 
 export class ShakingMinigame extends Minigame {
+  protected override tutorialAlias = MINIGAME_ASSET_ALIASES.SHAKE_TUTORIAL;
   protected dragObject: Sprite | null = null;
   private dragListener = (e: FederatedMouseEvent) => void this.onDrag(e);
   private vel: Point;

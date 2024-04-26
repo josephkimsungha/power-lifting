@@ -44,6 +44,7 @@ type ArrowData = {
 };
 
 export class PoseMinigame extends KeyboardMinigame {
+  protected override tutorialAlias = MINIGAME_ASSET_ALIASES.POSE_TUTORIAL;
   private timeUntilNextPose = 0;
 
   private poseProgress = 0;

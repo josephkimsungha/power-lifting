@@ -6,6 +6,8 @@ import { MINIGAME_ASSET_ALIASES } from "./assets";
 export class CheckpointMinigame extends KeyboardMinigame {
   // Checkpoints have no time limit.
   protected override lifetime = undefined;
+  protected override tutorialAlias: MINIGAME_ASSET_ALIASES =
+    MINIGAME_ASSET_ALIASES.CHECKPOINT_TUTORIAL;
 
   // Charge bar goes from 0 -> 100 but drains at some rate.
   protected chargeBar = 0;

@@ -31,7 +31,8 @@ type GroceryItem = {
 
 export class ShoppingMinigame extends Minigame {
   private dragTarget?: GroceryItem;
-
+  protected override tutorialAlias: MINIGAME_ASSET_ALIASES =
+    MINIGAME_ASSET_ALIASES.SHOPPING_TUTORIAL;
   private readonly shoppingList: Record<GroceryItemType, number> = {
     [GroceryItemType.BANANA]: 0,
     [GroceryItemType.MILK]: 0,

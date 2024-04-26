@@ -3,6 +3,8 @@ import { KeyboardMinigame } from "./keyboardMinigame";
 import { MINIGAME_ASSET_ALIASES } from "./assets";
 
 export class BalancingMinigame extends KeyboardMinigame {
+  protected tutorialAlias: MINIGAME_ASSET_ALIASES =
+    MINIGAME_ASSET_ALIASES.BALANCE_TUTORIAL;
   private balancingObject: Sprite | null = null;
   private pos: Point;
   private flag: boolean;
