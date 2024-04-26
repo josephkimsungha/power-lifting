@@ -142,7 +142,7 @@ export class TypingMinigame extends KeyboardMinigame {
       if (document.getElementById(word))
         document.getElementById(word).style.opacity = "0.2";
       if (this.remainingWords.size === 0) {
-        this.finishMinigame(true);
+        this.finishMinigame(true, new Promise((r) => setTimeout(r, 3_000)));
       }
     }
     this.highlightSubString(this.getString(this.currentNode));

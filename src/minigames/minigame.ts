@@ -64,7 +64,7 @@ export class Minigame {
     const tutorialSprite = new Sprite(await Assets.load(this.tutorialAlias));
     tutorialSprite.setSize(this.app.screen);
     this.app.stage.addChild(tutorialSprite);
-    await new Promise((r) => setTimeout(r, 6_000));
+    await new Promise((r) => setTimeout(r, 4500));
     tutorialSprite.removeFromParent();
 
     await this.populateContainer();
