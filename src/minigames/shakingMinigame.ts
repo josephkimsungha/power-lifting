@@ -18,16 +18,26 @@ export class ShakingMinigame extends Minigame{
     protected dragObject: Sprite | null = null;
     private dragListener = (e: FederatedMouseEvent) => void this.onDrag(e);
     private vel: Point;
+    private readonly velocityInfo: Map<Sprite, number> = {};
     private score: number = 0;
     private scoreText: Text | null = null;
     private prog: ProgressBar;
     private scoreToPass: number;
+    private amountOfBlenders;
 
 
     
     override async attach() {
         super.attach();
         this.scoreToPass = 3000;
+
+        const texture = await Assets.load(
+            MINIGAME_ASSET_ALIASES.KITCHEN_BG,
+         );
+        const background = new Sprite(texture);
+        background.setSize(this.app.screen);
+        background.zIndex = -1;
+        this.container.addChild(background);
 
         this.container.eventMode = 'static';
         this.container.hitArea = this.app.screen;
@@ -38,7 +48,22 @@ export class ShakingMinigame extends Minigame{
 
 
     protected override async populateContainer() {
-        const shakeAble = new Sprite(await Assets.load(MINIGAME_ASSET_ALIASES.BLENDER));
+
+        switch (this.week) {
+            case 0:
+                this.amountOfBlenders = 1;
+                break;
+            case 1:
+                this.amountOfBlenders = 2;
+                break;
+            case 2:
+                this.amountOfBlenders = 3;
+                break;
+
+        }
+
+
+        let shakeAble = new Sprite(await Assets.load(MINIGAME_ASSET_ALIASES.BLENDER));
         const x = (this.app.screen.width - 100) * Math.random();
         const y = (this.app.screen.height - 100) * Math.random();
 
@@ -68,7 +93,7 @@ export class ShakingMinigame extends Minigame{
         shakeAble.width = this.app.screen.width / 4;
         shakeAble.height = shakeAble.width * aspect;
         shakeAble.anchor = 0.5;
-        shakeAble.position = new Point(this.app.screen.width / 2, this.app.screen.height / 2);
+        shakeAble.position = new Point(x, y);
 
         
         shakeAble.eventMode = 'static';
