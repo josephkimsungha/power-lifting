@@ -88,6 +88,7 @@ export class PoseMinigame extends KeyboardMinigame {
   }
 
   private async periodicallyAddArrow(time: Ticker) {
+    const { screen } = this.app;
     this.timeUntilNextPose -= time.deltaMS;
     if (this.timeUntilNextPose > 0) return;
 
@@ -100,7 +101,7 @@ export class PoseMinigame extends KeyboardMinigame {
       Direction.RIGHT,
     ];
     const arrow = await this.constructTimelineArrow(
-      this.app.screen,
+      screen,
       directions[Math.floor(Math.random() * directions.length)],
     );
 
@@ -109,11 +110,15 @@ export class PoseMinigame extends KeyboardMinigame {
     this.ticker.add((time) => {
       if (!arrow.sprite.parent) return;
 
-      const speed = [8, 12, 20][this.week];
+      const speed = [
+        screen.width * 0.008,
+        screen.width * 0.012,
+        screen.width * 0.02,
+      ][this.week];
       arrow.sprite.x -= speed * time.deltaTime;
       if (
-        arrow.sprite.x < screen.width * 0.075 &&
-        arrow.sprite.x > screen.width * 0.06
+        arrow.sprite.x < screen.width * 0.125 &&
+        arrow.sprite.x > screen.width * 0.1
       ) {
         // Check the current player's direction.
         if (this.characterDirection === arrow.direction) {

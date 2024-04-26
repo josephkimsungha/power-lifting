@@ -119,7 +119,7 @@ export class FlingMinigame extends Minigame {
     progressBar.y = 16;
     this.container.addChild(progressBar);
 
-    for (let i = 0; i < 3 + this.week; i++) {
+    for (let i = 0; i < 2 + this.week; i++) {
       this.addPopup();
     }
 
@@ -133,8 +133,8 @@ export class FlingMinigame extends Minigame {
   }
 
   private async processPopups(ticker: Ticker, progressBar: ProgressBar) {
-    if (this.popupsOnScreen < 1) {
-      this.learningTime += ticker.deltaMS;
+    if (this.popupsOnScreen < 3) {
+      this.learningTime += ticker.deltaMS / (this.popupsOnScreen + 1);
     }
     this.timeToNextPopup -= ticker.deltaMS;
 
