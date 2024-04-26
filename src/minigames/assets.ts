@@ -58,6 +58,14 @@ export enum MINIGAME_ASSET_ALIASES {
   POPUP_4 = "popup-4",
   POPUP_5 = "popup-5",
   LEARNING_PROGRESS_CONTAINER = "learning-progress-container",
+  PROGRESS = "progress",
+  BLENDERPROG = "blenderProgress",
+  BLENDERFILL = "barFill",
+  BLENDER = "blender",
+  BALANCE_BG = "balancebg",
+  BALANCE_C1 = "balancec1",
+  BALANCE_C2 = "balancec2",
+  BALANCE_C3 = "balancec3",
 }
 
 const MINIGAME_ASSET_FILENAMES = {
@@ -146,6 +154,12 @@ const MINIGAME_ASSET_FILENAMES = {
   [MINIGAME_ASSET_ALIASES.INSTA_POST_1]: getAssetPath("insta_post_1.png"),
   [MINIGAME_ASSET_ALIASES.INSTA_POST_2]: getAssetPath("insta_post_2.png"),
   [MINIGAME_ASSET_ALIASES.INSTA_POST_3]: getAssetPath("insta_post_3.png"),
+  [MINIGAME_ASSET_ALIASES.PROGRESS]: getAssetPath("progress.png"),
+  [MINIGAME_ASSET_ALIASES.BLENDERPROG]: getAssetPath("progress_blender.png"),
+  [MINIGAME_ASSET_ALIASES.BLENDERFILL]: getAssetPath("progress_bar.png"),
+  [MINIGAME_ASSET_ALIASES.BLENDER]: getAssetPath("blender.png"),
+  [MINIGAME_ASSET_ALIASES.BALANCE_BG]: getAssetPath("balance_background.png"),
+  [MINIGAME_ASSET_ALIASES.BALANCE_C1]: getAssetPath("balance_character-1.png"),
 };
 
 function getAssetPath(filename: string) {
